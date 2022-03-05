@@ -44,7 +44,7 @@ function Dashboard() {
                 </>
               }
             />
-            <Route path="*" element={<Navigate to="/editProfile" />} />
+            <Route path="*" element={<Navigate to="/main" />} />
           </Routes>
         </Router>
       </div>

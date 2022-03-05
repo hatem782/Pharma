@@ -10,6 +10,11 @@ export const useStyles = makeStyles((theme) => ({
     outline: "none",
     border: "none",
     borderRadius: "500px",
+    transition: "all 0.1s",
+    "&:hover": {
+      cursor: "pointer",
+      transform: "scale(1.05)",
+    },
   },
   center: {
     display: "block",

@@ -41,4 +41,7 @@ export const useStyles = makeStyles((theme) => ({
       margin: "0px 0px 0px 10px",
     },
   },
+  notif_menu: {
+    padding: "10px",
+  },
 }));

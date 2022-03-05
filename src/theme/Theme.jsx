@@ -6,6 +6,19 @@ const lightTheme = createTheme({
   palette: {
     primary: {
       main: "#1DBF73",
+      contrastText: "#ffffff",
+    },
+    secondary: {
+      main: "#FECD54",
+      contrastText: "#ffffff",
+    },
+    error: {
+      main: "#F7617D",
+      contrastText: "#ffffff",
+    },
+    warning: {
+      main: "#FFCD54",
+      contrastText: "#ffffff",
     },
   },
 });

@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import CalendarRTC from "../../../../components/Calendar/CalendarRCT";
 import PieChart from "../../../../components/Charts/PieChart";
+import PresTab from "./PresTab/PresTab";
 
 function MainPage() {
   const css = useStyles();
@@ -34,16 +35,9 @@ function MainPage() {
         </ChartCont>
 
         {/***************************** Calendar with tab **************************/}
-        <Grid item xs={12} md={8} lg={8}>
-          <Paper
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-            }}
-          ></Paper>
-        </Grid>
+        <TabCont>
+          <PresTab />
+        </TabCont>
         <Grid item xs={12} md={8} lg={4}>
           <Grid container spacing={3}>
             <CalendarCont>
@@ -106,6 +100,23 @@ const PieChartCont = (props) => {
           "& *": {
             overflow: "hidden",
           },
+        }}
+      >
+        {props.children}
+      </Paper>
+    </Grid>
+  );
+};
+
+const TabCont = (props) => {
+  return (
+    <Grid item xs={12} md={8} lg={8}>
+      <Paper
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100%",
         }}
       >
         {props.children}

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
 import { useStyles } from "./SideBarStyles";
-import logo from "../../../assets/svgs/logo.svg";
-import folder from "../../../assets/svgs/folder.svg";
-import chat from "../../../assets/svgs/icon_chat-room.svg";
-import rounded_chart from "../../../assets/svgs/pie-chart.svg";
-import logout from "../../../assets/svgs/shutdown.svg";
-import settings from "../../../assets/svgs/settings.svg";
-import bar_chart from "../../../assets/svgs/chart-bar-32.svg";
-import trash from "../../../assets/svgs/trash.svg";
+import logo from "../../../assets/svgs/sidebar/logo.svg";
+import folder from "../../../assets/svgs/sidebar/folder.svg";
+import chat from "../../../assets/svgs/sidebar/icon_chat-room.svg";
+import rounded_chart from "../../../assets/svgs/sidebar/pie-chart.svg";
+import logout from "../../../assets/svgs/sidebar/shutdown.svg";
+import settings from "../../../assets/svgs/sidebar/settings.svg";
+import bar_chart from "../../../assets/svgs/sidebar/chart-bar-32.svg";
+import trash from "../../../assets/svgs/sidebar/trash.svg";
 
-import full_logo from "../../../assets/svgs/full_logo.svg";
+import full_logo from "../../../assets/svgs/sidebar/full_logo.svg";
 
 function SideBar() {
   const [hovered, setHovered] = useState(false);

@@ -1,16 +1,9 @@
 import React from "react";
 import SideBar from "./SideBar/SideBar";
-import TopBar from "./TopBar/TopBar";
-import TopBarWithRech from "./TopBar/TopBarWithRech";
 import { makeStyles } from "@mui/styles";
-import EditProfilePage from "./DashContent/EditProfilePage/EditProfilePage";
-import MainPage from "./DashContent/MainPage/MainPage";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import { routes } from "../../routes/Main.routes";
 
 export const useStyles = makeStyles((theme) => ({
   content: {
@@ -24,29 +17,12 @@ function Dashboard() {
     <div>
       <SideBar />
       <div className={css.content}>
-        <Router>
-          <Routes>
-            <Route
-              path="/editProfile"
-              element={
-                <>
-                  <TopBar />
-                  <EditProfilePage />
-                </>
-              }
-            />
-            <Route
-              path="/main"
-              element={
-                <>
-                  <TopBarWithRech />
-                  <MainPage />
-                </>
-              }
-            />
-            <Route path="*" element={<Navigate to="/main" />} />
-          </Routes>
-        </Router>
+        <Routes>
+          {routes.map((elem, key) => {
+            return <Route key={key} path={elem.url} element={elem.compo} />;
+          })}
+          <Route path="*" element={<Navigate to="/main" />} />
+        </Routes>
       </div>
     </div>
   );

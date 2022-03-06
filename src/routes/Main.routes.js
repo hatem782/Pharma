@@ -1,99 +1,79 @@
 // ************************** ICONS ****************************
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import CollectionsIcon from "@mui/icons-material/Collections";
-import EventIcon from "@mui/icons-material/Event";
-import ArticleIcon from "@mui/icons-material/Article";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import folder from "../assets/svgs/sidebar/folder.svg";
+import chat from "../assets/svgs/sidebar/icon_chat-room.svg";
+import rounded_chart from "../assets/svgs/sidebar/pie-chart.svg";
+import logout from "../assets/svgs/sidebar/shutdown.svg";
+import settings from "../assets/svgs/sidebar/settings.svg";
+import bar_chart from "../assets/svgs/sidebar/chart-bar-32.svg";
+import trash from "../assets/svgs/sidebar/trash.svg";
 
-import GroupsIcon from "@mui/icons-material/Groups";
-import SettingsIcon from "@mui/icons-material/Settings";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import EmailIcon from "@mui/icons-material/Email";
+// ************************** Components ****************************
+import EditPage from "../pages/dashboard/DashContent/EditProfilePage/EditProfilePage.jsx";
+import MainPage from "../pages/dashboard/DashContent/MainPage/MainPage";
 
-// ************************** COMPS ****************************
+// ************************** TOP BAR *******************************
 
-// import GalleryPage from "../pages/dashboard/GalleryPage/GestGallery";
-// import GestEvents from "../pages/dashboard/EventsPage/GestEvents";
-// import GestBlogs from "../pages/dashboard/BlogsPage/GestBlog";
-// import GestContacts from "../pages/dashboard/ContactsPage/GestContacts";
-// import GestMessages from "../pages/dashboard/MessagesPage/GestMessages";
-// import GestTeam from "../pages/dashboard/TeamPage/GestTeam";
-// import GestMemory from "../pages/dashboard/ForumMemoryPage/GestMemory";
-// import Logout from "../pages/login/Logout";
+import TopBar from "../pages/dashboard/TopBar/TopBar";
+import TopBarWithRech from "../pages/dashboard/TopBar/TopBarWithRech";
 
 export const routes = [
   {
     mainUrl: "/dashboard",
     url: "/main",
-    icon: <DashboardIcon />,
-    title: "dashboard",
+    img: bar_chart,
+    title: "Dashboard",
+    compo: (
+      <>
+        <TopBarWithRech />
+        <MainPage />
+      </>
+    ),
+  },
+  {
+    mainUrl: "/dashboard",
+    url: "/folder",
+    img: folder,
+    title: "Dossier",
     compo: <></>,
   },
   {
     mainUrl: "/dashboard",
-    url: "/gallery",
-    icon: <CollectionsIcon />,
-    title: "gallery",
+    url: "/messages",
+    img: chat,
+    title: "Messages",
     compo: <></>,
   },
   {
     mainUrl: "/dashboard",
-    url: "/blogs",
-    icon: <ArticleIcon />,
-    title: "blogs",
+    url: "/parrainage",
+    img: rounded_chart,
+    title: "Parrainage",
     compo: <></>,
   },
   {
     mainUrl: "/dashboard",
-    url: "/events",
-    icon: <EventIcon />,
-    title: "events",
+    url: "/corbeille",
+    img: trash,
+    title: "Corbeille",
     compo: <></>,
   },
   {
     mainUrl: "/dashboard",
-    url: "/memories",
-    icon: <AutoStoriesIcon />,
-    title: "memories",
-    compo: <></>,
+    url: "/parametres",
+    img: settings,
+    title: "Paramètres",
+    compo: (
+      <>
+        <TopBar />
+        <EditPage />
+      </>
+    ),
   },
   {
     mainUrl: "/dashboard",
-    url: "/contacts",
-    icon: <ContactMailIcon />,
-    title: "contacts",
-    compo: <></>,
-  },
-  {
-    mainUrl: "/dashboard",
-    url: "/emails",
-    icon: <EmailIcon />,
-    title: "emails",
-    compo: <></>,
-  },
-];
-
-export const subroutes = [
-  {
-    mainUrl: "/dashboard",
-    url: "/team",
-    icon: <GroupsIcon />,
-    title: "team",
-    compo: <></>,
-  },
-  {
-    mainUrl: "/dashboard",
-    url: "/settings",
-    icon: <SettingsIcon />,
-    title: "settings",
-    compo: <></>,
-  },
-  {
-    mainUrl: "/dashboard",
-    url: "/logout",
-    icon: <MeetingRoomIcon />,
-    title: "Logout",
+    url: "/deconnexion",
+    img: logout,
+    title: "Déconnexion",
     compo: <></>,
   },
 ];

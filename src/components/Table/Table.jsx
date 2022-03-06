@@ -20,6 +20,7 @@ export const useStyles = makeStyles((theme) => ({
   thr: { borderBottom: "solid 2px #D8EAE6" },
   tr: {
     borderBottom: "solid 1px #D8EAE6",
+    transition: "all 0.4s",
     "&:hover": {
       backgroundColor: "#646D8211",
     },

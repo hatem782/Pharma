@@ -10,6 +10,7 @@ import trash from "../assets/svgs/sidebar/trash.svg";
 // ************************** Components ****************************
 import EditPage from "../pages/dashboard/DashContent/EditProfilePage/EditProfilePage.jsx";
 import MainPage from "../pages/dashboard/DashContent/MainPage/MainPage";
+import FoldersMainPage from "../pages/dashboard/DashContent/FoldersPages/FoldersMainP.jsx";
 
 // ************************** TOP BAR *******************************
 
@@ -34,7 +35,12 @@ export const routes = [
     url: "/folder",
     img: folder,
     title: "Dossier",
-    compo: <></>,
+    compo: (
+      <>
+        <TopBarWithRech />
+        <FoldersMainPage />
+      </>
+    ),
   },
   {
     mainUrl: "/dashboard",

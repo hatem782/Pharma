@@ -6,10 +6,12 @@ import logout from "../assets/svgs/sidebar/shutdown.svg";
 import settings from "../assets/svgs/sidebar/settings.svg";
 import bar_chart from "../assets/svgs/sidebar/chart-bar-32.svg";
 import trash from "../assets/svgs/sidebar/trash.svg";
+import template from "../assets/svgs/sidebar/template.svg";
 
 // ************************** Components ****************************
-import EditPage from "../pages/dashboard/DashContent/EditProfilePage/EditProfilePage.jsx";
+//import EditPage from "../pages/dashboard/DashContent/EditProfilePage/EditProfilePage.jsx";
 import MainPage from "../pages/dashboard/DashContent/MainPage/MainPage";
+import Profile from "../pages/dashboard/DashContent/Profile/Profile";
 import FoldersMainPage from "../pages/dashboard/DashContent/FoldersPages/FoldersMainP.jsx";
 
 // ************************** TOP BAR *******************************
@@ -44,6 +46,13 @@ export const routes = [
   },
   {
     mainUrl: "/dashboard",
+    url: "/templates",
+    img: template,
+    title: "Templates",
+    compo: <></>,
+  },
+  {
+    mainUrl: "/dashboard",
     url: "/messages",
     img: chat,
     title: "Messages",
@@ -71,7 +80,7 @@ export const routes = [
     compo: (
       <>
         <TopBar />
-        <EditPage />
+        <Profile />
       </>
     ),
   },

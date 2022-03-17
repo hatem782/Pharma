@@ -8,7 +8,7 @@ function ToBaar() {
   return (
     <div className={css.TopBar}>
       {/* <RechInput /> */}
-      <h3>Paramètres du profil</h3>
+      <h3>{/* Paramètres du profil */}</h3>
       <Notif_Avatar />
     </div>
   );

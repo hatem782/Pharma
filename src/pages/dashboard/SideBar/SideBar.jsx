@@ -31,9 +31,7 @@ function SideBar() {
       {hovered ? (
         <img src={full_logo} className={cs.full_logo} />
       ) : (
-        <div styles={{ width: "45px" }}>
-          <img src={logo} className={cs.logo} />
-        </div>
+        <img src={logo} className={cs.logo} />
       )}
 
       <div className={cs.navlinks}>

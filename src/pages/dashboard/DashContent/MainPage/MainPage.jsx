@@ -38,7 +38,7 @@ function MainPage() {
         <TabCont>
           <PresTab />
         </TabCont>
-        <Grid item xs={12} md={8} lg={4}>
+        <Grid item xs={12} md={12} lg={12} xl={4}>
           <Grid container spacing={3}>
             <CalendarCont>
               <CalendarRTC />
@@ -57,7 +57,7 @@ export default MainPage;
 
 const ChartCont = (props) => {
   return (
-    <Grid item xs={12} md={8} lg={4}>
+    <Grid item xs={12} md={8} lg={4} xl={4}>
       <Paper
         sx={{ p: 2, display: "flex", flexDirection: "column", height: 260 }}
       >
@@ -69,7 +69,7 @@ const ChartCont = (props) => {
 
 const CalendarCont = (props) => {
   return (
-    <Grid item xs={12} md={12} lg={12}>
+    <Grid item xs={12} md={12} lg={6} xl={12}>
       <Paper
         sx={{
           p: 2,
@@ -90,7 +90,7 @@ const CalendarCont = (props) => {
 
 const PieChartCont = (props) => {
   return (
-    <Grid item xs={12} md={12} lg={12}>
+    <Grid item xs={12} md={6} lg={6} xl={12}>
       <Paper
         sx={{
           p: 2,
@@ -110,7 +110,7 @@ const PieChartCont = (props) => {
 
 const TabCont = (props) => {
   return (
-    <Grid item xs={12} md={8} lg={8}>
+    <Grid item xs={12} md={12} lg={12} xl={8}>
       <Paper
         sx={{
           p: 2,

@@ -1,4 +1,5 @@
 import Dashboard from "./pages/dashboard/Dashboard";
+import SignIn from "./pages/Login/SignIn/SignIn";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,7 +16,10 @@ function App() {
         <Router>
           <Routes>
             <Route path="/dashboard/*" element={<Dashboard />} />
-            <Route path="/*" element={<Navigate to="/dashboard/main" />} />
+
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/*" element={<Navigate to="/signin" />} />
+            {/* <Route path="/*" element={<Navigate to="/dashboard/main" />} /> */}
           </Routes>
         </Router>
       </Theme>

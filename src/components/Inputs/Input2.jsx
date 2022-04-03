@@ -5,11 +5,17 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
   inputContainer: {
     marginTop: "30px",
+    [theme.breakpoints.down("xl")]: {
+      marginTop: "15px",
+    },
   },
 
   label: {
     color: "#95989A",
     fontSize: "18px",
+    [theme.breakpoints.down("xl")]: {
+      fontSize: "16px",
+    },
   },
   input: {
     fontSize: "20px",
@@ -23,13 +29,19 @@ export const useStyles = makeStyles((theme) => ({
     "&:focus": {
       border: "solid 2px #95989A",
     },
+
+    [theme.breakpoints.down("xl")]: {
+      fontSize: "14px",
+      padding: "10px",
+      margin: "5px 0px",
+    },
   },
 }));
 function Input2(props) {
   const css = useStyles();
   const { label, name, type = "text", value, onChange } = props;
   return (
-    <div className={css.inputContainer}>
+    <div className={css.inputContainer + " edited-input"}>
       <label className={css.label}>{label}</label>
       <input
         onChange={onChange}

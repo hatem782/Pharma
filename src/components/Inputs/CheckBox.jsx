@@ -10,11 +10,18 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "20px",
     display: "flex",
     alignItems: "center",
+
+    [theme.breakpoints.down("xl")]: {
+      marginTop: "10px",
+    },
   },
 
   label: {
     color: "#95989A",
     fontSize: "18px",
+    [theme.breakpoints.down("xl")]: {
+      fontSize: "16px",
+    },
   },
   input: {
     color: theme.palette.primary.main,
@@ -23,6 +30,10 @@ export const useStyles = makeStyles((theme) => ({
     outline: "none",
     padding: "0px !important",
     "& .MuiSvgIcon-root": { fontSize: 26 },
+
+    [theme.breakpoints.down("xl")]: {
+      "& .MuiSvgIcon-root": { fontSize: 24 },
+    },
   },
 }));
 function CheckBx(props) {

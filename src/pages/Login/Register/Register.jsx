@@ -1,5 +1,5 @@
 import React from "react";
-import { useStyles } from "./SignInStyles";
+import { useStyles } from "./RegisterStyles";
 import { Grid } from "@mui/material";
 
 import logo from "../../../assets/svgs/logo/logo1.svg";
@@ -8,7 +8,7 @@ import CheckBx from "../../../components/Inputs/CheckBox";
 import SubmitBtn from "../../../components/Buttons/SubmitBtn";
 import NavLinkEdited from "../../../components/NavLink/NavLink";
 
-function SignIn() {
+function Register() {
   const css = useStyles();
   return (
     <main className={css.main}>
@@ -17,27 +17,29 @@ function SignIn() {
           <div className="images"></div>
         </Grid>
         <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
-          <div className="login">
+          <div className="register">
             <div>
               <img src={logo} alt="PBird" className="logo" />
 
               <div className="title">
-                <h1>Bienvenue sur PBird</h1>
+                <h1>Rejoignez notre communauté!</h1>
                 <p>
-                  Vous n'avez pas encore de compte ?{" "}
+                  Vous avez déjà un compte?{" "}
                   <span className="main-color">
-                    <NavLinkEdited to={"/registration"}>
-                      S'inscrire
-                    </NavLinkEdited>
+                    <NavLinkEdited to={"/signin"}>Connexion</NavLinkEdited>
                   </span>
                 </p>
               </div>
 
               <form>
+                <div className="row">
+                  <Input2 label="Nom" type="text" name="name" />
+                  <Input2 label="Prénom" type="text" name="lastname" />
+                </div>
+                <Input2 label="Adresse email" type="email" name="num" />
                 <Input2 label="Numéro de téléphone" type="text" name="num" />
                 <Input2 label="Mot de passe" type="password" name="pass" />
-                <CheckBx label="Se souvenir de moi" />
-                <SubmitBtn> Connexion </SubmitBtn>
+                <SubmitBtn> Rejoignez notre communauté! </SubmitBtn>
               </form>
             </div>
 
@@ -52,4 +54,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Register;

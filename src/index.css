@@ -27,6 +27,12 @@ code {
   background-color: #1dbf73;
 }
 
+@media only screen and (max-width: 1366px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
 @font-face {
   font-family: myriad;
   src: url(assets/fonts/Myriad\ Hebrew.ttf);

@@ -10,11 +10,18 @@ export const useStyles = makeStyles((theme) => ({
     outline: "none",
     border: "none",
     borderRadius: "5px",
+    cursor: "pointer",
     transition: "all 0.1s",
-    "&:hover": {
-      cursor: "pointer",
-      transform: "scale(1.05)",
+
+    [theme.breakpoints.down("xl")]: {
+      fontSize: "14px",
+      padding: "10px 120px",
     },
+
+    // "&:hover": {
+    //   cursor: "pointer",
+    //   transform: "scale(1.05)",
+    // },
   },
   center: {
     display: "block",

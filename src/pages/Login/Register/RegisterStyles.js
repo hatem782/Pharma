@@ -9,7 +9,7 @@ export const useStyles = makeStyles((theme) => ({
       backgroundColor: "#A2A2A2",
     },
 
-    "& .login": {
+    "& .register": {
       minHeight: "100vh",
       padding: "100px 0px",
       backgroundColor: "#FFFFFF",
@@ -68,9 +68,19 @@ export const useStyles = makeStyles((theme) => ({
           padding: "20px 0px 0px 0px",
         },
 
+        "& .row": {
+          display: "flex",
+          justifyContent: "space-between",
+          "& .edited-input": {
+            width: "48%",
+            marginTop: "0px !important",
+          },
+        },
+
         "& button": {
           display: "block",
           margin: "30px auto",
+          width: "100%",
         },
       },
       "& h6": {

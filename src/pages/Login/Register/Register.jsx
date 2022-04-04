@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStyles } from "./RegisterStyles";
 import { Grid } from "@mui/material";
 
@@ -8,8 +8,81 @@ import CheckBx from "../../../components/Inputs/CheckBox";
 import SubmitBtn from "../../../components/Buttons/SubmitBtn";
 import NavLinkEdited from "../../../components/NavLink/NavLink";
 
+import {
+  isPass,
+  isMobile,
+  isNom,
+  isEmail,
+} from "../../../functions/inputValidator";
+
 function Register() {
   const css = useStyles();
+
+  const [form, setform] = useState({
+    name: { value: "", error: false },
+    lastname: { value: "", error: false },
+    email: { value: "", error: false },
+    tel: { value: "", error: false },
+    pass: { value: "", error: false },
+  });
+
+  const inputHandler = (e) => {
+    setform({
+      ...form,
+      [e.target.name]: { error: false, value: e.target.value },
+    });
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    let { name, lastname, email, tel, pass } = form;
+
+    // name verification
+    if (!isNom(name.value)) {
+      setform({
+        ...form,
+        name: { ...form.name, error: true },
+      });
+      return false;
+    }
+
+    // lastname verification
+    if (!isNom(lastname.value)) {
+      setform({
+        ...form,
+        lastname: { ...form.lastname, error: true },
+      });
+      return false;
+    }
+
+    // email verification
+    if (!isEmail(email.value)) {
+      setform({
+        ...form,
+        email: { ...form.email, error: true },
+      });
+      return false;
+    }
+
+    // mobile verification
+    if (!isMobile(tel.value)) {
+      setform({
+        ...form,
+        tel: { ...form.tel, error: true },
+      });
+      return false;
+    }
+
+    // password verification
+    if (!isPass(pass.value)) {
+      setform({
+        ...form,
+        pass: { ...form.pass, error: true },
+      });
+      return false;
+    }
+  };
+
   return (
     <main className={css.main}>
       <Grid container spacing={0}>
@@ -33,13 +106,57 @@ function Register() {
 
               <form>
                 <div className="row">
-                  <Input2 label="Nom" type="text" name="name" />
-                  <Input2 label="Prénom" type="text" name="lastname" />
+                  <Input2
+                    label="Nom"
+                    errorMs="(Nom est invalide)"
+                    type="text"
+                    name="name"
+                    error={form.name.error}
+                    value={form.name.value}
+                    onChange={inputHandler}
+                  />
+                  <Input2
+                    label="Prénom"
+                    errorMs="(Prénom est invalide)"
+                    type="text"
+                    name="lastname"
+                    error={form.lastname.error}
+                    value={form.lastname.value}
+                    onChange={inputHandler}
+                  />
                 </div>
-                <Input2 label="Adresse email" type="email" name="num" />
-                <Input2 label="Numéro de téléphone" type="text" name="num" />
-                <Input2 label="Mot de passe" type="password" name="pass" />
-                <SubmitBtn> Rejoignez notre communauté! </SubmitBtn>
+                <Input2
+                  label="Adresse email"
+                  errorMs="(Hé, votre Email est invalide)"
+                  type="email"
+                  name="email"
+                  error={form.email.error}
+                  value={form.email.value}
+                  onChange={inputHandler}
+                />
+
+                <Input2
+                  label="Numéro de téléphone"
+                  errorMs="(Hé, votre numéro est invalide)"
+                  type="text"
+                  name="tel"
+                  error={form.tel.error}
+                  value={form.tel.value}
+                  onChange={inputHandler}
+                />
+                <Input2
+                  label="Mot de passe"
+                  errorMs="(Hé, votre mot de passe est invalide)"
+                  type="password"
+                  name="pass"
+                  error={form.pass.error}
+                  value={form.pass.value}
+                  onChange={inputHandler}
+                />
+
+                <SubmitBtn onClick={submit}>
+                  Rejoignez notre communauté!
+                </SubmitBtn>
               </form>
             </div>
 

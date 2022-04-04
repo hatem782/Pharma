@@ -31,10 +31,13 @@ export const useStyles = makeStyles((theme) => ({
 
 function SubmitBtn(props) {
   const css = useStyles();
-  const { children, center = false } = props;
+  const { children, center = false, onClick } = props;
   return (
-    <button className={`${css.button} ${center ? css.center : ""}`}>
-      {props.children}
+    <button
+      className={`${css.button} ${center ? css.center : ""}`}
+      onClick={onClick}
+    >
+      {children}
     </button>
   );
 }

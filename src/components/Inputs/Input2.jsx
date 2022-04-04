@@ -10,6 +10,12 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
 
+  labels: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
   label: {
     color: "#95989A",
     fontSize: "18px",
@@ -17,6 +23,11 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: "16px",
     },
   },
+
+  error: {
+    color: "#FF2200",
+  },
+
   input: {
     fontSize: "20px",
     backgroundColor: "#FCFCFC",
@@ -36,19 +47,39 @@ export const useStyles = makeStyles((theme) => ({
       margin: "5px 0px",
     },
   },
+  input_error: {
+    border: "solid 2px #FF2200",
+  },
 }));
 function Input2(props) {
   const css = useStyles();
-  const { label, name, type = "text", value, onChange } = props;
+  const {
+    label,
+    name,
+    type = "text",
+    value,
+    onChange,
+    error = false,
+    errorMs = "",
+  } = props;
   return (
     <div className={css.inputContainer + " edited-input"}>
-      <label className={css.label}>{label}</label>
+      <div className={css.labels}>
+        <label className={css.label + " " + (error ? css.error : "")}>
+          {label}
+        </label>
+        {error ? (
+          <label className={`${css.label} ${css.error}`}>{errorMs}</label>
+        ) : (
+          ""
+        )}
+      </div>
       <input
         onChange={onChange}
         value={value}
         type={type}
         name={name}
-        className={css.input}
+        className={css.input + " " + (error ? css.input_error : "")}
       />
     </div>
   );

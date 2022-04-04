@@ -75,6 +75,13 @@ export const useStyles = makeStyles((theme) => ({
             width: "48%",
             marginTop: "0px !important",
           },
+          /*[theme.breakpoints.down("xl")]: {
+            flexDirection: "column",
+            "& .edited-input": {
+              width: "100%",
+              marginTop: "0px !important",
+            },
+          },*/
         },
 
         "& button": {

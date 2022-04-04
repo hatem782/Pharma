@@ -3,22 +3,28 @@ import Button from "@mui/material/Button";
 import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   btn: {
-    borderRadius: "10px",
+    borderRadius: "5px",
     backgroundColor: "transparent",
-    border: `solid 2px ${theme.palette.primary.main} `,
+    border: `solid 3px ${"#56C596"} `,
     outlined: "false",
-    padding: "5px 30px",
-    height: "40px",
-    color: theme.palette.primary.main,
+    padding: "7px 60px",
+    color: "#56C596",
     margin: "0px 10px",
     transition: "all 0.1s",
     cursor: "pointer",
-
+    fontSize: "20px",
+    fontWeight: "600",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+
+    [theme.breakpoints.down("xl")]: {
+      fontSize: "16px",
+      padding: "7px 50px",
+    },
+
     "&:hover": {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: "#56C596",
       color: "white",
       "& *": {
         fill: "white !important",

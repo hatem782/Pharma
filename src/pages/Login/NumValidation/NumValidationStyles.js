@@ -92,7 +92,7 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: "#FCFCFC",
             border: "solid 3px #C7E6C2",
             borderRadius: "21px",
-            //margin: "0px 6px",
+            transition: "all 0.1s",
             outline: "none",
             "&:focus": {
               border: `solid 3px ${theme.palette.primary.main}`,

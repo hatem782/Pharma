@@ -55,10 +55,9 @@ const InpNums = () => {
     let newNumber = [...number];
     newNumber[key] = event.target.value;
     setNumber([...newNumber]);
-    if (key < 5) {
+    if (key < 5 && event.target.value) {
       document.getElementById(`inp_${key + 1}`).focus();
     }
-    //}
   };
 
   return (

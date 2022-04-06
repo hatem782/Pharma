@@ -5,13 +5,24 @@ import { Grid } from "@mui/material";
 import logo from "../../../assets/svgs/logo/logo1.svg";
 import GreenOutlinedButton from "../../../components/Buttons/GreenOutlinedButton";
 
+import Spinner from "../../../components/Spinner/SpinVer";
+
 function NumValidation() {
   const css = useStyles();
   const [valNumb, setvalNumb] = useState("");
-  const [match, setMatch] = useState("0"); // 0:not verified yet / 1 : match / -1 : not equal
+  const [match, setMatch] = useState(0); // 0:not verified yet / 1 : match / -1 : not equal
+  const [verification, setVerification] = useState(false);
 
   const validate = (e) => {
     e.preventDefault();
+    setVerification(true);
+
+    // fake request
+    setInterval(() => {
+      setVerification(false);
+    }, 4000);
+    // fake request
+
     if (Number(valNumb) == 123456) {
       setMatch(1);
       console.log("match");
@@ -37,17 +48,25 @@ function NumValidation() {
               </div>
             </div>
 
-            <form>
-              <p>
-                Entrer le code secret envoyé par SMS sur votre téléphone
-                portable
-              </p>
-              <InpNums setvalNumb={setvalNumb} match={match} />
-              <p className="resend-code">Demander un nouveau code</p>
-              <GreenOutlinedButton onClick={validate}>
-                Suivant
-              </GreenOutlinedButton>
-            </form>
+            {verification ? (
+              <Spinner />
+            ) : (
+              <form>
+                <p>
+                  Entrer le code secret envoyé par SMS sur votre téléphone
+                  portable
+                </p>
+                <InpNums
+                  valNumb={valNumb}
+                  setvalNumb={setvalNumb}
+                  match={match}
+                />
+                <p className="resend-code">Demander un nouveau code</p>
+                <GreenOutlinedButton onClick={validate}>
+                  Suivant
+                </GreenOutlinedButton>
+              </form>
+            )}
 
             <h6>
               En vous inscrivant, vous acceptez <span> les Conditions </span> et
@@ -62,7 +81,7 @@ function NumValidation() {
 
 export default NumValidation;
 
-const InpNums = ({ setvalNumb, match }) => {
+const InpNums = ({ valNumb, setvalNumb, match }) => {
   const [number, setNumber] = useState(["", "", "", "", "", ""]);
 
   const handlerChange = (event, key) => {
@@ -76,21 +95,23 @@ const InpNums = ({ setvalNumb, match }) => {
   };
 
   useEffect(() => {
-    setvalNumb(number.join(""));
-  }, [number]);
+    if (valNumb.length === 6) {
+      setNumber(valNumb.split(""));
+      document.getElementById(`inp_5`).focus();
+    }
+  }, []);
 
   useEffect(() => {
-    console.log(match == "1");
-    console.log(match == "-1");
-  }, [match]);
+    setvalNumb(number.join(""));
+  }, [number]);
 
   return (
     <div className="inputs">
       {number.map((num, key) => {
         return (
           <input
-            className={`${match == "1" ? " match " : ""} ${
-              match == "-1" ? " not-match " : ""
+            className={`${match === 1 ? " match " : ""} ${
+              match === -1 ? " not-match " : ""
             }`}
             key={key}
             value={num}

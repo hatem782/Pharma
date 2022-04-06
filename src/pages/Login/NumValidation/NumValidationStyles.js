@@ -77,6 +77,14 @@ export const useStyles = makeStyles((theme) => ({
           alignItems: "center",
           justifyContent: "space-between",
 
+          "& .match": {
+            border: `solid 3px ${theme.palette.primary.main} !important`,
+          },
+
+          "& .not-match": {
+            border: `solid 3px #FF0000 !important`,
+          },
+
           [theme.breakpoints.down("xl")]: {
             padding: "40px 0px",
           },

@@ -43,6 +43,7 @@ function GreenOutlinedButton(props) {
     <button
       className={`${css.btn} ${isIcon ? css.iconBtn : ""}`}
       variant="outlined"
+      onClick={onClick}
     >
       {children}
     </button>

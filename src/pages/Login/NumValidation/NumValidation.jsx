@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStyles } from "./NumValidationStyles";
 import { Grid } from "@mui/material";
 
@@ -7,6 +7,19 @@ import GreenOutlinedButton from "../../../components/Buttons/GreenOutlinedButton
 
 function NumValidation() {
   const css = useStyles();
+  const [valNumb, setvalNumb] = useState("");
+  const [match, setMatch] = useState("0"); // 0:not verified yet / 1 : match / -1 : not equal
+
+  const validate = (e) => {
+    e.preventDefault();
+    if (Number(valNumb) == 123456) {
+      setMatch(1);
+      console.log("match");
+    } else {
+      console.log("not-match");
+      setMatch(-1);
+    }
+  };
 
   return (
     <main className={css.main}>
@@ -29,9 +42,11 @@ function NumValidation() {
                 Entrer le code secret envoyé par SMS sur votre téléphone
                 portable
               </p>
-              <InpNums />
+              <InpNums setvalNumb={setvalNumb} match={match} />
               <p className="resend-code">Demander un nouveau code</p>
-              <GreenOutlinedButton>Suivant</GreenOutlinedButton>
+              <GreenOutlinedButton onClick={validate}>
+                Suivant
+              </GreenOutlinedButton>
             </form>
 
             <h6>
@@ -47,7 +62,7 @@ function NumValidation() {
 
 export default NumValidation;
 
-const InpNums = () => {
+const InpNums = ({ setvalNumb, match }) => {
   const [number, setNumber] = useState(["", "", "", "", "", ""]);
 
   const handlerChange = (event, key) => {
@@ -60,11 +75,23 @@ const InpNums = () => {
     }
   };
 
+  useEffect(() => {
+    setvalNumb(number.join(""));
+  }, [number]);
+
+  useEffect(() => {
+    console.log(match == "1");
+    console.log(match == "-1");
+  }, [match]);
+
   return (
     <div className="inputs">
       {number.map((num, key) => {
         return (
           <input
+            className={`${match == "1" ? " match " : ""} ${
+              match == "-1" ? " not-match " : ""
+            }`}
             key={key}
             value={num}
             maxLength="1"

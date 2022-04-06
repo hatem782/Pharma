@@ -8,6 +8,8 @@ import CheckBx from "../../../components/Inputs/CheckBox";
 import SubmitBtn from "../../../components/Buttons/SubmitBtn";
 import NavLinkEdited from "../../../components/NavLink/NavLink";
 
+import { useNavigate } from "react-router-dom";
+
 import {
   isPass,
   isMobile,
@@ -25,6 +27,8 @@ function Register() {
     tel: { value: "", error: false },
     pass: { value: "", error: false },
   });
+
+  const navig = useNavigate();
 
   const inputHandler = (e) => {
     setform({
@@ -81,6 +85,11 @@ function Register() {
       });
       return false;
     }
+    SendNumberAndVerif();
+  };
+
+  const SendNumberAndVerif = () => {
+    navig("/validation");
   };
 
   return (

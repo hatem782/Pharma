@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     "& p": {
       margin: "0px 0px 0px 10px",
+      color: theme.palette.primary.main,
     },
   },
 }));

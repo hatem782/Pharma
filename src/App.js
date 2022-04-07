@@ -17,12 +17,11 @@ function App() {
       <Theme>
         <Router>
           <Routes>
-            <Route path="/dashboard/*" element={<Dashboard />} />
-
             <Route path="/signin" element={<SignIn />} />
             <Route path="/registration" element={<Register />} />
             <Route path="/validation" element={<NumValidation />} />
-            <Route path="/*" element={<Navigate to="/signin" />} />
+            <Route path="/dashboard/*" element={<Dashboard />} />
+            <Route path="/" element={<Navigate to="/signin" />} />
             {/* <Route path="/*" element={<Navigate to="/dashboard/main" />} /> */}
           </Routes>
         </Router>

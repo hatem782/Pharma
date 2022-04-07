@@ -5,7 +5,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   main: {
     textDecoration: "none",
-    color: theme.palette.primary.main,
+    //color: theme.palette.primary.main,
   },
 }));
 

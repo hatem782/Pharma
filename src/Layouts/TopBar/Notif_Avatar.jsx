@@ -6,8 +6,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-import notification from "../../../assets/svgs/notification.svg";
-import person_img from "../../../assets/images/Circle.png";
+import notification from "../../assets/svgs/notification.svg";
+import person_img from "../../assets/images/Circle.png";
 
 import { useStyles } from "./TopBarStyles";
 

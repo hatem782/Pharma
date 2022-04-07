@@ -7,22 +7,37 @@ import settings from "../assets/svgs/sidebar/settings.svg";
 import bar_chart from "../assets/svgs/sidebar/chart-bar-32.svg";
 import trash from "../assets/svgs/sidebar/trash.svg";
 import template from "../assets/svgs/sidebar/template.svg";
+import berger from "../assets/svgs/sidebar/berger.svg";
+import fich from "../assets/svgs/sidebar/fich.svg";
+import notif from "../assets/svgs/sidebar/notif.svg";
 
 // ************************** Components ****************************
 //import EditPage from "../pages/dashboard/DashContent/EditProfilePage/EditProfilePage.jsx";
 import MainPage from "../pages/dashboard/DashContent/MainPage/MainPage";
 import Profile from "../pages/dashboard/DashContent/Profile/Profile";
 import FoldersMainPage from "../pages/dashboard/DashContent/FoldersPages/FoldersMainP.jsx";
-
+import MenuPrincipal from "../pages/dashboard/DashContent/MenuPrincipal/MenuPrincipal";
 // ************************** TOP BAR *******************************
 
-import TopBar from "../pages/dashboard/TopBar/TopBar";
-import TopBarWithRech from "../pages/dashboard/TopBar/TopBarWithRech";
+import TopBar from "../Layouts/TopBar/TopBar";
+import TopBarWithRech from "../Layouts/TopBar/TopBarWithRech";
 
 export const routes = [
   {
     mainUrl: "/dashboard",
     url: "/main",
+    img: berger,
+    title: "Menu principal",
+    compo: (
+      <>
+        <TopBarWithRech />
+        <MenuPrincipal />
+      </>
+    ),
+  },
+  {
+    mainUrl: "/dashboard",
+    url: "/dash",
     img: bar_chart,
     title: "Dashboard",
     compo: (
@@ -46,6 +61,13 @@ export const routes = [
   },
   {
     mainUrl: "/dashboard",
+    url: "/fichiers",
+    img: fich,
+    title: "Fichiers",
+    compo: <></>,
+  },
+  {
+    mainUrl: "/dashboard",
     url: "/templates",
     img: template,
     title: "Templates",
@@ -53,9 +75,9 @@ export const routes = [
   },
   {
     mainUrl: "/dashboard",
-    url: "/messages",
-    img: chat,
-    title: "Messages",
+    url: "/notifications",
+    img: notif,
+    title: "Notifications",
     compo: <></>,
   },
   {
@@ -65,6 +87,9 @@ export const routes = [
     title: "Parrainage",
     compo: <></>,
   },
+];
+
+export const routes2 = [
   {
     mainUrl: "/dashboard",
     url: "/corbeille",
@@ -84,11 +109,11 @@ export const routes = [
       </>
     ),
   },
-  {
-    mainUrl: "/dashboard",
-    url: "/deconnexion",
-    img: logout,
-    title: "Déconnexion",
-    compo: <></>,
-  },
+  // {
+  //   mainUrl: "/dashboard",
+  //   url: "/deconnexion",
+  //   img: logout,
+  //   title: "Déconnexion",
+  //   compo: <></>,
+  // },
 ];

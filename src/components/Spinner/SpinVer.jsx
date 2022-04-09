@@ -15,12 +15,12 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SpinVer() {
+function SpinVer({ text = "", done = false, doneText = "" }) {
   const css = useStyles();
   return (
     <div className={css.main}>
       <CircularProgress color="primary" />
-      <p>Vérification</p>
+      <p>{text}</p>
     </div>
   );
 }

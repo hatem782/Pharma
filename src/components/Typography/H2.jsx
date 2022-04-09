@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles((theme) => ({
   main: {
-    fontSize: "28px",
+    fontSize: "24px",
     color: "#000",
     padding: "0px",
     margin: "0px",
@@ -12,9 +12,9 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function H1({ children }) {
+function H2({ children }) {
   const css = useStyles();
-  return <h1 className={css.main}> {children} </h1>;
+  return <h2 className={css.main}> {children} </h2>;
 }
 
-export default H1;
+export default H2;

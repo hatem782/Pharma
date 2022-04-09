@@ -4,19 +4,24 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   btn: {
     borderRadius: "5px",
+    border: `solid 2px ${theme.palette.primary.main} `,
+    outline: "none",
+
     backgroundColor: "transparent",
-    border: `solid 3px ${"#56C596"} `,
-    outlined: "false",
-    padding: "7px 60px",
-    color: "#56C596",
+    padding: "0px 25px",
     margin: "0px 10px",
-    transition: "all 0.1s",
-    cursor: "pointer",
-    fontSize: "20px",
+
+    color: theme.palette.primary.main,
+    fontStyle: "myriad",
+    fontSize: "14px",
     fontWeight: "600",
+
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+
+    transition: "all 0.1s",
+    cursor: "pointer",
 
     [theme.breakpoints.down("xl")]: {
       fontSize: "16px",
@@ -24,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     "&:hover": {
-      backgroundColor: "#56C596",
+      backgroundColor: theme.palette.primary.main,
       color: "white",
       "& *": {
         fill: "white !important",
@@ -32,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   iconBtn: {
-    padding: "8px 15px",
+    padding: "5px 15px",
   },
 }));
 

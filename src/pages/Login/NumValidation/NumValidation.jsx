@@ -49,7 +49,7 @@ function NumValidation() {
             </div>
 
             {verification ? (
-              <Spinner />
+              <Spinner text="Vérification" />
             ) : (
               <form>
                 <p>

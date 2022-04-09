@@ -5,8 +5,8 @@ import sortimg from "../../assets/svgs/Sort.svg";
 export const useStyles = makeStyles((theme) => ({
   table: {
     width: "100%",
-    //borderCollapse: "collapse",
-    borderCollapse: "separate",
+    borderCollapse: "collapse",
+    //borderCollapse: "separate",
     borderSpacing: "0 1.5em",
   },
   th: {

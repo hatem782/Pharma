@@ -17,6 +17,14 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    position: "relative",
+
+    "& .drag-zone": {
+      height: "100%",
+      width: "100%",
+      position: "absolute",
+      zIndex: "11",
+    },
 
     "& .container": {
       width: "426px",
@@ -26,6 +34,7 @@ export const useStyles = makeStyles((theme) => ({
       alignItems: "center",
       justifyContent: "center",
       flexDirection: "column",
+      //transition: "all 0.1s",
 
       "& img": {
         height: "65px",
@@ -36,6 +45,16 @@ export const useStyles = makeStyles((theme) => ({
         color: "#636C80",
         fontSize: "24px",
       },
+
+      "& button": {
+        zIndex: "13",
+      },
+    },
+  },
+
+  dragging: {
+    "& .container": {
+      opacity: "0.3",
     },
   },
 

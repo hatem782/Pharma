@@ -4,6 +4,8 @@ import folderIcon from "../../../../assets/images/Folder.png";
 import H1 from "../../../../components/Typography/H1";
 
 import Button from "../../../../components/Buttons/Button";
+import Spinner from "../../../../components/Spinner/SpinVer";
+import { ltoa } from "../../../../functions/help";
 
 import {
   Table,
@@ -25,9 +27,7 @@ function MenuPrincipal() {
       <br />
       <H1>Bienvenue Mr. Alexandre Bertan !</H1>
       <Filedrag />
-      <div className={css.uploadingState}>
-        <ProgressBar value={50} />
-      </div>
+
       <br />
       <H2>Derniers fichiers importés</H2>
       <FoldersTable />
@@ -37,20 +37,110 @@ function MenuPrincipal() {
 
 const Filedrag = () => {
   const css = useStyles();
+  const [uploading, setuploading] = useState({
+    up: false,
+    value: 0,
+    done: false,
+  });
+
+  const onDragEnter = (e) => {
+    e.preventDefault();
+    document.getElementById("dragZone").classList.add(css.dragging);
+    return false;
+  };
+
+  const onDragLeave = (e) => {
+    e.preventDefault();
+    document.getElementById("dragZone").classList.remove(css.dragging);
+    return false;
+  };
+
+  const onDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+
+    document.getElementById("dragZone").classList.remove(css.dragging);
+    // getting files from drag zone
+    let files = ltoa(e.dataTransfer.files);
+    console.log(files);
+    // creating form data
+    let formData = new FormData();
+
+    // preparing data to be sended via APIs
+    files.forEach((file) => {
+      formData.append("file[]", file);
+    });
+    console.log(formData);
+    console.log(formData.getAll("file[]"));
+
+    // fake file sending
+    let i = 0;
+    let tm = setInterval(() => {
+      i++;
+      console.log(i);
+      setuploading({ up: true, value: i, done: false });
+      if (i === 100) {
+        setuploading({ up: true, value: i, done: true });
+        clearInterval(tm);
+        // to end the uploading and back to normal
+        setTimeout(() => {
+          setuploading({ up: false, value: 0, done: false });
+        }, 4000);
+      }
+    }, 200);
+
+    return false;
+  };
 
   return (
-    <div className={css.filedrag}>
-      <div className="container">
-        <img src={folderIcon} alt="upload" />
-        <p>
-          Faites glisser vos documents ici pour commencer le téléchargement.
-        </p>
-        <span className={css.devider}>
-          <hr />
-          <p className="devider-content">OU</p>
-        </span>
-        <Button>Parcourir les fichiers</Button>
+    <div>
+      {/* ************ FILE ZONE DRAG ****************** */}
+      <div id="dragZone" className={css.filedrag}>
+        {uploading.up ? (
+          <Spinner
+            text="Mise à jour des fichiers"
+            done={uploading.done}
+            doneText="Votre fichier a été téléchargé avec succès"
+          />
+        ) : (
+          <>
+            {/* !************ ZONE DRAG ******************! */}
+            <div
+              className="drag-zone"
+              onDragEnter={onDragEnter}
+              onDragLeave={onDragLeave}
+              onDragOver={onDragOver}
+              onDrop={onDrop}
+            />
+            {/* !************ ZONE DRAG ******************! */}
+
+            <div className="container">
+              <img src={folderIcon} alt="upload" />
+              <p>
+                Faites glisser vos documents ici pour commencer le
+                téléchargement.
+              </p>
+              <span className={css.devider}>
+                <hr />
+                <p className="devider-content">OU</p>
+              </span>
+              <Button>Parcourir les fichiers</Button>
+            </div>
+          </>
+        )}
       </div>
+      {/* ************ PRORESS BAR ****************** */}
+
+      {uploading.up && !uploading.done ? (
+        <div className={css.uploadingState}>
+          <ProgressBar value={uploading.value} />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

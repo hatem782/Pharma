@@ -2,6 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@mui/styles";
 import CircularProgress from "@mui/material/CircularProgress";
+import DoneIcon from "@mui/icons-material/Done";
 
 export const useStyles = makeStyles((theme) => ({
   main: {
@@ -19,8 +20,12 @@ function SpinVer({ text = "", done = false, doneText = "" }) {
   const css = useStyles();
   return (
     <div className={css.main}>
-      <CircularProgress color="primary" />
-      <p>{text}</p>
+      {done ? (
+        <DoneIcon color="primary" />
+      ) : (
+        <CircularProgress color="primary" />
+      )}
+      <p>{done ? doneText : text}</p>
     </div>
   );
 }

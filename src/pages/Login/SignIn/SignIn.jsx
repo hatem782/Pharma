@@ -10,13 +10,18 @@ import NavLinkEdited from "../../../components/NavLink/NavLink";
 
 import { isPass, isMobile } from "../../../functions/inputValidator";
 
+// redux and actions
+import { useDispatch } from "react-redux";
+import { login } from "../../../store/actions/Auth.action";
+
 function SignIn() {
   const css = useStyles();
 
   const [form, setform] = useState({
-    tel: { value: "", error: false },
-    pass: { value: "", error: false },
+    phone_number: { value: "", error: false },
+    password: { value: "", error: false },
   });
+  const dispatch = useDispatch();
 
   const inputHandler = (e) => {
     setform({
@@ -27,25 +32,32 @@ function SignIn() {
 
   const submit = (e) => {
     e.preventDefault();
-    let { tel, pass } = form;
+    let { phone_number, password } = form;
 
     // mobile verification
-    if (!isMobile(tel.value)) {
+    if (!isMobile(phone_number.value)) {
       setform({
         ...form,
-        tel: { ...form.tel, error: true },
+        phone_number: { ...form.phone_number, error: true },
       });
       return false;
     }
 
     // password verification
-    if (!isPass(pass.value)) {
+    /*if (!isPass(password.value)) {
       setform({
         ...form,
-        pass: { ...form.pass, error: true },
+        password: { ...form.password, error: true },
       });
       return false;
-    }
+    }*/
+
+    // the password and phone number are correct => send to server
+    let auth = {
+      phone_number: form.phone_number.value,
+      password: form.password.value,
+    };
+    dispatch(login(auth));
   };
 
   return (
@@ -76,18 +88,18 @@ function SignIn() {
                   label="Numéro de téléphone"
                   errorMs="(Hé, votre numéro est invalide)"
                   type="text"
-                  name="tel"
-                  error={form.tel.error}
-                  value={form.tel.value}
+                  name="phone_number"
+                  error={form.phone_number.error}
+                  value={form.phone_number.value}
                   onChange={inputHandler}
                 />
                 <Input2
                   label="Mot de passe"
                   errorMs="(Hé, votre mot de passe est invalide)"
                   type="password"
-                  name="pass"
-                  error={form.pass.error}
-                  value={form.pass.value}
+                  name="password"
+                  error={form.password.error}
+                  value={form.password.value}
                   onChange={inputHandler}
                 />
                 <CheckBx label="Se souvenir de moi" />

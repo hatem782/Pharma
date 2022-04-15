@@ -25,9 +25,10 @@ const login = (user) => {
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/users/auth/login",
-        { ...user },
-        { headers: allow }
+        { ...user }
+        //{ headers: allow }
       );
+      console.log(response);
       localStorage.setItem("pbird_token", response.data.token);
       dispatch({
         type: "SetToken",
@@ -35,8 +36,32 @@ const login = (user) => {
       });
     } catch (error) {
       console.log(error);
+      console.log(error.response);
     }
   };
 };
 
-export { login, deleteToken, GetToken };
+const register = (user, validationPage) => {
+  console.log(user);
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        REACT_APP_API_HOST + "/users/auth/register",
+        { ...user }
+        //{ headers: allow }
+      );
+      console.log(response);
+      //localStorage.setItem("pbird_token", response.data.token);
+      /*dispatch({
+        type: "SetToken",
+        value: response.data.token,
+      });*/
+      validationPage();
+    } catch (error) {
+      console.log(error);
+      console.log(error.response);
+    }
+  };
+};
+
+export { login, register, deleteToken, GetToken };

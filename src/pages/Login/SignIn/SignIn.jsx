@@ -44,13 +44,13 @@ function SignIn() {
     }
 
     // password verification
-    /*if (!isPass(password.value)) {
+    if (password.value === "") {
       setform({
         ...form,
         password: { ...form.password, error: true },
       });
       return false;
-    }*/
+    }
 
     // the password and phone number are correct => send to server
     let auth = {

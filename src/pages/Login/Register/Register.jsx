@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStyles } from "./RegisterStyles";
 import { Grid } from "@mui/material";
 
 import logo from "../../../assets/svgs/logo/logo1.svg";
 import Input2 from "../../../components/Inputs/Input2";
-import CheckBx from "../../../components/Inputs/CheckBox";
+import Select from "../../../components/Inputs/Select";
+//import CheckBx from "../../../components/Inputs/CheckBox";
 import SubmitBtn from "../../../components/Buttons/SubmitBtn";
 import NavLinkEdited from "../../../components/NavLink/NavLink";
 
 import { useNavigate } from "react-router-dom";
+
+// redux and actions
+import { useDispatch } from "react-redux";
+import { register } from "../../../store/actions/Auth.action";
 
 import {
   isPass,
@@ -21,13 +26,17 @@ function Register() {
   const css = useStyles();
 
   const [form, setform] = useState({
-    name: { value: "", error: false },
-    lastname: { value: "", error: false },
+    first_name: { value: "", error: false },
+    last_name: { value: "", error: false },
     email: { value: "", error: false },
-    tel: { value: "", error: false },
-    pass: { value: "", error: false },
+    phone_number: { value: "", error: false },
+    password: { value: "", error: false },
+    role: { value: "SIMPLE_USER", error: false },
+    _company: { value: "", error: false },
+    siret: { value: "", error: false },
   });
 
+  const dispatch = useDispatch();
   const navig = useNavigate();
 
   const inputHandler = (e) => {
@@ -37,24 +46,29 @@ function Register() {
     });
   };
 
+  const listRole = [
+    { value: "SIMPLE_USER", text: "Utilisateur" },
+    { value: "COMPANY", text: "Entreprise" },
+  ];
+
   const submit = (e) => {
     e.preventDefault();
-    let { name, lastname, email, tel, pass } = form;
+    let { first_name, last_name, email, phone_number, password } = form;
 
     // name verification
-    if (!isNom(name.value)) {
+    if (!isNom(first_name.value)) {
       setform({
         ...form,
-        name: { ...form.name, error: true },
+        first_name: { ...form.name, error: true },
       });
       return false;
     }
 
-    // lastname verification
-    if (!isNom(lastname.value)) {
+    // last_name verification
+    if (!isNom(last_name.value)) {
       setform({
         ...form,
-        lastname: { ...form.lastname, error: true },
+        last_name: { ...form.last_name, error: true },
       });
       return false;
     }
@@ -69,26 +83,60 @@ function Register() {
     }
 
     // mobile verification
-    if (!isMobile(tel.value)) {
+    if (!isMobile(phone_number.value)) {
       setform({
         ...form,
-        tel: { ...form.tel, error: true },
+        phone_number: { ...form.phone_number, error: true },
       });
       return false;
     }
 
-    // password verification
-    if (!isPass(pass.value)) {
+    // passwordword verification
+    if (password.value === "") {
       setform({
         ...form,
-        pass: { ...form.pass, error: true },
+        password: { ...form.password, error: true },
       });
       return false;
     }
-    SendNumberAndVerif();
+
+    // verif company values
+    if (form.role.value === "COMPANY") {
+      if (form._company.value === "") {
+        setform({
+          ...form,
+          _company: { ...form._company, error: true },
+        });
+        return false;
+      }
+      if (form.siret.value === "") {
+        setform({
+          ...form,
+          siret: { ...form.siret, error: true },
+        });
+        return false;
+      }
+    }
+
+    sendData();
   };
 
-  const SendNumberAndVerif = () => {
+  const sendData = () => {
+    // the password and phone number are correct => send to server
+    let auth = {
+      first_name: form.first_name.value,
+      last_name: form.last_name.value,
+      email: form.email.value,
+      phone_number: form.phone_number.value,
+      password: form.password.value,
+      role: form.role.value,
+      _company: form._company.value,
+      siret: form.siret.value,
+    };
+    dispatch(register(auth, validationPage));
+  };
+
+  const validationPage = () => {
     navig("/validation");
   };
 
@@ -119,18 +167,18 @@ function Register() {
                     label="Nom"
                     errorMs="(Nom est invalide)"
                     type="text"
-                    name="name"
-                    error={form.name.error}
-                    value={form.name.value}
+                    name="first_name"
+                    error={form.first_name.error}
+                    value={form.first_name.value}
                     onChange={inputHandler}
                   />
                   <Input2
                     label="Prénom"
                     errorMs="(Prénom est invalide)"
                     type="text"
-                    name="lastname"
-                    error={form.lastname.error}
-                    value={form.lastname.value}
+                    name="last_name"
+                    error={form.last_name.error}
+                    value={form.last_name.value}
                     onChange={inputHandler}
                   />
                 </div>
@@ -148,20 +196,51 @@ function Register() {
                   label="Numéro de téléphone"
                   errorMs="(Hé, votre numéro est invalide)"
                   type="text"
-                  name="tel"
-                  error={form.tel.error}
-                  value={form.tel.value}
+                  name="phone_number"
+                  error={form.phone_number.error}
+                  value={form.phone_number.value}
                   onChange={inputHandler}
                 />
                 <Input2
                   label="Mot de passe"
                   errorMs="(Hé, votre mot de passe est invalide)"
                   type="password"
-                  name="pass"
-                  error={form.pass.error}
-                  value={form.pass.value}
+                  name="password"
+                  error={form.password.error}
+                  value={form.password.value}
                   onChange={inputHandler}
                 />
+                <Select
+                  label="Type de compte"
+                  name="role"
+                  list={listRole}
+                  value={form.role.value}
+                  onChange={inputHandler}
+                />
+                {form.role.value === "COMPANY" ? (
+                  <>
+                    <Input2
+                      label="Libellé de l'entreprise"
+                      errorMs="(Hé, libellé est invalide)"
+                      type="text"
+                      name="_company"
+                      error={form._company.error}
+                      value={form._company.value}
+                      onChange={inputHandler}
+                    />
+                    <Input2
+                      label="Code série"
+                      errorMs="(Hé, code série est invalide)"
+                      type="text"
+                      name="siret"
+                      error={form.siret.error}
+                      value={form.siret.value}
+                      onChange={inputHandler}
+                    />
+                  </>
+                ) : (
+                  <></>
+                )}
 
                 <SubmitBtn onClick={submit}>
                   Rejoignez notre communauté!

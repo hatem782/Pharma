@@ -14,9 +14,11 @@ import {
   Thr,
   Tr,
 } from "../../../../components/Table/TableFolder";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Radio from "@mui/material/Radio";
-import Gobutton from "../../../../components/Buttons/GreenOutlinedButton";
+import TabButtonGf from "../../../../components/Buttons/TabButtonGf";
+import TabButtonGo from "../../../../components/Buttons/TabButtonGo";
+import TabButtonYf from "../../../../components/Buttons/TabButtonYf";
+import TabButtonRo from "../../../../components/Buttons/TabButtonRo";
 import H2 from "../../../../components/Typography/H2";
 import ProgressBar from "../../../../components/Spinner/ProgressBar";
 
@@ -195,12 +197,10 @@ const OneFolder = (props) => {
         </span>
       </Td>
       <Td className="buttons-group">
-        <Gobutton>Afficher</Gobutton>
-        <Gobutton>Envoyer</Gobutton>
-        <Gobutton>Code QR</Gobutton>
-        <Gobutton isIcon={true}>
-          <MoreHorizIcon />
-        </Gobutton>
+        <TabButtonGf>Afficher</TabButtonGf>
+        <TabButtonGo>Code QR</TabButtonGo>
+        <TabButtonYf>Partager</TabButtonYf>
+        <TabButtonRo>Supprimer</TabButtonRo>
       </Td>
     </Tr>
   );

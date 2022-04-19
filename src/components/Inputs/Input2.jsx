@@ -55,6 +55,7 @@ function Input2(props) {
   const css = useStyles();
   const {
     label,
+    placeholder = "",
     name,
     type = "text",
     value,
@@ -77,6 +78,7 @@ function Input2(props) {
       <input
         onChange={onChange}
         value={value}
+        placeholder={placeholder}
         type={type}
         name={name}
         className={css.input + " " + (error ? css.input_error : "")}

@@ -38,10 +38,10 @@ export const useStyles = makeStyles((theme) => ({
 }));
 function CheckBx(props) {
   const css = useStyles();
-  const { label, name, value, onChange } = props;
+  const { label, name, value = false, onChange } = props;
   return (
     <div className={css.inputContainer}>
-      <Checkbox className={css.input} />
+      <Checkbox checked={value} onChange={onChange} className={css.input} />
       <label className={css.label}>{label}</label>
     </div>
   );

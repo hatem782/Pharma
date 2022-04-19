@@ -90,8 +90,8 @@ export const useStyles = makeStyles((theme) => ({
           },
 
           "& input": {
-            height: "90px",
-            width: "90px",
+            height: "80px",
+            width: "80px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -99,7 +99,7 @@ export const useStyles = makeStyles((theme) => ({
             textAlign: "center",
             backgroundColor: "#FCFCFC",
             border: "solid 3px #C7E6C2",
-            borderRadius: "21px",
+            borderRadius: "19px",
             transition: "all 0.1s",
             outline: "none",
             "&:focus": {
@@ -107,8 +107,8 @@ export const useStyles = makeStyles((theme) => ({
             },
 
             [theme.breakpoints.down("xl")]: {
-              height: "70px",
-              width: "70px",
+              height: "65px",
+              width: "65px",
               fontSize: "30px",
               borderRadius: "15px",
               border: "solid 2px #C7E6C2",

@@ -3,6 +3,6 @@ export const allow = {
   "User-Agent": "Thunder Client (https://www.thunderclient.com)",
 };
 
-export const token = {
+export const Authorization = {
   Authorization: `token ${localStorage.getItem("pbird_token")}`,
 };

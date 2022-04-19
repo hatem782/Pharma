@@ -1,14 +1,39 @@
 import * as React from "react";
-import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 import { makeStyles } from "@mui/styles";
+import Input from "./Input2";
+import img from "../../assets/svgs/topbar/Search.svg";
 
 export const useStyles = makeStyles((theme) => ({
   input: {
-    width: "655px",
+    width: "312px",
+    heigth: "100%",
+    display: "flex",
+    alignItems: "center",
+
     "& input": {
-      padding: "10px 0px !important",
+      margin: "0px !important",
+      padding: "13px !important",
+      borderRight: "0px",
+      borderRadius: "5px 0px 0px 5px",
+
+      "&:focus": {
+        border: "solid 2px #95989A66 !important",
+        borderRight: "0px !important",
+      },
+    },
+    "& *": {
+      margin: "0px",
+    },
+
+    "& img": {
+      padding: "14px",
+      backgroundColor: "#FCFCFC",
+      border: "solid 2px #95989A66",
+      borderRadius: "0px 5px 5px 0px",
+
+      [theme.breakpoints.down("xl")]: {
+        height: "46px",
+      },
     },
   },
   icon: {
@@ -19,19 +44,9 @@ export const useStyles = makeStyles((theme) => ({
 export default function RechInput() {
   const css = useStyles();
   return (
-    <TextField
-      className={css.input}
-      id="input-with-icon-textfield"
-      //label="Rechercher les données des patients et les prescriptions médicales"
-      placeholder="Rechercher les données des patients et les prescriptions médicales"
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon className={css.icon} />
-          </InputAdornment>
-        ),
-      }}
-      variant="standard"
-    />
+    <div className={css.input}>
+      <Input placeholder="Recherche ..." />
+      <img src={img} />
+    </div>
   );
 }

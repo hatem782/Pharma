@@ -13,11 +13,11 @@ const lightTheme = createTheme({
       contrastText: "#ffffff",
     },
     error: {
-      main: "#F7617D",
+      main: "#d32f2f",
       contrastText: "#ffffff",
     },
     warning: {
-      main: "#FFCD54",
+      main: "#FFD950",
       contrastText: "#ffffff",
     },
   },

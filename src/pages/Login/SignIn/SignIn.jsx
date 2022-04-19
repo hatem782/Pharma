@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStyles } from "./SignInStyles";
 import { Grid } from "@mui/material";
 
@@ -21,6 +21,7 @@ function SignIn() {
     phone_number: { value: "", error: false },
     password: { value: "", error: false },
   });
+  const [remember, setRemeber] = useState(false);
   const dispatch = useDispatch();
 
   const inputHandler = (e) => {
@@ -28,6 +29,10 @@ function SignIn() {
       ...form,
       [e.target.name]: { error: false, value: e.target.value },
     });
+  };
+
+  const checkboxHandler = (e) => {
+    setRemeber(e.target.checked);
   };
 
   const submit = (e) => {
@@ -57,7 +62,7 @@ function SignIn() {
       phone_number: form.phone_number.value,
       password: form.password.value,
     };
-    dispatch(login(auth));
+    dispatch(login(auth, remember));
   };
 
   return (
@@ -102,7 +107,11 @@ function SignIn() {
                   value={form.password.value}
                   onChange={inputHandler}
                 />
-                <CheckBx label="Se souvenir de moi" />
+                <CheckBx
+                  value={remember}
+                  onChange={checkboxHandler}
+                  label="Se souvenir de moi"
+                />
                 <SubmitBtn onClick={submit}> Connexion </SubmitBtn>
               </form>
             </div>

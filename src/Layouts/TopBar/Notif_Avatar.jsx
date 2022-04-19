@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
+import Menu from "../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import notification from "../../assets/svgs/notification.svg";
 import person_img from "../../assets/images/Circle.png";
+import { useDispatch } from "react-redux";
+import { deleteUser } from "../../store/actions/Auth.action";
 
 import { useStyles } from "./TopBarStyles";
 
 function Notif_Avatar() {
   const css = useStyles();
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -26,11 +30,15 @@ function Notif_Avatar() {
       <IconButton className="button-notif">
         <img src={notification} />
       </IconButton>
-      <Divider orientation="vertical" variant="middle" flexItem />
-      <Avatar alt="Remy Sharp" src={person_img} />
-      <div>
-        <KeyboardArrowDownIcon onClick={handleClick} className="dwon-arrow" />
 
+      <div>
+        <Avatar
+          alt="Remy Sharp"
+          sx={{ width: 46, height: 46 }}
+          src={person_img}
+          onClick={handleClick}
+          style={{ cursor: "pointer" }}
+        />
         <Menu
           id="basic-menu"
           anchorEl={anchorEl}
@@ -39,6 +47,7 @@ function Notif_Avatar() {
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}
+          pos={18}
         >
           <div className={css.notif_menu}>
             <MenuItem>Status : En ligne</MenuItem>
@@ -47,7 +56,13 @@ function Notif_Avatar() {
             <Divider />
             <MenuItem>Feedback</MenuItem>
             <Divider />
-            <MenuItem>Se déconnecter</MenuItem>
+            <MenuItem
+              onClick={() => {
+                dispatch(deleteUser());
+              }}
+            >
+              Se déconnecter
+            </MenuItem>
           </div>
         </Menu>
       </div>

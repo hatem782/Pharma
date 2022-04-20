@@ -37,17 +37,64 @@ const register = (user, validationPage) => {
       const response = await axios.post(
         REACT_APP_API_HOST + "/users/auth/register",
         { ...user }
-        //{ headers: allow }
       );
       console.log(response);
-      //localStorage.setItem("pbird_token", response.data.token);
-      /*dispatch({
-        type: "SetToken",
-        value: response.data.token,
-      });*/
+      localStorage.setItem("pbird_verif_token", response.data.token);
       validationPage();
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+    }
+  };
+};
+
+const ValidateRegister = (number, setVerification, setMatch, setpassPage) => {
+  console.log(number);
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        REACT_APP_API_HOST + "/user/validate_otp/",
+        { otp: number },
+        {
+          headers: {
+            Authorization: `token ${localStorage.getItem("pbird_verif_token")}`,
+          },
+        }
+      );
+      console.log(response);
+      setVerification(false);
+      console.log(response.data.is_validated);
+      if (response.data.is_validated) {
+        setMatch(1);
+        // go to reset pass
+        setpassPage();
+      } else {
+        setMatch(-1);
+      }
+    } catch (error) {
+      console.log(error.response);
+      setVerification(false);
+      setMatch(-1);
+    }
+  };
+};
+
+const SetPasses = (pass, signinPage) => {
+  console.log(pass);
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        REACT_APP_API_HOST + "/user/define_password/",
+        { ...pass },
+        {
+          headers: {
+            Authorization: `token ${localStorage.getItem("pbird_verif_token")}`,
+          },
+        }
+      );
+      console.log(response);
+      // go to signin to access to account
+      signinPage();
+    } catch (error) {
       console.log(error.response);
     }
   };
@@ -63,7 +110,6 @@ const GetTokenFromLocal = () => {
 };
 
 const GetUserByToken = (setspinn) => {
-  console.log({ headers: Authorization });
   console.log(GetTokenFromLocal());
   return async (dispatch) => {
     try {
@@ -84,7 +130,6 @@ const GetUserByToken = (setspinn) => {
     } catch (error) {
       // to stop spinner
       setspinn(false);
-      console.log(error);
       console.log(error.response);
     }
   };
@@ -110,4 +155,13 @@ const deleteUser = () => {
   };
 };
 
-export { login, register, deleteToken, deleteUser, GetToken, GetUserByToken };
+export {
+  login,
+  register,
+  ValidateRegister,
+  SetPasses,
+  deleteToken,
+  deleteUser,
+  GetToken,
+  GetUserByToken,
+};

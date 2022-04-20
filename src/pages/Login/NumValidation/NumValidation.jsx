@@ -7,29 +7,41 @@ import GreenOutlinedButton from "../../../components/Buttons/GreenOutlinedButton
 
 import Spinner from "../../../components/Spinner/SpinVer";
 
+// redux and actions
+import { useDispatch } from "react-redux";
+import { ValidateRegister } from "../../../store/actions/Auth.action";
+import { useNavigate } from "react-router-dom";
+
 function NumValidation() {
   const css = useStyles();
   const [valNumb, setvalNumb] = useState("");
   const [match, setMatch] = useState(0); // 0:not verified yet / 1 : match / -1 : not equal
   const [verification, setVerification] = useState(false);
+  const dispatch = useDispatch();
+  const navig = useNavigate();
+
+  const setpassPage = () => {
+    navig("/setpassword");
+  };
 
   const validate = (e) => {
     e.preventDefault();
     setVerification(true);
+    dispatch(ValidateRegister(valNumb, setVerification, setMatch, setpassPage));
 
-    // fake request
-    setInterval(() => {
-      setVerification(false);
-    }, 4000);
-    // fake request
+    // // fake request
+    // setInterval(() => {
+    //   setVerification(false);
+    // }, 4000);
+    // // fake request
 
-    if (Number(valNumb) == 123456) {
-      setMatch(1);
-      console.log("match");
-    } else {
-      console.log("not-match");
-      setMatch(-1);
-    }
+    // if (Number(valNumb) == 123456) {
+    //   setMatch(1);
+    //   console.log("match");
+    // } else {
+    //   console.log("not-match");
+    //   setMatch(-1);
+    // }
   };
 
   return (

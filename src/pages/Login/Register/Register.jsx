@@ -30,7 +30,6 @@ function Register() {
     last_name: { value: "", error: false },
     email: { value: "", error: false },
     phone_number: { value: "", error: false },
-    password: { value: "", error: false },
     role: { value: "SIMPLE_USER", error: false },
     _company: { value: "", error: false },
     siret: { value: "", error: false },
@@ -91,15 +90,6 @@ function Register() {
       return false;
     }
 
-    // passwordword verification
-    if (password.value === "") {
-      setform({
-        ...form,
-        password: { ...form.password, error: true },
-      });
-      return false;
-    }
-
     // verif company values
     if (form.role.value === "COMPANY") {
       if (form._company.value === "") {
@@ -128,7 +118,6 @@ function Register() {
       last_name: form.last_name.value,
       email: form.email.value,
       phone_number: form.phone_number.value,
-      password: form.password.value,
       role: form.role.value,
       _company: form._company.value,
       siret: form.siret.value,
@@ -201,15 +190,6 @@ function Register() {
                   value={form.phone_number.value}
                   onChange={inputHandler}
                 />
-                <Input2
-                  label="Mot de passe"
-                  errorMs="(Hé, votre mot de passe est invalide)"
-                  type="password"
-                  name="password"
-                  error={form.password.error}
-                  value={form.password.value}
-                  onChange={inputHandler}
-                />
                 <Select
                   label="Type de compte"
                   name="role"
@@ -241,7 +221,6 @@ function Register() {
                 ) : (
                   <></>
                 )}
-
                 <SubmitBtn onClick={submit}>
                   Rejoignez notre communauté!
                 </SubmitBtn>

@@ -5,6 +5,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import SignIn from "./pages/Login/SignIn/SignIn";
 import Register from "./pages/Login/Register/Register";
 import NumValidation from "./pages/Login/NumValidation/NumValidation";
+import SetPassword from "./pages/Login/SetPassword/SetPassword";
 // ********************** COMPONENTS ************************
 
 // ********************** User Dispatch *********************
@@ -31,10 +32,6 @@ function App() {
     dispatch(GetUserByToken(setspinn));
   }, []);
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
-
   return (
     <div className="App">
       <Theme>
@@ -52,6 +49,7 @@ function App() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/registration" element={<Register />} />
                 <Route path="/validation" element={<NumValidation />} />
+                <Route path="/setpassword" element={<SetPassword />} />
                 <Route path="/*" element={<Navigate to="/signin" />} />
               </Routes>
             )}

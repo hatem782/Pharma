@@ -2,6 +2,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Authorization, allow } from "./Headers";
 import { SetToken, SetUser } from "../keys/Users.keys";
+import { ErrorSnack, SuccessSnack } from "../keys/Snack";
 
 const { REACT_APP_API_HOST } = process.env;
 
@@ -25,7 +26,11 @@ const login = (user, remember) => {
       }
     } catch (error) {
       console.log(error);
-      console.log(error.response);
+      console.log(error.response.data.Authorization[0]);
+      dispatch({
+        type: ErrorSnack(),
+        value: error.response.data.Authorization[0],
+      });
     }
   };
 };

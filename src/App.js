@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetUserByToken } from "./store/actions/Auth.action";
 import Spinner from "./components/Spinner/Spinner";
 
+// to show every error or success message
+import SnackBar from "./components/SnackBars/SnackBar";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,12 +37,13 @@ function App() {
 
   return (
     <div className="App">
+      <SnackBar />
       <Theme>
         {spinn ? (
           <Spinner />
         ) : (
           <Router>
-            {user ? (
+            {true ? (
               <Routes>
                 <Route path="/dashboard/*" element={<Dashboard />} />
                 <Route path="/*" element={<Navigate to="/dashboard/main" />} />

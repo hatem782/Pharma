@@ -17,6 +17,7 @@ import MainPage from "../pages/dashboard/DashContent/MainPage/MainPage";
 import Profile from "../pages/dashboard/DashContent/Profile/Profile";
 import FoldersMainPage from "../pages/dashboard/DashContent/FoldersPages/FoldersMainP.jsx";
 import MenuPrincipal from "../pages/dashboard/DashContent/MenuPrincipal/MenuPrincipal";
+import Dossier from "../pages/dashboard/DashContent/Dossier/Dossier";
 // ************************** TOP BAR *******************************
 
 import TopBar from "../Layouts/TopBar/TopBar";
@@ -55,7 +56,7 @@ export const routes = [
     compo: (
       <>
         <TopBarWithRech />
-        <FoldersMainPage />
+        <Dossier />
       </>
     ),
   },

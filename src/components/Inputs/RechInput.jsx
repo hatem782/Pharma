@@ -26,7 +26,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     "& img": {
-      padding: "14px",
+      padding: "12px",
       backgroundColor: "#FCFCFC",
       border: "solid 2px #95989A66",
       borderRadius: "0px 5px 5px 0px",

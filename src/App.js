@@ -6,6 +6,7 @@ import SignIn from "./pages/Login/SignIn/SignIn";
 import Register from "./pages/Login/Register/Register";
 import NumValidation from "./pages/Login/NumValidation/NumValidation";
 import SetPassword from "./pages/Login/SetPassword/SetPassword";
+import ForgetPass from "./pages/Login/ForgetPass/ForgetPass";
 // ********************** COMPONENTS ************************
 
 // ********************** User Dispatch *********************
@@ -43,7 +44,7 @@ function App() {
           <Spinner />
         ) : (
           <Router>
-            {true ? (
+            {false ? (
               <Routes>
                 <Route path="/dashboard/*" element={<Dashboard />} />
                 <Route path="/*" element={<Navigate to="/dashboard/main" />} />
@@ -51,6 +52,7 @@ function App() {
             ) : (
               <Routes>
                 <Route path="/signin" element={<SignIn />} />
+                <Route path="/forget" element={<ForgetPass />} />
                 <Route path="/registration" element={<Register />} />
                 <Route path="/validation" element={<NumValidation />} />
                 <Route path="/setpassword" element={<SetPassword />} />

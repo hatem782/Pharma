@@ -10,7 +10,7 @@ import { CloseSnakAction } from "../../store/actions/Snack.action";
 
 const outerTheme = createTheme({
   palette: {
-    error: {
+    success: {
       main: "#1DBF73",
     },
     error: {

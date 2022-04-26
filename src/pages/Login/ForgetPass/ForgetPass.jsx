@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { useStyles } from "./SignInStyles";
+import { useStyles } from "./ForgetPassStyles";
 import { Grid } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/svgs/logo/logo1.svg";
 import Input2 from "../../../components/Inputs/Input2";
 import CheckBx from "../../../components/Inputs/CheckBox";
 import SubmitBtn from "../../../components/Buttons/SubmitBtn";
 import NavLinkEdited from "../../../components/NavLink/NavLink";
 
-import { isPass, isMobile } from "../../../functions/inputValidator";
+import { isMobile } from "../../../functions/inputValidator";
 
 // redux and actions
 import { useDispatch } from "react-redux";
-import { login } from "../../../store/actions/Auth.action";
+import { Reset_pass } from "../../../store/actions/Auth.action";
 
-function SignIn() {
+function ForgetPass() {
   const css = useStyles();
 
   const [form, setform] = useState({
     phone_number: { value: "", error: false },
-    password: { value: "", error: false },
   });
-  const [remember, setRemeber] = useState(false);
   const dispatch = useDispatch();
+  const navig = useNavigate();
+
+  const validationPage = () => {
+    navig("/validation");
+  };
 
   const inputHandler = (e) => {
     setform({
@@ -31,13 +34,9 @@ function SignIn() {
     });
   };
 
-  const checkboxHandler = (e) => {
-    setRemeber(e.target.checked);
-  };
-
   const submit = (e) => {
     e.preventDefault();
-    let { phone_number, password } = form;
+    let { phone_number } = form;
 
     // mobile verification
     if (!isMobile(phone_number.value)) {
@@ -48,21 +47,11 @@ function SignIn() {
       return false;
     }
 
-    // password verification
-    if (password.value === "") {
-      setform({
-        ...form,
-        password: { ...form.password, error: true },
-      });
-      return false;
-    }
-
     // the password and phone number are correct => send to server
     let auth = {
       phone_number: form.phone_number.value,
-      password: form.password.value,
     };
-    dispatch(login(auth, remember));
+    dispatch(Reset_pass(auth, validationPage));
   };
 
   return (
@@ -77,7 +66,7 @@ function SignIn() {
               <img src={logo} alt="PBird" className="logo" />
 
               <div className="title">
-                <h1>Bienvenue sur PBird</h1>
+                <h1>Réinitialiser votre mot de passe</h1>
                 <p>
                   Vous n'avez pas encore de compte ?{" "}
                   <span className="main-color">
@@ -98,25 +87,6 @@ function SignIn() {
                   value={form.phone_number.value}
                   onChange={inputHandler}
                 />
-                <Input2
-                  label="Mot de passe"
-                  errorMs="(Hé, votre mot de passe est invalide)"
-                  type="password"
-                  name="password"
-                  error={form.password.error}
-                  value={form.password.value}
-                  onChange={inputHandler}
-                />
-                <div className="check-forget">
-                  <CheckBx
-                    value={remember}
-                    onChange={checkboxHandler}
-                    label="Se souvenir de moi"
-                  />
-                  <NavLinkEdited to={"/forget"}>
-                    Mot de passe oublié ?
-                  </NavLinkEdited>
-                </div>
                 <SubmitBtn onClick={submit}> Connexion </SubmitBtn>
               </form>
             </div>
@@ -132,4 +102,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default ForgetPass;

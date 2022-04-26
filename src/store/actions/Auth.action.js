@@ -35,6 +35,35 @@ const login = (user, remember) => {
   };
 };
 
+const Reset_pass = (user, validationPage) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        REACT_APP_API_HOST + "/users/auth/reset_password",
+        { ...user }
+      );
+      console.log(response.data);
+      dispatch({
+        type: SetToken(),
+        value: response.data.token,
+      });
+      localStorage.setItem("pbird_verif_token", response.data.token);
+      dispatch({
+        type: SuccessSnack(),
+        value: "message de 6 chiffre a été envoyé",
+      });
+      validationPage();
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
+      dispatch({
+        type: ErrorSnack(),
+        value: error.response.data.Authorization[0],
+      });
+    }
+  };
+};
+
 const register = (user, validationPage) => {
   console.log(user);
   return async (dispatch) => {
@@ -48,6 +77,10 @@ const register = (user, validationPage) => {
       validationPage();
     } catch (error) {
       console.log(error.response);
+      dispatch({
+        type: ErrorSnack(),
+        value: "probléme !!!!!!!!",
+      });
     }
   };
 };
@@ -77,6 +110,10 @@ const ValidateRegister = (number, setVerification, setMatch, setpassPage) => {
       }
     } catch (error) {
       console.log(error.response);
+      dispatch({
+        type: ErrorSnack(),
+        value: "Nombre est invalid",
+      });
       setVerification(false);
       setMatch(-1);
     }
@@ -97,10 +134,18 @@ const SetPasses = (pass, signinPage) => {
         }
       );
       console.log(response);
+      dispatch({
+        type: SuccessSnack(),
+        value: "mot de passe a été changée",
+      });
       // go to signin to access to account
       signinPage();
     } catch (error) {
       console.log(error.response);
+      dispatch({
+        type: ErrorSnack(),
+        value: "probléme !!!!!!!!",
+      });
     }
   };
 };
@@ -162,6 +207,7 @@ const deleteUser = () => {
 
 export {
   login,
+  Reset_pass,
   register,
   ValidateRegister,
   SetPasses,

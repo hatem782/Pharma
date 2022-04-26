@@ -22,11 +22,6 @@ function Dossier() {
       <br />
       <h4>Mes dossier</h4>
       <h5>Mes dossiers / Tous mes dossiers</h5>
-      {/* <div className="filter">
-        <p>Affichage</p> <input type="text" />
-        <input type="text" />
-        <input type="text" />
-      </div> */}
 
       <br />
       <FoldersTable />
@@ -41,11 +36,11 @@ function FoldersTable() {
       <Table>
         <thead>
           <Thr>
-            <Th>{/*selection*/}</Th>
-            <Th /*align="center"*/>Nom</Th>
-            <Th /*align="center"*/>Source</Th>
-            <Th /*align="center"*/>Date</Th>
-            <Th /*align="center"*/>Taille</Th>
+            <Th></Th>
+            <Th>Nom</Th>
+            <Th>Source</Th>
+            <Th>Date</Th>
+            <Th>Taille</Th>
           </Thr>
         </thead>
         <tbody>

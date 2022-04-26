@@ -61,26 +61,17 @@ export const useStyles = makeStyles((theme) => ({
 
       "& form": {
         width: "600px",
-        padding: "10px 0px",
+        margin: "auto",
+        padding: "140px 0px 10px 0px",
+        //width: "100%",
 
         [theme.breakpoints.down("xl")]: {
           width: "500px",
           padding: "20px 0px 0px 0px",
         },
-        "& .check-forget": {
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-
-          "& .navlink": {
-            fontSize: "18px !important",
-            textDecoration: "underline",
-          },
-        },
-
         "& button": {
           display: "block",
-          margin: "30px auto",
+          margin: "50px auto",
         },
       },
       "& h6": {

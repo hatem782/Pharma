@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useStyles } from "./ForgetPassStyles";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import logo from "../../../assets/svgs/logo/logo1.svg";
-import Input2 from "../../../components/Inputs/Input2";
-import CheckBx from "../../../components/Inputs/CheckBox";
-import SubmitBtn from "../../../components/Buttons/SubmitBtn";
-import NavLinkEdited from "../../../components/NavLink/NavLink";
+import logo from "../../../../assets/svgs/logo/logo1.svg";
+import Input2 from "../../../../components/Inputs/Input2";
+import CheckBx from "../../../../components/Inputs/CheckBox";
+import SubmitBtn from "../../../../components/Buttons/SubmitBtn";
+import NavLinkEdited from "../../../../components/NavLink/NavLink";
 
-import { isMobile } from "../../../functions/inputValidator";
+import { isMobile } from "../../../../functions/inputValidator";
 
 // redux and actions
 import { useDispatch } from "react-redux";
-import { Reset_pass } from "../../../store/actions/Auth.action";
+import { Reset_pass } from "../../../../store/actions/Auth.action";
 
 function ForgetPass() {
   const css = useStyles();
@@ -24,7 +24,7 @@ function ForgetPass() {
   const navig = useNavigate();
 
   const validationPage = () => {
-    navig("/validation");
+    navig("/validation_reset");
   };
 
   const inputHandler = (e) => {

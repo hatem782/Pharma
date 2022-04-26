@@ -6,7 +6,11 @@ import SignIn from "./pages/Login/SignIn/SignIn";
 import Register from "./pages/Login/Register/Register";
 import NumValidation from "./pages/Login/NumValidation/NumValidation";
 import SetPassword from "./pages/Login/SetPassword/SetPassword";
-import ForgetPass from "./pages/Login/ForgetPass/ForgetPass";
+// reset password in login
+import ForgetPass from "./pages/Login/Reset/ForgetPass/ForgetPass";
+import NumValidResetPass from "./pages/Login/Reset/NumValidResetPass/NumValidResetPass";
+import ResetPassword from "./pages/Login/Reset/ResetPassword/ResetPassword";
+
 // ********************** COMPONENTS ************************
 
 // ********************** User Dispatch *********************
@@ -52,10 +56,17 @@ function App() {
             ) : (
               <Routes>
                 <Route path="/signin" element={<SignIn />} />
-                <Route path="/forget" element={<ForgetPass />} />
+
                 <Route path="/registration" element={<Register />} />
                 <Route path="/validation" element={<NumValidation />} />
                 <Route path="/setpassword" element={<SetPassword />} />
+
+                <Route path="/reset_pass" element={<ForgetPass />} />
+                <Route
+                  path="/validation_reset"
+                  element={<NumValidResetPass />}
+                />
+                <Route path="/resetpassword" element={<ResetPassword />} />
                 <Route path="/*" element={<Navigate to="/signin" />} />
               </Routes>
             )}

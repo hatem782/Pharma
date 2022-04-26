@@ -113,7 +113,7 @@ function SignIn() {
                     onChange={checkboxHandler}
                     label="Se souvenir de moi"
                   />
-                  <NavLinkEdited to={"/forget"}>
+                  <NavLinkEdited to={"/reset_pass"}>
                     Mot de passe oublié ?
                   </NavLinkEdited>
                 </div>

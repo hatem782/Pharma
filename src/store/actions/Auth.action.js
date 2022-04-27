@@ -26,7 +26,7 @@ const login = (user, remember) => {
       }
     } catch (error) {
       console.log(error);
-      console.log(error.response.data.Authorization[0]);
+      console.log(error.response);
       dispatch({
         type: ErrorSnack(),
         value: error.response.data.Authorization[0],
@@ -35,7 +35,7 @@ const login = (user, remember) => {
   };
 };
 
-const Reset_pass = (user, validationPage) => {
+const Validate_Reset_pass = (user, callback) => {
   return async (dispatch) => {
     try {
       const response = await axios.put(
@@ -48,11 +48,24 @@ const Reset_pass = (user, validationPage) => {
         value: response.data.token,
       });
       localStorage.setItem("pbird_verif_token", response.data.token);
+
+      // to send the verification code
+      const response2 = await axios.put(
+        REACT_APP_API_HOST + "/user/send_otp/",
+        { ...user },
+        {
+          headers: {
+            Authorization: `token ${response.data.token}`,
+          },
+        }
+      );
+      console.log(response2.data);
+
       dispatch({
         type: SuccessSnack(),
         value: "message de 6 chiffre a été envoyé",
       });
-      validationPage();
+      callback();
     } catch (error) {
       console.log(error);
       console.log(error.response.data);
@@ -202,6 +215,51 @@ const deleteUser = () => {
       type: SetUser(),
       value: "",
     });
+  };
+};
+
+// ******************* reset password ****************
+
+const Reset_pass = (user, callback) => {
+  return async (dispatch) => {
+    try {
+      // send mobile number and get the tocken
+      const response = await axios.put(
+        REACT_APP_API_HOST + "/users/auth/reset_password",
+        { ...user }
+      );
+      console.log(response.data);
+      dispatch({
+        type: SetToken(),
+        value: response.data.token,
+      });
+      localStorage.setItem("pbird_verif_token", response.data.token);
+
+      // send the token => serveer will send 6 verif number
+      // const response2 = await axios.put(
+      //   REACT_APP_API_HOST + "/user/send_otp/",
+      //   { ...user },
+      //   {
+      //     headers: {
+      //       Authorization: `token ${response.data.token}`,
+      //     },
+      //   }
+      // );
+      // console.log(response2.data);
+
+      dispatch({
+        type: SuccessSnack(),
+        value: "message de 6 chiffre a été envoyé",
+      });
+      callback();
+    } catch (error) {
+      console.log(error);
+      console.log(error.response.data);
+      dispatch({
+        type: ErrorSnack(),
+        value: error.response.data.Authorization[0],
+      });
+    }
   };
 };
 

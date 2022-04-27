@@ -7,8 +7,6 @@ import Input2 from "../../../../components/Inputs/Input2";
 import SubmitBtn from "../../../../components/Buttons/SubmitBtn";
 import { useNavigate } from "react-router-dom";
 
-//import { isPass, isMobile } from "../../../../functions/inputValidator";
-
 // redux and actions
 import { useDispatch } from "react-redux";
 import { SetPasses } from "../../../../store/actions/Auth.action";

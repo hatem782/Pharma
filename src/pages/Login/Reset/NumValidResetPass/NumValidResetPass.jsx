@@ -28,21 +28,9 @@ function NumValidResetPass() {
     e.preventDefault();
     setVerification(true);
     /*********************** HERE ADD DISPATCH ***************************/
-    //dispatch(ValidateRegister(valNumb, setVerification, setMatch, setpassPage));
-
-    // // fake request
-    // setInterval(() => {
-    //   setVerification(false);
-    // }, 4000);
-    // // fake request
-
-    // if (Number(valNumb) == 123456) {
-    //   setMatch(1);
-    //   console.log("match");
-    // } else {
-    //   console.log("not-match");
-    //   setMatch(-1);
-    // }
+    dispatch(
+      ValidateRegister(valNumb, setVerification, setMatch, resetpasswordPage)
+    );
   };
 
   return (

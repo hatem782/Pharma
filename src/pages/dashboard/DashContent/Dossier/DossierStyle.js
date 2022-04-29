@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles((theme) => ({
   main: {
     width: "100%",
-    padding: "0px 0px 15px 0px",
+    padding: "20px 0px 15px 0px",
 
     "& h4": {
       fontSize: "21px",
@@ -16,6 +16,42 @@ export const useStyles = makeStyles((theme) => ({
       margin: "0px",
       marginTop: "10px",
       fontFamily: "myriad",
+    },
+  },
+
+  filter: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+
+    "& .part1": {
+      display: "flex",
+      alignItems: "center",
+    },
+
+    "& .part2": {
+      "& button": {
+        padding: "17px 20px !important",
+      },
+    },
+
+    "& h4": {
+      margin: "0px 10px 0px 0px",
+    },
+
+    "& .claned-filter": {
+      width: "276px",
+      margin: "0px 10px 0px 10px",
+    },
+
+    "& .source-filter , .rech-filter": {
+      width: "230px",
+      margin: "0px 10px 0px 10px",
+    },
+
+    "& .rech-filter": {
+      width: "230px",
+      margin: "0px 10px 0px 10px",
     },
   },
 

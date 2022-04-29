@@ -18,7 +18,7 @@ export const useStyles = makeStyles((theme) => ({
       padding: "14px 25px",
       fontSize: "18px",
       fontWeight: "500",
-      margin: "0px 0px 0px 60px",
+      margin: "0px 0px 0px 30px",
       // fontFamily:"Myriad Hebrew"
     },
   },
@@ -34,7 +34,7 @@ export const useStyles = makeStyles((theme) => ({
     "& .button-notif": {
       padding: "9px",
       border: "solid 0.5px #00000088",
-      margin: "0px 50px",
+      margin: "0px 30px",
       "& img": {
         height: "25px",
         width: "25px",

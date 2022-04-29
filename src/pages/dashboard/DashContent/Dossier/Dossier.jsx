@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useStyles } from "./DossierStyle";
-import H1 from "../../../../components/Typography/H1";
+import Calendar from "../../../../components/Inputs/Calendar";
+import Button from "../../../../components/Buttons/SubmitBtn";
+import addimg from "../../../../assets/svgs/icons/Groupe 17437.svg";
 
 import {
   Table,
@@ -14,6 +16,8 @@ import TabButtonGf from "../../../../components/Buttons/TabButtonGf";
 import TabButtonGo from "../../../../components/Buttons/TabButtonGo";
 import TabButtonYf from "../../../../components/Buttons/TabButtonYf";
 import threp from "../../../../assets/svgs/icons/Groupe 17360.svg";
+import EditedSelect from "../../../../components/Inputs/EditedSelect";
+import RechInput from "../../../../components/Inputs/RechInput2";
 
 function Dossier() {
   const css = useStyles();
@@ -22,7 +26,26 @@ function Dossier() {
       <br />
       <h4>Mes dossier</h4>
       <h5>Mes dossiers / Tous mes dossiers</h5>
-
+      <div className={css.filter}>
+        <div className="part1">
+          <h4>Affichage</h4>
+          <div className="claned-filter">
+            <Calendar />
+          </div>
+          <div className="source-filter">
+            <EditedSelect />
+          </div>
+          <div className="rech-filter">
+            <RechInput />
+          </div>
+        </div>
+        <div className="part2">
+          <Button>
+            <img style={{ transform: "translateY(2px)" }} src={addimg} />{" "}
+            Nouveau dossier
+          </Button>
+        </div>
+      </div>
       <br />
       <FoldersTable />
     </main>

@@ -162,3 +162,31 @@
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   } */
+
+/*********************** Calendar2 *************************/
+
+button.rdrDay {
+  color: #1dbf73 !important;
+}
+
+.rdrInRange,
+.rdrStartEdge,
+.rdrEndEdge {
+  color: #1dbf73 !important;
+}
+
+.rdrDayNumber span::after {
+  background-color: #1dbf73 !important;
+}
+
+.rdrWeekDay {
+  color: #1dbf73 !important;
+}
+
+.rdrDay span {
+  border-color: #1dbf73 !important;
+}
+
+.rdrDateDisplayWrapper {
+  display: none;
+}

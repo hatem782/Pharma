@@ -1,3 +1,4 @@
+import React from "react";
 // ************************** ICONS ****************************
 import folder from "../assets/svgs/sidebar/folder.svg";
 import chat from "../assets/svgs/sidebar/icon_chat-room.svg";
@@ -21,6 +22,7 @@ import Dossier from "../pages/dashboard/DashContent/Dossier/Dossier";
 // ************************** TOP BAR *******************************
 
 import TopBar from "../Layouts/TopBar/TopBar";
+import DossierTopBar from "../Layouts/TopBar/DossierTopBar.jsx";
 import TopBarWithRech from "../Layouts/TopBar/TopBarWithRech";
 
 export const routes = [
@@ -55,7 +57,7 @@ export const routes = [
     title: "Dossier",
     compo: (
       <>
-        <TopBarWithRech />
+        <DossierTopBar />
         <Dossier />
       </>
     ),

@@ -3,6 +3,9 @@ import { useStyles } from "./DossierStyle";
 import Calendar from "../../../../components/Inputs/Calendar";
 import Button from "../../../../components/Buttons/SubmitBtn";
 import addimg from "../../../../assets/svgs/icons/Groupe 17437.svg";
+import Menu from "../../../../components/Menu/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
 
 import {
   Table,
@@ -15,9 +18,15 @@ import Radio from "@mui/material/Radio";
 import TabButtonGf from "../../../../components/Buttons/TabButtonGf";
 import TabButtonGo from "../../../../components/Buttons/TabButtonGo";
 import TabButtonYf from "../../../../components/Buttons/TabButtonYf";
+import TabButtonRo from "../../../../components/Buttons/TabButtonRo";
 import threp from "../../../../assets/svgs/icons/Groupe 17360.svg";
 import EditedSelect from "../../../../components/Inputs/EditedSelect";
 import RechInput from "../../../../components/Inputs/RechInput2";
+// dialogs
+import Renommer from "./Popups/Renommer";
+import QRcode from "./Popups/QRcode";
+import DeleteItem from "./Popups/DeleteItem";
+import Partager from "./Popups/Partager";
 
 function Dossier() {
   const css = useStyles();
@@ -85,11 +94,51 @@ function FoldersTable() {
 }
 
 const OneFolder = (props) => {
+  // the state for checkbox *************************************
   const [selected, setSelected] = useState(false);
-
   const click = () => {
     setSelected(!selected);
   };
+  // the state for checkbox *************************************
+
+  // the menu items of rename and delete ************************
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  // the menu items of rename and delete ************************
+
+  // the popup state to open and close **************************
+  const [dialog, setdialog] = useState({
+    active: false,
+    type: "", // delete / rename / qrcode / share
+    value: null,
+  });
+  const openDial = (type, value) => {
+    setdialog({ active: true, type: type, value: value });
+  };
+
+  const closeDial = () => {
+    setdialog({ active: false, type: "", value: null });
+  };
+  const openQrcode = () => {
+    openDial("qrcode", null);
+  };
+  const openRename = () => {
+    openDial("rename", null);
+  };
+  const openDelete = () => {
+    openDial("delete", null);
+  };
+  const openShare = () => {
+    openDial("share", null);
+  };
+  // the popup state to open and close **************************
 
   return (
     <Tr>
@@ -121,10 +170,55 @@ const OneFolder = (props) => {
       </Td>
       <Td className="buttons-group">
         <TabButtonGf>Afficher</TabButtonGf>
-        <TabButtonGo>Code QR</TabButtonGo>
-        <TabButtonYf>Partager</TabButtonYf>
-        <img src={threp} />
+        <TabButtonGo onClick={openQrcode}>Code QR</TabButtonGo>
+        <TabButtonYf onClick={openShare}>Partager</TabButtonYf>
+        <img src={threp} onClick={handleClick} />
+        <div className="menu">
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+            pos={5}
+          >
+            <div style={{ padding: "0px 10px" }} className="menu-items">
+              <MenuItem>
+                <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
+              </MenuItem>
+              <Divider />
+              <MenuItem>
+                <TabButtonRo onClick={openDelete}>Supprimer</TabButtonRo>
+              </MenuItem>
+            </div>
+          </Menu>
+        </div>
       </Td>
+      {/************************  POPUPS ************************/}
+      {dialog.type === "rename" ? (
+        <Renommer dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+      {dialog.type === "qrcode" ? (
+        <QRcode dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+      {dialog.type === "delete" ? (
+        <DeleteItem dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+      {dialog.type === "share" ? (
+        <Partager dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+
+      {/************************  POPUPS ************************/}
     </Tr>
   );
 };

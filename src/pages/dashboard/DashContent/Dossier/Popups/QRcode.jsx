@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 
 import Slide from "@mui/material/Slide";
 import { makeStyles } from "@mui/styles";
+import img from "../../../../../assets/images/qrcode/Groupe 17987.png";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,11 +33,7 @@ const QRcode = (props) => {
         onClose={handleClose}
         scroll={"paper"}
       >
-        <DialogContent dividers>
-          <div className={classes.main}>
-            <h1>QRcode</h1>
-          </div>
-        </DialogContent>
+        <img src={img} alt="qrcode" />
       </Dialog>
     </div>
   );

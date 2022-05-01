@@ -28,11 +28,33 @@ import Renommer from "./Popups/Renommer";
 import QRcode from "./Popups/QRcode";
 import DeleteItem from "./Popups/DeleteItem";
 import Partager from "./Popups/Partager";
+import DeleteGroup from "./Popups/DeleteGroup";
+import PartagerAll from "./Popups/PartagerAll";
 
 function Dossier() {
   const css = useStyles();
   const [nbSelect, set_nbSelect] = useState(0);
-  const select = () => {};
+  // POPUP FOR DELETE-UPDATE ALL
+  const [dialog, setdialog] = useState({
+    active: false,
+    type: "", // delete_all / share_all
+    value: null,
+  });
+  const openDial = (type, value) => {
+    setdialog({ active: true, type: type, value: value });
+  };
+
+  const closeDial = () => {
+    setdialog({ active: false, type: "", value: null });
+  };
+  const openShareAll = () => {
+    openDial("share_all", null);
+    console.log("share_al");
+  };
+  const openDelAll = () => {
+    openDial("delete_all", null);
+    console.log("delete_a");
+  };
 
   return (
     <main className={css.main}>
@@ -62,14 +84,27 @@ function Dossier() {
             </div>
           ) : (
             <div className="group">
-              <Button>Partager</Button>
-              <Button className="red-btn"> Supprimer</Button>
+              <Button onClick={openShareAll}>Partager</Button>
+              <Button onClick={openDelAll} className="red-btn">
+                {" "}
+                Supprimer
+              </Button>
             </div>
           )}
         </div>
       </div>
       <br />
       <FoldersTable nbSelect={nbSelect} set_nbSelect={set_nbSelect} />
+      {dialog.type === "delete_all" ? (
+        <DeleteGroup dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+      {dialog.type === "share_all" ? (
+        <PartagerAll dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
     </main>
   );
 }

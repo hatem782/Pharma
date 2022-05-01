@@ -64,7 +64,7 @@ export const useStyles = makeStyles((theme) => ({
       width: "500px",
       margin: "25px 0px",
       padding: "17px",
-
+      cursor: "pointer",
       display: "flex",
       alignItems: "center",
       //justifyContent:""

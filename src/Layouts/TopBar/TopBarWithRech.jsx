@@ -47,16 +47,20 @@ const AjouterModel = () => {
         pos={80}
       >
         <div className={css.AddProject}>
-          <Item
-            img={importer}
-            txt1="Importer un projet"
-            txt2="Parcourez les fichiers de votre machine."
-          />
-          <Item
-            img={drag}
-            txt1="Drag and Drop"
-            txt2="Faites glisser et déposez vos fichiers facilement."
-          />
+          <label>
+            <Item
+              img={importer}
+              txt1="Importer un projet"
+              txt2="Parcourez les fichiers de votre machine."
+            />
+            <input
+              style={{ display: "none" }}
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+            />
+          </label>
           <Item
             img={create}
             txt1="Créer un document"

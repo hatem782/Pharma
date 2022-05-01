@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStyles } from "./DossierStyle";
 import Calendar from "../../../../components/Inputs/Calendar";
 import Button from "../../../../components/Buttons/SubmitBtn";
@@ -6,7 +6,8 @@ import addimg from "../../../../assets/svgs/icons/Groupe 17437.svg";
 import Menu from "../../../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
-
+import { useDispatch, useSelector } from "react-redux";
+import { GetAllDossier } from "../../../../store/actions/Dossier.action";
 import {
   Table,
   Th,
@@ -30,6 +31,9 @@ import Partager from "./Popups/Partager";
 
 function Dossier() {
   const css = useStyles();
+  const [nbSelect, set_nbSelect] = useState(0);
+  const select = () => {};
+
   return (
     <main className={css.main}>
       <br />
@@ -49,19 +53,52 @@ function Dossier() {
           </div>
         </div>
         <div className="part2">
-          <Button>
-            <img style={{ transform: "translateY(2px)" }} src={addimg} />{" "}
-            Nouveau dossier
-          </Button>
+          {nbSelect === 0 ? (
+            <div className="add">
+              <Button>
+                <img style={{ transform: "translateY(2px)" }} src={addimg} />{" "}
+                Nouveau dossier
+              </Button>
+            </div>
+          ) : (
+            <div className="group">
+              <Button>Partager</Button>
+              <Button className="red-btn"> Supprimer</Button>
+            </div>
+          )}
         </div>
       </div>
       <br />
-      <FoldersTable />
+      <FoldersTable nbSelect={nbSelect} set_nbSelect={set_nbSelect} />
     </main>
   );
 }
 
-function FoldersTable() {
+function FoldersTable({ nbSelect, set_nbSelect }) {
+  const data = useSelector((state) => state.Dossier);
+  const dispatch = useDispatch();
+  const [selData, setSelData] = useState([...data]);
+
+  useEffect(() => {
+    dispatch(GetAllDossier());
+  }, []);
+
+  useEffect(() => {
+    setSelData(data);
+  }, [data]);
+
+  const handleSelect = (id) => {
+    let newTab = [...selData];
+    let index = newTab.findIndex((item) => item.id === id);
+    newTab[index].selected = !newTab[index].selected;
+    if (newTab[index].selected) {
+      set_nbSelect(nbSelect + 1);
+    } else if (nbSelect > 0) {
+      set_nbSelect(nbSelect - 1);
+    }
+    setSelData(newTab);
+  };
+
   const css = useStyles();
   return (
     <div className={css.foldes}>
@@ -76,28 +113,22 @@ function FoldersTable() {
           </Thr>
         </thead>
         <tbody>
-          <OneFolder />
-          <br />
-          <OneFolder />
-          <br />
-          <OneFolder />
-          <br />
-          <OneFolder />
-          <br />
-          <OneFolder />
-          <br />
-          <OneFolder />
+          {selData.map((item, key) => {
+            return (
+              <OneFolder key={key} item={item} handleSelect={handleSelect} />
+            );
+          })}
         </tbody>
       </Table>
     </div>
   );
 }
 
-const OneFolder = (props) => {
+const OneFolder = ({ item, handleSelect }) => {
+  const { id, selected, nom, source, date, taille } = item;
   // the state for checkbox *************************************
-  const [selected, setSelected] = useState(false);
   const click = () => {
-    setSelected(!selected);
+    handleSelect(id);
   };
   // the state for checkbox *************************************
 
@@ -141,85 +172,88 @@ const OneFolder = (props) => {
   // the popup state to open and close **************************
 
   return (
-    <Tr>
-      <Td>
-        <span className="space20" />
-        <Radio onClick={click} checked={selected} />
-      </Td>
-      <Td>
-        <div className={"folder-name green-underlined"}>
-          <span>Nom du dossier</span>
-          <span className="space50" />
-        </div>
-      </Td>
-      <Td>
-        <div className={"folder-name"}>
-          <span>Nom de la source</span>
-          <span className="space50" />
-        </div>
-      </Td>
-      <Td>
-        <span className="folder-name">
-          14 Janvier 2022 <span className="space50" />
-        </span>
-      </Td>
-      <Td>
-        <span className="folder-name">
-          200 Ko <span className="space50" />
-        </span>
-      </Td>
-      <Td className="buttons-group">
-        <TabButtonGf>Afficher</TabButtonGf>
-        <TabButtonGo onClick={openQrcode}>Code QR</TabButtonGo>
-        <TabButtonYf onClick={openShare}>Partager</TabButtonYf>
-        <img src={threp} onClick={handleClick} />
-        <div className="menu">
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-            pos={5}
-          >
-            <div style={{ padding: "0px 10px" }} className="menu-items">
-              <MenuItem>
-                <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
-              </MenuItem>
-              <Divider />
-              <MenuItem>
-                <TabButtonRo onClick={openDelete}>Supprimer</TabButtonRo>
-              </MenuItem>
-            </div>
-          </Menu>
-        </div>
-      </Td>
-      {/************************  POPUPS ************************/}
-      {dialog.type === "rename" ? (
-        <Renommer dialog={dialog} handleClose={closeDial} />
-      ) : (
-        <></>
-      )}
-      {dialog.type === "qrcode" ? (
-        <QRcode dialog={dialog} handleClose={closeDial} />
-      ) : (
-        <></>
-      )}
-      {dialog.type === "delete" ? (
-        <DeleteItem dialog={dialog} handleClose={closeDial} />
-      ) : (
-        <></>
-      )}
-      {dialog.type === "share" ? (
-        <Partager dialog={dialog} handleClose={closeDial} />
-      ) : (
-        <></>
-      )}
+    <>
+      <Tr>
+        <Td>
+          <span className="space20" />
+          <Radio onClick={click} checked={selected} />
+        </Td>
+        <Td>
+          <div className={"folder-name green-underlined"}>
+            <span>{nom}</span>
+            <span className="space50" />
+          </div>
+        </Td>
+        <Td>
+          <div className={"folder-name"}>
+            <span>{source}</span>
+            <span className="space50" />
+          </div>
+        </Td>
+        <Td>
+          <span className="folder-name">
+            {date} <span className="space50" />
+          </span>
+        </Td>
+        <Td>
+          <span className="folder-name">
+            {taille} <span className="space50" />
+          </span>
+        </Td>
+        <Td className="buttons-group">
+          <TabButtonGf>Afficher</TabButtonGf>
+          <TabButtonGo onClick={openQrcode}>Code QR</TabButtonGo>
+          <TabButtonYf onClick={openShare}>Partager</TabButtonYf>
+          <img src={threp} onClick={handleClick} />
+          <div className="menu">
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              pos={5}
+            >
+              <div style={{ padding: "0px 10px" }} className="menu-items">
+                <MenuItem>
+                  <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
+                </MenuItem>
+                <Divider />
+                <MenuItem>
+                  <TabButtonRo onClick={openDelete}>Supprimer</TabButtonRo>
+                </MenuItem>
+              </div>
+            </Menu>
+          </div>
+        </Td>
+        {/************************  POPUPS ************************/}
+        {dialog.type === "rename" ? (
+          <Renommer dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
+        {dialog.type === "qrcode" ? (
+          <QRcode dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
+        {dialog.type === "delete" ? (
+          <DeleteItem dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
+        {dialog.type === "share" ? (
+          <Partager dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
 
-      {/************************  POPUPS ************************/}
-    </Tr>
+        {/************************  POPUPS ************************/}
+      </Tr>
+      <br />
+    </>
   );
 };
 

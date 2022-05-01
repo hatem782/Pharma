@@ -2,9 +2,11 @@ import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { SetToken, SetUser } from "../keys/Users.keys";
 import { ErrorSnack, SuccessSnack, CloseSnack } from "../keys/Snack";
+import { GET_DOSSIER } from "../keys/Dosser.key";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+// USER REDUCER
 const InitialUser = { token: "", user: null };
 const User = (state = { ...InitialUser }, action) => {
   switch (action.type) {
@@ -17,6 +19,7 @@ const User = (state = { ...InitialUser }, action) => {
   }
 };
 
+// SNACK REDUCER
 const InitialSnack = { open: false, type: "", msg: "" };
 const Snack = (state = { ...InitialSnack }, action) => {
   switch (action.type) {
@@ -31,9 +34,21 @@ const Snack = (state = { ...InitialSnack }, action) => {
   }
 };
 
+// SNACK REDUCER
+const InitialDossier = [];
+const Dossier = (state = InitialDossier, action) => {
+  switch (action.type) {
+    case GET_DOSSIER():
+      return action.value;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   User: User,
   Snack: Snack,
+  Dossier: Dossier,
 });
 
 //const load = loadFromLocal();

@@ -31,7 +31,13 @@ export const useStyles = makeStyles((theme) => ({
 
     "& .part2": {
       "& button": {
-        padding: "17px 20px !important",
+        padding: "15px 20px !important",
+        margin: "0px 0px 0px 20px",
+        minWidth: "180px",
+        boxShadow: "0px 3px 6px #00000033",
+      },
+      "& .red-btn": {
+        backgroundColor: "#F00",
       },
     },
 

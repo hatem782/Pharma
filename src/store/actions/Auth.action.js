@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Authorization, allow } from "./Headers";
+import { Authorization } from "./Headers";
 import { SetToken, SetUser } from "../keys/Users.keys";
 import { ErrorSnack, SuccessSnack } from "../keys/Snack";
 
@@ -178,7 +178,7 @@ const GetUserByToken = (setspinn) => {
     try {
       const response = await axios.get(
         REACT_APP_API_HOST + "/users/auth/user",
-        { headers: Authorization, allow }
+        { headers: Authorization }
       );
       console.log(response.data);
       dispatch({

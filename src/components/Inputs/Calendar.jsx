@@ -100,7 +100,7 @@ function Calendar(props) {
         type={type}
         name={name}
         className={css.input}
-        placeholder="select date"
+        placeholder="00/00 to 00/00"
       />
       <img src={img} className="icon" />
       <div className="content">

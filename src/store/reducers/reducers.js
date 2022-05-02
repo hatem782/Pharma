@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { SetToken, SetUser } from "../keys/Users.keys";
 import { ErrorSnack, SuccessSnack, CloseSnack } from "../keys/Snack";
 import { GET_DOSSIER } from "../keys/Dosser.key";
+import { GET_FICHIER } from "../keys/Fichier.key";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -34,7 +35,7 @@ const Snack = (state = { ...InitialSnack }, action) => {
   }
 };
 
-// SNACK REDUCER
+// DOSSIER REDUCER
 const InitialDossier = [];
 const Dossier = (state = InitialDossier, action) => {
   switch (action.type) {
@@ -45,10 +46,22 @@ const Dossier = (state = InitialDossier, action) => {
   }
 };
 
+// FICHIER REDUCER
+const InitialFichier = [];
+const Fichier = (state = InitialFichier, action) => {
+  switch (action.type) {
+    case GET_FICHIER():
+      return action.value;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   User: User,
   Snack: Snack,
   Dossier: Dossier,
+  Fichier: Fichier,
 });
 
 //const load = loadFromLocal();

@@ -19,10 +19,12 @@ import Profile from "../pages/dashboard/DashContent/Profile/Profile";
 import FoldersMainPage from "../pages/dashboard/DashContent/FoldersPages/FoldersMainP.jsx";
 import MenuPrincipal from "../pages/dashboard/DashContent/MenuPrincipal/MenuPrincipal";
 import Dossier from "../pages/dashboard/DashContent/Dossier/Dossier";
+import Fichier from "../pages/dashboard/DashContent/Fichier/Fichier";
 // ************************** TOP BAR *******************************
 
 import TopBar from "../Layouts/TopBar/TopBar";
 import DossierTopBar from "../Layouts/TopBar/DossierTopBar.jsx";
+import FichierTopBar from "../Layouts/TopBar/FichierTopBar";
 import TopBarWithRech from "../Layouts/TopBar/TopBarWithRech";
 
 export const routes = [
@@ -67,7 +69,12 @@ export const routes = [
     url: "/fichiers",
     img: fich,
     title: "Fichiers",
-    compo: <></>,
+    compo: (
+      <>
+        <FichierTopBar />
+        <Fichier />
+      </>
+    ),
   },
   {
     mainUrl: "/dashboard",

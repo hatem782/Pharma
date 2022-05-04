@@ -4,7 +4,7 @@ import SideBar from "../../Layouts/SideBar/SideBar";
 import { makeStyles } from "@mui/styles";
 import { Routes, Route } from "react-router-dom";
 
-import { routes } from "../../routes/Main.routes";
+import { routes, NoNavRoutes } from "../../routes/Main.routes";
 
 export const useStyles = makeStyles((theme) => ({
   content: {
@@ -23,6 +23,9 @@ function Dashboard() {
       <div className={css.content}>
         <Routes>
           {routes.map((elem, key) => {
+            return <Route key={key} path={elem.url} element={elem.compo} />;
+          })}
+          {NoNavRoutes.map((elem, key) => {
             return <Route key={key} path={elem.url} element={elem.compo} />;
           })}
           {/* <Route path="/dashboard/*" element={<Navigate to="/main" />} /> */}

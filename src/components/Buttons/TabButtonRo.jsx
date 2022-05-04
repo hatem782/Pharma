@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
 // RED OUTLINED
 function TabButtonRo(props) {
   const css = useStyles();
-  const { onClick, children, isIcon = false } = props;
+  const { onClick, children, isIcon = false, className } = props;
   return (
     <button
-      className={`${css.btn} ${isIcon ? css.iconBtn : ""}`}
+      className={`${css.btn} ${isIcon ? css.iconBtn : ""} ${className} `}
       onClick={onClick}
     >
       {children}

@@ -33,7 +33,16 @@ code {
   }
 }
 
+.text-editer::-webkit-scrollbar {
+  background-color: gold;
+  width: 10px;
+}
+
+.text-editer::-webkit-scrollbar-thumb {
+  background-color: #731dbf;
+}
+
 @font-face {
   font-family: myriad;
-  src: url(assets/fonts/Myriad\ Hebrew.ttf);
+  src: url("./assets/fonts/Myriad\ Hebrew.ttf");
 }

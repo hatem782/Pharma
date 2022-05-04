@@ -16,10 +16,11 @@ import notif from "../assets/svgs/sidebar/notif.svg";
 //import EditPage from "../pages/dashboard/DashContent/EditProfilePage/EditProfilePage.jsx";
 import MainPage from "../pages/dashboard/DashContent/MainPage/MainPage";
 import Profile from "../pages/dashboard/DashContent/Profile/Profile";
-import FoldersMainPage from "../pages/dashboard/DashContent/FoldersPages/FoldersMainP.jsx";
 import MenuPrincipal from "../pages/dashboard/DashContent/MenuPrincipal/MenuPrincipal";
 import Dossier from "../pages/dashboard/DashContent/Dossier/Dossier";
 import Fichier from "../pages/dashboard/DashContent/Fichier/Fichier";
+import AllTempsier from "../pages/dashboard/DashContent/Templats/AllTemps/AllTemps";
+import CreateTemps from "../pages/dashboard/DashContent/Templats/CreateTemps/CreateTemps";
 // ************************** TOP BAR *******************************
 
 import TopBar from "../Layouts/TopBar/TopBar";
@@ -81,7 +82,12 @@ export const routes = [
     url: "/templates",
     img: template,
     title: "Templates",
-    compo: <></>,
+    compo: (
+      <>
+        <TopBarWithRech />
+        <AllTempsier />
+      </>
+    ),
   },
   {
     mainUrl: "/dashboard",
@@ -126,4 +132,18 @@ export const routes2 = [
   //   title: "Déconnexion",
   //   compo: <></>,
   // },
+];
+
+// those routes are not acceccible by navbar
+export const NoNavRoutes = [
+  {
+    mainUrl: "/dashboard",
+    url: "/templates/create",
+    compo: (
+      <>
+        <TopBarWithRech />
+        <CreateTemps />
+      </>
+    ),
+  },
 ];

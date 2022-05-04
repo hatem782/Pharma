@@ -4,7 +4,9 @@ import Grid from "@mui/material/Grid";
 import TextEditor from "../../../../../components/Inputs/TextEditor";
 
 import TabButtonGf from "../../../../../components/Buttons/TabButtonGf";
-import TabButtonYf from "../../../../../components/Buttons/TabButtonYf";
+//import TabButtonYf from "../../../../../components/Buttons/TabButtonYf";
+
+import Partager from "./popups/Partager";
 
 function CreateTemps() {
   const css = useStyles();
@@ -18,6 +20,25 @@ function CreateTemps() {
   const setFooter = (text) => {
     setText({ ...Text, footer: text });
   };
+
+  // ********* popups ********
+  const [dialog, setdialog] = useState({
+    active: false,
+    type: "", // share
+    value: null,
+  });
+  const openDial = (type, value) => {
+    setdialog({ active: true, type: type, value: value });
+  };
+
+  const closeDial = () => {
+    setdialog({ active: false, type: "", value: null });
+  };
+
+  const openShare = () => {
+    openDial("share", null);
+  };
+
   return (
     <div className={css.main}>
       <h4>Créer un nouveau fichierMes fichiers</h4>
@@ -54,12 +75,18 @@ function CreateTemps() {
               </div>
               <div className="buttons">
                 <TabButtonGf>Sauvegarder</TabButtonGf>
-                <TabButtonYf>Partager</TabButtonYf>
+                <TabButtonGf onClick={openShare}>Partager</TabButtonGf>
+                <TabButtonGf>Génerer</TabButtonGf>
               </div>
             </div>
           </Grid>
         </Grid>
       </div>
+      {dialog.type === "share" ? (
+        <Partager dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

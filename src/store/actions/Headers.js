@@ -6,3 +6,9 @@ export const allow = {
 export const Authorization = {
   Authorization: `token ${localStorage.getItem("pbird_token")}`,
 };
+
+export const headers = {
+  headers: {
+    Authorization: `token ${localStorage.getItem("pbird_token")}`,
+  },
+};

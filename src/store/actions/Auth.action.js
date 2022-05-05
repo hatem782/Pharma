@@ -208,13 +208,29 @@ const deleteToken = () => {
   };
 };
 
-const deleteUser = () => {
-  localStorage.setItem("pbird_token", "");
-  return (dispatch) => {
-    dispatch({
-      type: SetUser(),
-      value: "",
-    });
+const Logout = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(
+        REACT_APP_API_HOST + "/users/auth/logout",
+        {
+          nothing: "nothing",
+        },
+        {
+          headers: {
+            Authorization: `token ${localStorage.getItem("pbird_token")}`,
+          },
+        }
+      );
+      //console.log(response);
+      dispatch({
+        type: SetUser(),
+        value: null,
+      });
+      localStorage.setItem("pbird_token", "");
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 };
 
@@ -270,7 +286,7 @@ export {
   ValidateRegister,
   SetPasses,
   deleteToken,
-  deleteUser,
+  Logout,
   GetToken,
   GetUserByToken,
 };

@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import notification from "../../assets/svgs/notification.svg";
 import person_img from "../../assets/images/Circle.png";
 import { useDispatch } from "react-redux";
-import { deleteUser } from "../../store/actions/Auth.action";
+import { Logout } from "../../store/actions/Auth.action";
 
 import { useStyles } from "./TopBarStyles";
 
@@ -58,7 +58,7 @@ function Notif_Avatar() {
             <Divider />
             <MenuItem
               onClick={() => {
-                dispatch(deleteUser());
+                dispatch(Logout());
               }}
             >
               Se déconnecter

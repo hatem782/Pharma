@@ -48,7 +48,7 @@ function App() {
           <Spinner />
         ) : (
           <Router>
-            {true ? (
+            {user ? (
               <Routes>
                 <Route path="/dashboard/*" element={<Dashboard />} />
                 <Route path="/*" element={<Navigate to="/dashboard/main" />} />

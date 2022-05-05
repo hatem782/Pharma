@@ -7,7 +7,10 @@ import Menu from "../../../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAllDossier } from "../../../../store/actions/Dossier.action";
+import {
+  GetAllDossier,
+  GetAllByUser,
+} from "../../../../store/actions/Dossier.action";
 import {
   Table,
   Th,
@@ -30,14 +33,16 @@ import DeleteItem from "./Popups/DeleteItem";
 import Partager from "./Popups/Partager";
 import DeleteGroup from "./Popups/DeleteGroup";
 import PartagerAll from "./Popups/PartagerAll";
+import AddFolder from "./Popups/AddFolder";
 
 function Dossier() {
   const css = useStyles();
   const [nbSelect, set_nbSelect] = useState(0);
+  const dispatch = useDispatch();
   // POPUP FOR DELETE-UPDATE ALL
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // delete_all / share_all
+    type: "", // delete_all / share_all // create
     value: null,
   });
   const openDial = (type, value) => {
@@ -49,12 +54,17 @@ function Dossier() {
   };
   const openShareAll = () => {
     openDial("share_all", null);
-    console.log("share_al");
   };
   const openDelAll = () => {
     openDial("delete_all", null);
-    console.log("delete_a");
   };
+  const openCreate = () => {
+    openDial("create", null);
+  };
+
+  useEffect(() => {
+    dispatch(GetAllByUser());
+  }, []);
 
   return (
     <main className={css.main}>
@@ -77,8 +87,8 @@ function Dossier() {
         <div className="part2">
           {nbSelect === 0 ? (
             <div className="add">
-              <Button>
-                <img style={{ transform: "translateY(2px)" }} src={addimg} />{" "}
+              <Button onClick={openCreate}>
+                <img style={{ transform: "translateY(2px)" }} src={addimg} />
                 Nouveau dossier
               </Button>
             </div>
@@ -86,7 +96,6 @@ function Dossier() {
             <div className="group">
               <Button onClick={openShareAll}>Partager</Button>
               <Button onClick={openDelAll} className="red-btn">
-                {" "}
                 Supprimer
               </Button>
             </div>
@@ -102,6 +111,11 @@ function Dossier() {
       )}
       {dialog.type === "share_all" ? (
         <PartagerAll dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+      {dialog.type === "create" ? (
+        <AddFolder dialog={dialog} handleClose={closeDial} />
       ) : (
         <></>
       )}

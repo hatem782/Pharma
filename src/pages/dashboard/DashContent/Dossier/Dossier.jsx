@@ -7,10 +7,7 @@ import Menu from "../../../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  GetAllDossier,
-  GetAllByUser,
-} from "../../../../store/actions/Dossier.action";
+import { GetAllByUser } from "../../../../store/actions/Dossier.action";
 import {
   Table,
   Th,
@@ -38,7 +35,14 @@ import AddFolder from "./Popups/AddFolder";
 function Dossier() {
   const css = useStyles();
   const [nbSelect, set_nbSelect] = useState(0);
-  const dispatch = useDispatch();
+  const [selData, setSelData] = useState([]);
+  const handleChangeSelectedData = (data) => {
+    setSelData(data);
+  };
+  // useEffect(() => {
+  //   console.log(selData);
+  // }, [selData]);
+
   // POPUP FOR DELETE-UPDATE ALL
   const [dialog, setdialog] = useState({
     active: false,
@@ -61,10 +65,6 @@ function Dossier() {
   const openCreate = () => {
     openDial("create", null);
   };
-
-  useEffect(() => {
-    dispatch(GetAllByUser());
-  }, []);
 
   return (
     <main className={css.main}>
@@ -103,7 +103,11 @@ function Dossier() {
         </div>
       </div>
       <br />
-      <FoldersTable nbSelect={nbSelect} set_nbSelect={set_nbSelect} />
+      <FoldersTable
+        handleChangeSelectedData={handleChangeSelectedData}
+        nbSelect={nbSelect}
+        set_nbSelect={set_nbSelect}
+      />
       {dialog.type === "delete_all" ? (
         <DeleteGroup dialog={dialog} handleClose={closeDial} />
       ) : (
@@ -123,18 +127,26 @@ function Dossier() {
   );
 }
 
-function FoldersTable({ nbSelect, set_nbSelect }) {
+function FoldersTable({ nbSelect, set_nbSelect, handleChangeSelectedData }) {
   const data = useSelector((state) => state.Dossier);
   const dispatch = useDispatch();
   const [selData, setSelData] = useState([...data]);
 
   useEffect(() => {
-    dispatch(GetAllDossier());
+    dispatch(GetAllByUser());
   }, []);
 
   useEffect(() => {
     setSelData(data);
   }, [data]);
+
+  useEffect(() => {
+    handleChangeSelectedData(
+      selData.filter((item) => {
+        return item.selected;
+      })
+    );
+  }, [selData]);
 
   const handleSelect = (id) => {
     let newTab = [...selData];
@@ -174,7 +186,8 @@ function FoldersTable({ nbSelect, set_nbSelect }) {
 }
 
 const OneFolder = ({ item, handleSelect }) => {
-  const { id, selected, nom, source, date, taille } = item;
+  const { id, selected, created } = item;
+  const { name, size } = item.folder;
   // the state for checkbox *************************************
   const click = () => {
     handleSelect(id);
@@ -216,7 +229,7 @@ const OneFolder = ({ item, handleSelect }) => {
     openDial("delete", null);
   };
   const openShare = () => {
-    openDial("share", null);
+    openDial("share", item.folder.id);
   };
   // the popup state to open and close **************************
 
@@ -229,24 +242,24 @@ const OneFolder = ({ item, handleSelect }) => {
         </Td>
         <Td>
           <div className={"folder-name green-underlined"}>
-            <span>{nom}</span>
+            <span>{name}</span>
             <span className="space50" />
           </div>
         </Td>
         <Td>
           <div className={"folder-name"}>
-            <span>{source}</span>
+            <span>{"source"}</span>
             <span className="space50" />
           </div>
         </Td>
         <Td>
           <span className="folder-name">
-            {date} <span className="space50" />
+            {new Date(created).toDateString()} <span className="space50" />
           </span>
         </Td>
         <Td>
           <span className="folder-name">
-            {taille} <span className="space50" />
+            {size} <span className="space50" />
           </span>
         </Td>
         <Td className="buttons-group">

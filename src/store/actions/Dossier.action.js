@@ -14,7 +14,7 @@ export const AddFolder = (name, callback) => {
         { name: name },
         { ...headers }
       );
-      console.log(response);
+      //console.log(response);
       callback();
     } catch (error) {
       console.log(error.response);
@@ -23,12 +23,78 @@ export const AddFolder = (name, callback) => {
 };
 
 export const GetAllByUser = () => {
-  console.log({ ...headers });
   return async (dispatch) => {
     try {
       const response = await axios.get(
         REACT_APP_API_HOST + "/folder/by_user/",
         { ...headers }
+      );
+      //console.log(response.data.results);
+      dispatch({
+        type: GET_DOSSIER(),
+        value: response.data.results.map((dt) => {
+          return { ...dt, selected: false };
+        }),
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const GetRecievedFolders = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        REACT_APP_API_HOST + "/folder/received/",
+        { ...headers }
+      );
+      //console.log(response.data.results);
+      dispatch({
+        type: GET_DOSSIER(),
+        value: response.data.results.map((dt) => {
+          return { ...dt, selected: false };
+        }),
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const GetCreatedFolders = () => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        REACT_APP_API_HOST + "/folder/created/",
+        {
+          ...headers,
+        }
+      );
+      //console.log(response.data.results);
+      dispatch({
+        type: GET_DOSSIER(),
+        value: response.data.results.map((dt) => {
+          return { ...dt, selected: false };
+        }),
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const ShareOneFolders = (id, users) => {
+  console.log({ users: [...users], folders: [{ id: id }] });
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(
+        REACT_APP_API_HOST + "/folder/send_to_users/",
+
+        { users: [...users], folders: [{ id: id }] },
+        {
+          ...headers,
+        }
       );
       console.log(response);
     } catch (error) {
@@ -36,69 +102,3 @@ export const GetAllByUser = () => {
     }
   };
 };
-
-export const GetAllDossier = () => {
-  return async (dispatch) => {
-    try {
-      let selected_data = data.map((dt, key) => {
-        return { ...dt, selected: false };
-      });
-
-      dispatch({
-        type: GET_DOSSIER(),
-        value: selected_data,
-      });
-    } catch (error) {
-      console.log(error.response);
-      dispatch({
-        type: ErrorSnack(),
-        value: "can't get data",
-      });
-    }
-  };
-};
-
-const data = [
-  {
-    id: "123456",
-    nom: "Nom du dossi",
-    source: "nom de source",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-  },
-  {
-    id: "123457",
-    nom: "Nom du dossier",
-    source: "nom de source",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-  },
-  {
-    id: "123458",
-    nom: "Nom du dossier",
-    source: "nom de source",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-  },
-  {
-    id: "123459",
-    nom: "Nom du dossier",
-    source: "nom de source",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-  },
-  {
-    id: "123460",
-    nom: "Nom du dossier",
-    source: "nom de source",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-  },
-  {
-    id: "123461",
-    nom: "Nom du dossier",
-    source: "nom de source",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-  },
-];

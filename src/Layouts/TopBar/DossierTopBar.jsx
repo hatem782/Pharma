@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import TopBarWithRech from "./TopBarWithRech";
 
 import { makeStyles } from "@mui/styles";
+import { useDispatch } from "react-redux";
+import {
+  GetRecievedFolders,
+  GetCreatedFolders,
+  GetAllByUser,
+} from "../../store/actions/Dossier.action";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -56,6 +62,29 @@ const ListItems = () => {
 
   const items = ["Tous mes dossiers", "Dossiers reçus", "Dossiers créés"];
 
+  const dispatch = useDispatch();
+
+  const GetSpecificFolder = (item) => {
+    setselected(item);
+    switch (item) {
+      case "Tous mes dossiers":
+        dispatch(GetAllByUser());
+        break;
+
+      case "Dossiers reçus":
+        dispatch(GetRecievedFolders());
+        break;
+
+      case "Dossiers créés":
+        dispatch(GetCreatedFolders());
+        break;
+
+      default:
+        dispatch(GetAllByUser());
+        break;
+    }
+  };
+
   const css = useStyles();
   return (
     <div className={css.list}>
@@ -63,7 +92,7 @@ const ListItems = () => {
         return (
           <div
             onClick={() => {
-              setselected(item);
+              GetSpecificFolder(item);
             }}
             key={key}
             className={`${css.item} ${selected === item && css.selected}`}

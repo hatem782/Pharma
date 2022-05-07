@@ -148,7 +148,7 @@ const Partager = (props) => {
         ? { phone_number: dests[item] }
         : { email: dests[item] };
     });
-    dispatch(ShareOneFolders(value, users));
+    dispatch(ShareOneFolders(value, users, handleClose));
   };
 
   return (

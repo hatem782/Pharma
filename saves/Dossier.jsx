@@ -34,43 +34,11 @@ import AddFolder from "./Popups/AddFolder";
 
 function Dossier() {
   const css = useStyles();
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state.Dossier);
   const [nbSelect, set_nbSelect] = useState(0);
   const [selData, setSelData] = useState([]);
-
-  useEffect(() => {
-    dispatch(GetAllByUser());
-  }, []);
-
-  useEffect(() => {
+  const handleChangeSelectedData = (data) => {
     setSelData(data);
-    set_nbSelect(0);
-  }, [data]);
-
-  // useEffect(() => {
-  //   handleChangeSelectedData(
-  //     selData.filter((item) => {
-  //       return item.selected;
-  //     })
-  //   );
-  // }, [selData]);
-
-  const handleSelect = (id) => {
-    let newTab = [...selData];
-    let index = newTab.findIndex((item) => item.id === id);
-    newTab[index].selected = !newTab[index].selected;
-    if (newTab[index].selected) {
-      set_nbSelect(nbSelect + 1);
-    } else if (nbSelect > 0) {
-      set_nbSelect(nbSelect - 1);
-    }
-    setSelData(newTab);
   };
-
-  // const handleChangeSelectedData = (data) => {
-  //   setSelData(data);
-  // };
   // useEffect(() => {
   //   console.log(selData);
   // }, [selData]);
@@ -88,19 +56,9 @@ function Dossier() {
   const closeDial = () => {
     setdialog({ active: false, type: "", value: null });
     set_nbSelect(0);
-    setSelData(
-      selData.map((item) => {
-        return { ...item, selected: false };
-      })
-    );
   };
   const openShareAll = () => {
-    openDial(
-      "share_all",
-      selData.filter((item) => {
-        return item.selected;
-      })
-    );
+    openDial("share_all", selData);
   };
   const openDelAll = () => {
     openDial("delete_all", null);
@@ -146,26 +104,11 @@ function Dossier() {
         </div>
       </div>
       <br />
-      <div className={css.foldes}>
-        <Table>
-          <thead>
-            <Thr>
-              <Th></Th>
-              <Th>Nom</Th>
-              <Th>Source</Th>
-              <Th>Date</Th>
-              <Th>Taille</Th>
-            </Thr>
-          </thead>
-          <tbody>
-            {selData.map((item, key) => {
-              return (
-                <OneFolder key={key} item={item} handleSelect={handleSelect} />
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
+      <FoldersTable
+        handleChangeSelectedData={handleChangeSelectedData}
+        nbSelect={nbSelect}
+        set_nbSelect={set_nbSelect}
+      />
       {dialog.type === "delete_all" ? (
         <DeleteGroup dialog={dialog} handleClose={closeDial} />
       ) : (
@@ -182,6 +125,64 @@ function Dossier() {
         <></>
       )}
     </main>
+  );
+}
+
+function FoldersTable({ nbSelect, set_nbSelect, handleChangeSelectedData }) {
+  const data = useSelector((state) => state.Dossier);
+  const dispatch = useDispatch();
+  const [selData, setSelData] = useState([...data]);
+
+  useEffect(() => {
+    dispatch(GetAllByUser());
+  }, []);
+
+  useEffect(() => {
+    setSelData(data);
+  }, [data]);
+
+  useEffect(() => {
+    handleChangeSelectedData(
+      selData.filter((item) => {
+        return item.selected;
+      })
+    );
+  }, [selData]);
+
+  const handleSelect = (id) => {
+    let newTab = [...selData];
+    let index = newTab.findIndex((item) => item.id === id);
+    newTab[index].selected = !newTab[index].selected;
+    if (newTab[index].selected) {
+      set_nbSelect(nbSelect + 1);
+    } else if (nbSelect > 0) {
+      set_nbSelect(nbSelect - 1);
+    }
+    setSelData(newTab);
+  };
+
+  const css = useStyles();
+  return (
+    <div className={css.foldes}>
+      <Table>
+        <thead>
+          <Thr>
+            <Th></Th>
+            <Th>Nom</Th>
+            <Th>Source</Th>
+            <Th>Date</Th>
+            <Th>Taille</Th>
+          </Thr>
+        </thead>
+        <tbody>
+          {selData.map((item, key) => {
+            return (
+              <OneFolder key={key} item={item} handleSelect={handleSelect} />
+            );
+          })}
+        </tbody>
+      </Table>
+    </div>
   );
 }
 
@@ -223,7 +224,7 @@ const OneFolder = ({ item, handleSelect }) => {
     openDial("qrcode", null);
   };
   const openRename = () => {
-    openDial("rename", item.folder);
+    openDial("rename", null);
   };
   const openDelete = () => {
     openDial("delete", null);

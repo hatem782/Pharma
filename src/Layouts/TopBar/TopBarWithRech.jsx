@@ -62,6 +62,11 @@ const AjouterModel = () => {
             />
           </label>
           <Item
+            img={drag}
+            txt1="Drag and Drop"
+            txt2="Faites glisser et déposez vos fichiers facilement."
+          />
+          <Item
             img={create}
             txt1="Créer un document"
             txt2="Créez votre document grâce aux templates que vous avez créés"

@@ -1,16 +1,20 @@
 import axios from "axios";
 import { /*ErrorSnack*/ SuccessSnack } from "../keys/Snack";
 import { GET_DOSSIER } from "../keys/Dosser.key";
-import { headers } from "./Headers";
+import { getToken } from "./Headers";
 const { REACT_APP_API_HOST } = process.env;
 
 export const AddFolder = (name, callback) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/folder/add/",
         { name: name },
-        { ...headers }
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
       );
       dispatch({
         type: SuccessSnack(),
@@ -19,18 +23,22 @@ export const AddFolder = (name, callback) => {
       callback();
       dispatch(GetAllByUser());
     } catch (error) {
-      console.log(error.response);
+      console.log(error);
     }
   };
 };
 
 export const RenameFolder = (id, name, callback) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.put(
         REACT_APP_API_HOST + "/folder/update/",
         { id: id, name: name },
-        { ...headers }
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
       );
       console.log(response);
       dispatch({
@@ -46,11 +54,15 @@ export const RenameFolder = (id, name, callback) => {
 };
 
 export const GetAllByUser = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.get(
         REACT_APP_API_HOST + "/folder/by_user/",
-        { ...headers }
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
       );
       //console.log(response.data.results);
       dispatch({
@@ -66,11 +78,15 @@ export const GetAllByUser = () => {
 };
 
 export const GetRecievedFolders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.get(
         REACT_APP_API_HOST + "/folder/received/",
-        { ...headers }
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
       );
       //console.log(response.data.results);
       dispatch({
@@ -86,12 +102,14 @@ export const GetRecievedFolders = () => {
 };
 
 export const GetCreatedFolders = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.get(
         REACT_APP_API_HOST + "/folder/created/",
         {
-          ...headers,
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
         }
       );
       //console.log(response.data.results);
@@ -109,14 +127,16 @@ export const GetCreatedFolders = () => {
 
 export const ShareOneFolders = (id, users, callback) => {
   console.log({ users: [...users], folders: [{ id: id }] });
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/folder/send_to_users/",
 
         { users: [...users], folders: [{ id: id }] },
         {
-          ...headers,
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
         }
       );
       dispatch({
@@ -134,7 +154,7 @@ export const ShareMultipleFolders = (ids, users, callback) => {
   let folders = ids.map((item) => {
     return { id: item.folder.id };
   });
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/folder/send_to_users/",
@@ -143,7 +163,9 @@ export const ShareMultipleFolders = (ids, users, callback) => {
           folders: [...folders],
         },
         {
-          ...headers,
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
         }
       );
       dispatch({

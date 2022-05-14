@@ -211,7 +211,7 @@ const deleteToken = () => {
 const Logout = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(
+      const response = await axios.post(
         REACT_APP_API_HOST + "/users/auth/logout",
         {
           nothing: "nothing",

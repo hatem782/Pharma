@@ -7,7 +7,8 @@ import Menu from "../../../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAllFichier } from "../../../../store/actions/Fichier.action";
+import {} from "../../../../functions/help";
+import { GetDocsByUser } from "../../../../store/actions/Fichier.action";
 import {
   Table,
   Th,
@@ -34,6 +35,7 @@ import PartagerAll from "./Popups/PartagerAll";
 function Fichier() {
   const css = useStyles();
   const [nbSelect, set_nbSelect] = useState(0);
+  const [selected, set_selected] = useState([]);
   // POPUP FOR DELETE-UPDATE ALL
   const [dialog, setdialog] = useState({
     active: false,
@@ -48,12 +50,10 @@ function Fichier() {
     setdialog({ active: false, type: "", value: null });
   };
   const openShareAll = () => {
-    openDial("share_all", null);
-    console.log("share_al");
+    openDial("share_all", selected);
   };
   const openDelAll = () => {
-    openDial("delete_all", null);
-    console.log("delete_a");
+    openDial("delete_all", selected);
   };
 
   return (
@@ -93,7 +93,11 @@ function Fichier() {
         </div>
       </div>
       <br />
-      <FoldersTable nbSelect={nbSelect} set_nbSelect={set_nbSelect} />
+      <FoldersTable
+        nbSelect={nbSelect}
+        set_nbSelect={set_nbSelect}
+        set_selected={set_selected}
+      />
       {dialog.type === "delete_all" ? (
         <DeleteGroup dialog={dialog} handleClose={closeDial} />
       ) : (
@@ -108,18 +112,26 @@ function Fichier() {
   );
 }
 
-function FoldersTable({ nbSelect, set_nbSelect }) {
+function FoldersTable({ nbSelect, set_nbSelect, set_selected }) {
   const data = useSelector((state) => state.Fichier);
   const dispatch = useDispatch();
   const [selData, setSelData] = useState([...data]);
 
   useEffect(() => {
-    dispatch(GetAllFichier());
+    dispatch(GetDocsByUser());
   }, []);
 
   useEffect(() => {
     setSelData(data);
   }, [data]);
+
+  useEffect(() => {
+    set_selected(
+      selData.filter((item) => {
+        return item.selected;
+      })
+    );
+  }, [selData]);
 
   const handleSelect = (id) => {
     let newTab = [...selData];
@@ -150,9 +162,7 @@ function FoldersTable({ nbSelect, set_nbSelect }) {
         </thead>
         <tbody>
           {selData.map((item, key) => {
-            return (
-              <OneFolder key={key} item={item} handleSelect={handleSelect} />
-            );
+            return <OneDoc key={key} item={item} handleSelect={handleSelect} />;
           })}
         </tbody>
       </Table>
@@ -160,8 +170,9 @@ function FoldersTable({ nbSelect, set_nbSelect }) {
   );
 }
 
-const OneFolder = ({ item, handleSelect }) => {
-  const { id, selected, nom, dossier, source, date, taille, status } = item;
+const OneDoc = ({ item, handleSelect }) => {
+  const { id, selected, type, folder_name, created, document } = item;
+  const { title, size, qr_code } = document;
   const css = useStyles();
   // the state for checkbox *************************************
   const click = () => {
@@ -204,7 +215,7 @@ const OneFolder = ({ item, handleSelect }) => {
     openDial("delete", null);
   };
   const openShare = () => {
-    openDial("share", null);
+    openDial("share", document.id);
   };
   // the popup state to open and close **************************
 
@@ -217,35 +228,35 @@ const OneFolder = ({ item, handleSelect }) => {
         </Td>
         <Td>
           <div className={"folder-name"}>
-            <span>{nom}</span>
+            <span>{title}</span>
             <span className="space50" />
           </div>
         </Td>
         <Td>
           <div className={"folder-name"}>
-            <span>{source}</span>
+            <span>{type}</span>
             <span className="space50" />
           </div>
         </Td>
         <Td>
           <div className={"folder-name green-underlined"}>
-            <span>{dossier}</span>
+            <span>{folder_name}</span>
             <span className="space50" />
           </div>
         </Td>
         <Td>
           <span className="folder-name">
-            {date} <span className="space50" />
+            {new Date(created).toDateString()} <span className="space50" />
           </span>
         </Td>
         <Td>
           <span className="folder-name">
-            {taille} <span className="space50" />
+            {Math.floor(size / 1024)} ko <span className="space50" />
           </span>
         </Td>
         <Td>
           <span className="folder-name">
-            {status} <span className="space50" />
+            {type} <span className="space50" />
           </span>
         </Td>
         <Td className="buttons-group">

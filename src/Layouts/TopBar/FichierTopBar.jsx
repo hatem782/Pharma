@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import TopBarWithRech from "./TopBarWithRech";
 
 import { makeStyles } from "@mui/styles";
-
+import { useDispatch } from "react-redux";
+import {
+  GetDocsByUser,
+  GetDocsByUserRecieved,
+  GetDocsByUserUploaded,
+} from "../../store/actions/Fichier.action";
 const useStyles = makeStyles((theme) => ({
   main: {
     display: "flex",
@@ -51,24 +56,54 @@ function FichierTopBar() {
 export default FichierTopBar;
 
 const ListItems = () => {
-  const [selected, setselected] = useState("Tous mes dossiers");
+  const [selected, setselected] = useState("Tous mes fichiers");
+  const css = useStyles();
+  const dispatch = useDispatch();
 
   const items = [
     "Tous mes fichiers",
     "Fichiers reçus",
-    "Fichiers envoyés",
-    "Fichiers créés",
+    /*"Fichiers envoyés",*/
+    /*"Fichiers créés",*/
     "Fichiers importés",
   ];
 
-  const css = useStyles();
+  const GetSpecificDocs = (item) => {
+    setselected(item);
+    switch (item) {
+      case "Tous mes fichiers":
+        dispatch(GetDocsByUser());
+        break;
+
+      /*case "Fichiers envoyés":
+        dispatch(GetDocsByUser());
+        break;
+
+      case "Fichiers créés":
+        dispatch(GetDocsByUser());
+        break;*/
+
+      case "Fichiers importés":
+        dispatch(GetDocsByUserUploaded());
+        break;
+
+      case "Fichiers reçus":
+        dispatch(GetDocsByUserRecieved());
+        break;
+
+      default:
+        dispatch(GetDocsByUser());
+        break;
+    }
+  };
+
   return (
     <div className={css.list}>
       {items.map((item, key) => {
         return (
           <div
             onClick={() => {
-              setselected(item);
+              GetSpecificDocs(item);
             }}
             key={key}
             className={`${css.item} ${selected === item && css.selected}`}

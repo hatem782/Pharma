@@ -5,7 +5,8 @@ import { GET_FICHIER } from "../keys/Fichier.key";
 import { ErrorSnack, SuccessSnack } from "../keys/Snack";
 
 const { REACT_APP_API_HOST } = process.env;
-export const GetAllFichier = () => {
+
+/*export const GetAllFichier = () => {
   return async (dispatch) => {
     try {
       let selected_data = data.map((dt, key) => {
@@ -24,7 +25,7 @@ export const GetAllFichier = () => {
       });
     }
   };
-};
+};*/
 
 export const UploadFile = (file, callback) => {
   console.log(file);
@@ -99,70 +100,135 @@ export const GetDocsByUser = () => {
         },
       });
       console.log(response.data.results);
-      //callback();
-      //dispatch(GetAllByUser());
+      let with_select = response.data.results.map((dt) => {
+        let folder_name = "aucun";
+        let selected = false;
+        if (dt.folder_id) {
+          folder_name = "have a name";
+        }
+        return { ...dt, selected, folder_name };
+      });
+      dispatch({
+        type: GET_FICHIER(),
+        value: with_select,
+      });
     } catch (error) {
       console.log(error.response);
     }
   };
 };
 
-const data = [
-  {
-    id: "123456",
-    nom: "Nom du fichier",
-    source: "nom de source",
-    dossier: "Nom du dossier",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-    status: "Partagé",
-  },
-  {
-    id: "123457",
-    nom: "Nom du fichier",
-    source: "nom de source",
-    dossier: "Nom du dossier",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-    status: "Partagé",
-  },
-  {
-    id: "123458",
-    nom: "Nom du fichier",
-    source: "nom de source",
-    dossier: "Nom du dossier",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-    status: "Partagé",
-  },
-  {
-    id: "123459",
-    nom: "Nom du fichier",
-    source: "nom de source",
-    dossier: "Nom du dossier",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-    status: "Partagé",
-  },
-  {
-    id: "123460",
-    nom: "Nom du fichier",
-    source: "nom de source",
-    dossier: "Nom du dossier",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-    status: "Partagé",
-  },
-  {
-    id: "123461",
-    nom: "Nom du fichier",
-    source: "nom de source",
-    dossier: "Nom du dossier",
-    date: "14 Janvier 2022",
-    taille: "200 Ko",
-    status: "Partagé",
-  },
-];
+export const GetDocsByUserUploaded = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(
+        REACT_APP_API_HOST + "/document/uploaded/",
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      console.log(response.data.results);
+      let with_select = response.data.results.map((dt) => {
+        let folder_name = "aucun";
+        let selected = false;
+        if (dt.folder_id) {
+          folder_name = "have a name";
+        }
+        return { ...dt, selected, folder_name };
+      });
+      dispatch({
+        type: GET_FICHIER(),
+        value: with_select,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const GetDocsByUserRecieved = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(
+        REACT_APP_API_HOST + "/document/received/",
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      console.log(response.data.results);
+      let with_select = response.data.results.map((dt) => {
+        let folder_name = "aucun";
+        let selected = false;
+        if (dt.folder_id) {
+          folder_name = "have a name";
+        }
+        return { ...dt, selected, folder_name };
+      });
+      dispatch({
+        type: GET_FICHIER(),
+        value: with_select,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+// ************************** Partager **************************
+export const ShareOneDoc = (id, users, callback) => {
+  console.log({ users: [...users], documents: [{ id: id }] });
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(
+        REACT_APP_API_HOST + "/document/send_to_users/",
+
+        { users: [...users], documents: [{ id: id }] },
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      dispatch({
+        type: SuccessSnack(),
+        value: response.data.success,
+      });
+      callback();
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const ShareMultipleDocs = (ids, users, callback) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(
+        REACT_APP_API_HOST + "/document/send_to_users/",
+        {
+          users: [...users],
+          documents: [...ids],
+        },
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      dispatch({
+        type: SuccessSnack(),
+        value: response.data.success,
+      });
+      callback();
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
 
 const data2 = [
   {

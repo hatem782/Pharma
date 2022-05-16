@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Authorization } from "./Headers";
+import { Authorization, getToken } from "./Headers";
 import { SetToken, SetUser } from "../keys/Users.keys";
 import { ErrorSnack, SuccessSnack } from "../keys/Snack";
 
@@ -209,7 +209,7 @@ const deleteToken = () => {
 };
 
 const Logout = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/users/auth/logout",
@@ -218,7 +218,7 @@ const Logout = () => {
         },
         {
           headers: {
-            Authorization: `token ${localStorage.getItem("pbird_token")}`,
+            Authorization: `token ${getToken(getState)}`,
           },
         }
       );
@@ -250,19 +250,6 @@ const Reset_pass = (user, callback) => {
         value: response.data.token,
       });
       localStorage.setItem("pbird_verif_token", response.data.token);
-
-      // send the token => serveer will send 6 verif number
-      // const response2 = await axios.put(
-      //   REACT_APP_API_HOST + "/user/send_otp/",
-      //   { ...user },
-      //   {
-      //     headers: {
-      //       Authorization: `token ${response.data.token}`,
-      //     },
-      //   }
-      // );
-      // console.log(response2.data);
-
       dispatch({
         type: SuccessSnack(),
         value: "message de 6 chiffre a été envoyé",

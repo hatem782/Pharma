@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStyles } from "./MenuPrincipalStyle";
 import folderIcon from "../../../../assets/images/Folder.png";
 import H1 from "../../../../components/Typography/H1";
@@ -6,6 +6,11 @@ import H1 from "../../../../components/Typography/H1";
 import Button from "../../../../components/Buttons/Button";
 import Spinner from "../../../../components/Spinner/SpinVer";
 import { ltoa } from "../../../../functions/help";
+import {
+  UploadFile,
+  GetDocsByUser,
+} from "../../../../store/actions/Fichier.action";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Table,
@@ -39,6 +44,7 @@ function MenuPrincipal() {
 
 const Filedrag = () => {
   const css = useStyles();
+  const dispatch = useDispatch();
   const [uploading, setuploading] = useState({
     up: false,
     value: 0,
@@ -67,22 +73,25 @@ const Filedrag = () => {
     document.getElementById("dragZone").classList.remove(css.dragging);
     // getting files from drag zone
     let files = ltoa(e.dataTransfer.files);
-    console.log(files);
+    console.log(files[0]);
+    dispatch(UploadFile(files[0]));
+
     // creating form data
-    let formData = new FormData();
+    /*let formData = new FormData();
 
     // preparing data to be sended via APIs
     files.forEach((file) => {
-      formData.append("file[]", file);
+      formData.append("files", file);
     });
     console.log(formData);
-    console.log(formData.getAll("file[]"));
+    console.log(formData.getAll("files"));
+*/
 
     // fake file sending
     let i = 0;
     let tm = setInterval(() => {
       i++;
-      console.log(i);
+      //console.log(i);
       setuploading({ up: true, value: i, done: false });
       if (i === 100) {
         setuploading({ up: true, value: i, done: true });
@@ -149,6 +158,10 @@ const Filedrag = () => {
 
 function FoldersTable() {
   const css = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetDocsByUser());
+  }, []);
   return (
     <div className={css.foldes}>
       <Table>

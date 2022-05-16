@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import Dialog from "@mui/material/Dialog";
-import Input from "../../../../../components/Inputs/Input2";
 import Button from "../../../../../components/Buttons/TabButtonRo";
+
+import { useDispatch } from "react-redux";
+import { SendToTrushOne } from "../../../../../store/actions/Dossier.action";
 
 import Slide from "@mui/material/Slide";
 import { makeStyles } from "@mui/styles";
@@ -48,13 +50,13 @@ const useStyles = makeStyles((theme) => ({
 
 const DeleteItem = (props) => {
   const { dialog, handleClose } = props;
-  const { active } = dialog;
+  const { active, value } = dialog;
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  //   const Submit = () => {
-  //     AddGal(Item);
-  //     handleClose();
-  //   };
+  const handleSubmit = () => {
+    dispatch(SendToTrushOne(value, handleClose));
+  };
 
   return (
     <div>
@@ -68,7 +70,7 @@ const DeleteItem = (props) => {
         <div className={classes.main}>
           <h3>Supprimer un dossier</h3>
           <p>vous êtes sure de supprimer ce dossier ?</p>
-          <Button>DeleteItem</Button>
+          <Button onClick={handleSubmit}>Supprimer</Button>
         </div>
       </Dialog>
     </div>

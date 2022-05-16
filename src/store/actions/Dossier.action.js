@@ -43,7 +43,7 @@ export const RenameFolder = (id, name, callback) => {
       console.log(response);
       dispatch({
         type: SuccessSnack(),
-        value: "folder name updated",
+        value: response.sucssess,
       });
       callback();
       dispatch(GetAllByUser());
@@ -175,6 +175,47 @@ export const ShareMultipleFolders = (ids, users, callback) => {
       callback();
     } catch (error) {
       console.log(error.response);
+    }
+  };
+};
+
+export const SendToTrushMultiple = (ids, callback) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(
+        REACT_APP_API_HOST + "/trash/send_folders/",
+        {
+          data: { folders: [...ids] },
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      dispatch(GetAllByUser());
+      callback();
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const SendToTrushOne = (id, callback) => {
+  console.log(id);
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(
+        REACT_APP_API_HOST + "/trash/send_folders/",
+        {
+          data: { folders: [{ id: id }] },
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      dispatch(GetAllByUser());
+      callback();
+    } catch (error) {
+      console.log(error);
     }
   };
 };

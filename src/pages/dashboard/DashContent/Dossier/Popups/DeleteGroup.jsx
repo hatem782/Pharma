@@ -6,6 +6,8 @@ import Button from "../../../../../components/Buttons/TabButtonRo";
 
 import Slide from "@mui/material/Slide";
 import { makeStyles } from "@mui/styles";
+import { useDispatch } from "react-redux";
+import { SendToTrushMultiple } from "../../../../../store/actions/Dossier.action";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -48,13 +50,18 @@ const useStyles = makeStyles((theme) => ({
 
 const DeleteGroup = (props) => {
   const { dialog, handleClose } = props;
-  const { active } = dialog;
+  const { active, value } = dialog;
   const classes = useStyles();
 
-  //   const Submit = () => {
-  //     AddGal(Item);
-  //     handleClose();
-  //   };
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    let ids = value.map((item) => {
+      return { id: item.folder.id };
+    });
+    console.log(ids);
+    dispatch(SendToTrushMultiple(ids, handleClose));
+  };
 
   return (
     <div>
@@ -68,7 +75,7 @@ const DeleteGroup = (props) => {
         <div className={classes.main}>
           <h3>Supprimer un dossier</h3>
           <p>vous êtes sure de supprimer ces dossiers ?</p>
-          <Button>Supprimer tout</Button>
+          <Button onClick={handleSubmit}>Supprimer tout</Button>
         </div>
       </Dialog>
     </div>

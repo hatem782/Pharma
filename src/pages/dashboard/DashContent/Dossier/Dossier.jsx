@@ -103,7 +103,12 @@ function Dossier() {
     );
   };
   const openDelAll = () => {
-    openDial("delete_all", null);
+    openDial(
+      "delete_all",
+      selData.filter((item) => {
+        return item.selected;
+      })
+    );
   };
   const openCreate = () => {
     openDial("create", null);
@@ -220,13 +225,13 @@ const OneFolder = ({ item, handleSelect }) => {
     setdialog({ active: false, type: "", value: null });
   };
   const openQrcode = () => {
-    openDial("qrcode", null);
+    openDial("qrcode", item.folder.qr_code);
   };
   const openRename = () => {
     openDial("rename", item.folder);
   };
   const openDelete = () => {
-    openDial("delete", null);
+    openDial("delete", item.folder.id);
   };
   const openShare = () => {
     openDial("share", item.folder.id);

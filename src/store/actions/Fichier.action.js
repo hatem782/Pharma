@@ -29,7 +29,9 @@ export const GetAllFichier = () => {
 export const UploadFile = (file, callback) => {
   console.log(file);
   let body = new FormData();
-  body.append("files", file);
+  body.append("file", file);
+  console.log(body);
+  console.log(body.getAll("file"));
   return async (dispatch, getState) => {
     try {
       const response = await axios.post(

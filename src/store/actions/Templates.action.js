@@ -26,7 +26,7 @@ export const GenerateTemplate = (tempalte, callback) => {
         type: SuccessSnack(),
         value: "Template a été gérérer avec succée",
       });
-      dispatch(GetAllTemplates());
+      GetAllTemplates();
       callback();
     } catch (error) {
       console.log(error.response);

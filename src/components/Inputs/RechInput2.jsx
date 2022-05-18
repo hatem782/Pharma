@@ -40,11 +40,11 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RechInput2() {
+export default function RechInput2({ onChange, value }) {
   const css = useStyles();
   return (
     <div className={css.input}>
-      <Input placeholder="Recherche ..." />
+      <Input onChange={onChange} value={value} placeholder="Recherche ..." />
       <img src={img} />
     </div>
   );

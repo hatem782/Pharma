@@ -123,13 +123,13 @@ function Dossier() {
         <div className="part1">
           <h4>Affichage</h4>
           <div className="claned-filter">
-            <Calendar />
+            {/* <Calendar onChange={() => {}} /> */}
           </div>
           <div className="source-filter">
-            <EditedSelect />
+            {/* <EditedSelect onChange={() => {}} /> */}
           </div>
           <div className="rech-filter">
-            <RechInput />
+            {/* <RechInput onChange={() => {}} /> */}
           </div>
         </div>
         <div className="part2">

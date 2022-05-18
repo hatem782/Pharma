@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { makeStyles } from "@mui/styles";
 
@@ -89,22 +89,50 @@ export const useStyles = makeStyles((theme) => ({
 }));
 function EditedSelect(props) {
   const css = useStyles();
-  const { label, name, type = "text", value, onChange } = props;
+  const {
+    label,
+    name,
+    type = "text",
+    value,
+    items = [],
+    initial,
+    onChange,
+  } = props;
+  const [selected, setSelected] = useState("");
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    setSelected(items[initial].value);
+    setTitle(items[initial].title);
+  }, [initial]);
+
+  useEffect(() => {
+    onChange(selected);
+  }, [selected]);
+
   return (
     <div className={css.main}>
       <label className={css.label}>{label}</label>
       <input
-        onChange={onChange}
-        value={value}
-        type={type}
-        name={name}
+        //onChange={onChange}
+        value={title}
         className={css.input}
         placeholder="select an element"
       />
       <img src={img} className="icon" />
       <div className="content">
         {items.map((item, key) => {
-          return <Item key={key} onClick={() => {}} item={item} />;
+          return (
+            <Item
+              key={key}
+              onClick={() => {
+                setSelected(item.value);
+                setTitle(item.title);
+              }}
+              item={item}
+              selected={selected}
+            />
+          );
         })}
       </div>
     </div>
@@ -127,12 +155,17 @@ const useStyles2 = makeStyles((theme) => ({
     },
 
     "& .puce": {
-      backgroundColor: theme.palette.primary.main,
-      height: 10,
-      width: 10,
+      height: 12,
+      width: 12,
       borderRadius: 2,
       margin: "0px 10px 0px 0px",
       display: "block",
+      border: `solid 3px ${theme.palette.primary.main}`,
+    },
+    "& .selected": {
+      "& .puce": {
+        backgroundColor: theme.palette.primary.main,
+      },
     },
     "& .title": {
       color: "#454F63",
@@ -145,35 +178,15 @@ const useStyles2 = makeStyles((theme) => ({
   },
 }));
 
-const Item = ({ item, onClick }) => {
+const Item = ({ item, selected, onClick }) => {
   const css = useStyles2();
 
   return (
     <div className={css.main} onClick={onClick}>
-      <div className="main-text">
+      <div className={`main-text ${selected === item.value ? "selected" : ""}`}>
         <span className="puce" />
         <p className="title">{item.title}</p>
       </div>
-      <p className="countity">({item.number})</p>
     </div>
   );
 };
-
-const items = [
-  {
-    title: "source1",
-    number: 22,
-  },
-  {
-    title: "source1",
-    number: 35,
-  },
-  {
-    title: "source1",
-    number: 17,
-  },
-  {
-    title: "source1",
-    number: 6,
-  },
-];

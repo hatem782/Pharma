@@ -4,7 +4,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "./Calendar.css";
 
-export default function App() {
+export default function App({ onChange }) {
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -14,7 +14,8 @@ export default function App() {
   ]);
 
   useEffect(() => {
-    console.log(state);
+    let { startDate, endDate } = state[0];
+    onChange({ start: startDate, end: endDate });
   }, [state]);
 
   return (

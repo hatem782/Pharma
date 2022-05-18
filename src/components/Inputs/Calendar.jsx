@@ -95,16 +95,16 @@ function Calendar(props) {
     <div className={css.main}>
       <label className={css.label}>{label}</label>
       <input
-        onChange={onChange}
-        value={value}
+        //onChange={onChange}
+        //value={value}
         type={type}
         name={name}
         className={css.input}
-        placeholder="00/00 to 00/00"
+        placeholder="yyyy-mm-dd to yyyy-mm-dd"
       />
       <img src={img} className="icon" />
       <div className="content">
-        <DT />
+        <DT onChange={onChange} />
       </div>
     </div>
   );

@@ -25,7 +25,6 @@ import threp from "../../../../assets/svgs/icons/Groupe 17360.svg";
 import EditedSelect from "../../../../components/Inputs/EditedSelect";
 import RechInput from "../../../../components/Inputs/RechInput2";
 // dialogs
-import Renommer from "./Popups/Renommer";
 import QRcode from "./Popups/QRcode";
 import DeleteItem from "./Popups/DeleteItem";
 import Partager from "./Popups/Partager";
@@ -33,10 +32,49 @@ import DeleteGroup from "./Popups/DeleteGroup";
 import PartagerAll from "./Popups/PartagerAll";
 import ToFolderGroup from "./Popups/ToFolderGroup";
 
+const SourceList = [
+  {
+    title: "Telechargée",
+    value: "UPLOADED",
+  },
+  {
+    title: "Partagée",
+    value: "SHARED",
+  },
+  {
+    title: "Générée",
+    value: null,
+  },
+  {
+    title: "Tout",
+    value: "all",
+  },
+];
+
 function Fichier() {
   const css = useStyles();
   const [nbSelect, set_nbSelect] = useState(0);
   const [selected, set_selected] = useState([]);
+  // FILTER SECTION
+
+  const [filter, setFilter] = useState({
+    name: "",
+    source: "",
+    date: { start: "", end: "" },
+  });
+
+  const setFilterName = (e) => {
+    setFilter({ ...filter, name: e.target.value });
+  };
+
+  const setFiltersource = (val) => {
+    setFilter({ ...filter, source: val });
+  };
+
+  const setFilterdate = (val) => {
+    setFilter({ ...filter, date: val });
+  };
+
   // POPUP FOR DELETE-UPDATE ALL
   const [dialog, setdialog] = useState({
     active: false,
@@ -69,13 +107,17 @@ function Fichier() {
         <div className="part1">
           <h4>Affichage</h4>
           <div className="claned-filter">
-            <Calendar />
+            <Calendar onChange={setFilterdate} />
           </div>
           <div className="source-filter">
-            <EditedSelect />
+            <EditedSelect
+              items={SourceList}
+              initial={3}
+              onChange={setFiltersource}
+            />
           </div>
           <div className="rech-filter">
-            <RechInput />
+            <RechInput onChange={setFilterName} value={filter.name} />
           </div>
         </div>
         <div className="part2">
@@ -104,6 +146,7 @@ function Fichier() {
         nbSelect={nbSelect}
         set_nbSelect={set_nbSelect}
         set_selected={set_selected}
+        filter={filter}
       />
       {dialog.type === "delete_all" ? (
         <DeleteGroup dialog={dialog} handleClose={closeDial} />
@@ -124,7 +167,7 @@ function Fichier() {
   );
 }
 
-function FilesTable({ nbSelect, set_nbSelect, set_selected }) {
+function FilesTable({ nbSelect, set_nbSelect, set_selected, filter }) {
   const data = useSelector((state) => state.Fichier);
   const dispatch = useDispatch();
   const [selData, setSelData] = useState([...data]);
@@ -136,6 +179,23 @@ function FilesTable({ nbSelect, set_nbSelect, set_selected }) {
   useEffect(() => {
     setSelData(data);
   }, [data]);
+
+  useEffect(() => {
+    let { name, source, date } = filter;
+    setSelData(
+      data.filter((item) => {
+        console.log(item.created);
+        console.log(date.start);
+        return (
+          (item.type === source || source === "all") &&
+          (item.document.title.indexOf(name) !== -1 || name === "") &&
+          ((new Date(item.created) >= date.start &&
+            new Date(item.created) <= date.end) ||
+            (date.start === "" && date.end === ""))
+        );
+      })
+    );
+  }, [filter]);
 
   useEffect(() => {
     set_selected(

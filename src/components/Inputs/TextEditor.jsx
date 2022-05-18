@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertFromHTML, ContentState } from "draft-js";
+import {
+  EditorState,
+  convertFromHTML,
+  ContentState,
+  convertToRaw,
+} from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 function TextEditor(props) {
@@ -25,7 +31,9 @@ function TextEditor(props) {
   }, [data]);
 
   const onEditorStateChange = (newData) => {
-    let html = stateToHTML(newData.getCurrentContent());
+    console.log();
+    //let html = stateToHTML(newData.getCurrentContent());
+    let html = draftToHtml(convertToRaw(newData.getCurrentContent()));
     onChange(html);
     setEditor(newData);
   };

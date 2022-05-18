@@ -29,6 +29,10 @@ export const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: "670px",
       border: "solid 2px black",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      padding: "20px",
       [theme.breakpoints.down("xl")]: {
         height: "500px",
         border: "solid 1px black",

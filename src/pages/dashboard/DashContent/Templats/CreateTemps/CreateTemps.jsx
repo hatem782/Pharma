@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useStyles } from "./CreateTemps.styles";
 import Grid from "@mui/material/Grid";
 import TextEditor from "../../../../../components/Inputs/TextEditor";
@@ -11,6 +11,11 @@ import Partager from "./popups/Partager";
 function CreateTemps() {
   const css = useStyles();
   const [Text, setText] = useState({ header: "", body: "", footer: "" });
+
+  useEffect(() => {
+    console.log(Text);
+  }, [Text]);
+
   const setHeader = (text) => {
     setText({ ...Text, header: text });
   };
@@ -45,7 +50,26 @@ function CreateTemps() {
       <div className="create-temp">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={6} lg={4} xl={4}>
-            <div className="model"></div>
+            <div className="model">
+              <div className="header">
+                <div
+                  className="subInfo"
+                  dangerouslySetInnerHTML={{ __html: Text.header }}
+                />
+              </div>
+              <div className="body">
+                <div
+                  className="subInfo"
+                  dangerouslySetInnerHTML={{ __html: Text.body }}
+                />
+              </div>
+              <div className="footer">
+                <div
+                  className="subInfo"
+                  dangerouslySetInnerHTML={{ __html: Text.footer }}
+                />
+              </div>
+            </div>
             <a className="previsualise" href="#">
               Prévisualiser
             </a>

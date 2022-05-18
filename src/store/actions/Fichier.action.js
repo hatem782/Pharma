@@ -91,6 +91,20 @@ export const UploadFile2 = (file, callback) => {
   };
 };
 
+// get folder name by id
+const GetFNBId = async (id, getState) => {
+  try {
+    const response2 = await axios.get(REACT_APP_API_HOST + `/folder/${id}/`, {
+      headers: {
+        Authorization: `token ${getToken(getState)}`,
+      },
+    });
+    return response2.data.folder.name;
+  } catch (erreur) {
+    return "aucun";
+  }
+};
+
 export const GetDocsByUser = () => {
   return async (dispatch, getState) => {
     try {
@@ -100,14 +114,18 @@ export const GetDocsByUser = () => {
         },
       });
       console.log(response.data.results);
-      let with_select = response.data.results.map((dt) => {
-        let folder_name = "aucun";
-        let selected = false;
-        if (dt.folder_id) {
-          folder_name = "have a name";
-        }
-        return { ...dt, selected, folder_name };
-      });
+      let with_select = await Promise.all(
+        response.data.results.map(async (dt) => {
+          let folder_name = "aucun";
+          let selected = false;
+          if (dt.folder_id) {
+            folder_name = await GetFNBId(dt.folder_id, getState);
+            console.log(dt.folder_id);
+          }
+          return { ...dt, selected, folder_name };
+        })
+      );
+      console.log(with_select);
       dispatch({
         type: GET_FICHIER(),
         value: with_select,
@@ -226,6 +244,55 @@ export const ShareMultipleDocs = (ids, users, callback) => {
       callback();
     } catch (error) {
       console.log(error.response);
+    }
+  };
+};
+
+export const SendDocToFolder = (ids, folder, callback) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.put(
+        REACT_APP_API_HOST + "/document/transfer_to_folder/",
+        {
+          documents: [...ids],
+          folder_id: folder,
+        },
+        {
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      console.log(response);
+      dispatch({
+        type: SuccessSnack(),
+        value: response.data.success,
+      });
+      dispatch(GetDocsByUser());
+      callback();
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const SendToTrush = (ids, callback) => {
+  console.log(ids);
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(
+        REACT_APP_API_HOST + "/trash/send_documents/",
+        {
+          data: { documents: [...ids] },
+          headers: {
+            Authorization: `token ${getToken(getState)}`,
+          },
+        }
+      );
+      dispatch(GetDocsByUser());
+      callback();
+    } catch (error) {
+      console.log(error);
     }
   };
 };

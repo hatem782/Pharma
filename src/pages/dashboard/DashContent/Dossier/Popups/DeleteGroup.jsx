@@ -73,7 +73,7 @@ const DeleteGroup = (props) => {
         scroll={"paper"}
       >
         <div className={classes.main}>
-          <h3>Supprimer un dossier</h3>
+          <h3>Supprimer les dossiers selectionnées</h3>
           <p>vous êtes sure de supprimer ces dossiers ?</p>
           <Button onClick={handleSubmit}>Supprimer tout</Button>
         </div>

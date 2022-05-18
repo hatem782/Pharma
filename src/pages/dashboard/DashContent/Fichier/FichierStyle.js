@@ -39,6 +39,9 @@ export const useStyles = makeStyles((theme) => ({
       "& .red-btn": {
         backgroundColor: "#F00",
       },
+      "& .yello-btn": {
+        backgroundColor: "#FFD950",
+      },
     },
 
     "& h4": {

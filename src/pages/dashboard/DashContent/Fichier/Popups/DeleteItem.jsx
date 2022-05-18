@@ -6,6 +6,8 @@ import Button from "../../../../../components/Buttons/TabButtonRo";
 
 import Slide from "@mui/material/Slide";
 import { makeStyles } from "@mui/styles";
+import { useDispatch } from "react-redux";
+import { SendToTrush } from "../../../../../store/actions/Fichier.action";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -46,15 +48,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DeleteItem = (props) => {
+const DeleteGroup = (props) => {
   const { dialog, handleClose } = props;
-  const { active } = dialog;
+  const { active, value } = dialog;
   const classes = useStyles();
 
-  //   const Submit = () => {
-  //     AddGal(Item);
-  //     handleClose();
-  //   };
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    let ids = value.map((item) => {
+      return { id: item.document.id };
+    });
+    console.log(ids);
+    dispatch(SendToTrush(ids, handleClose));
+  };
 
   return (
     <div>
@@ -66,13 +73,13 @@ const DeleteItem = (props) => {
         scroll={"paper"}
       >
         <div className={classes.main}>
-          <h3>Supprimer une fichier</h3>
-          <p>vous êtes sure de supprimer cette fichier ?</p>
-          <Button>DeleteItem</Button>
+          <h3>Supprimer un fichier</h3>
+          <p>vous êtes sure de supprimer cet fichiers ?</p>
+          <Button onClick={handleSubmit}>Supprimer</Button>
         </div>
       </Dialog>
     </div>
   );
 };
 
-export default DeleteItem;
+export default DeleteGroup;

@@ -31,6 +31,7 @@ import DeleteItem from "./Popups/DeleteItem";
 import Partager from "./Popups/Partager";
 import DeleteGroup from "./Popups/DeleteGroup";
 import PartagerAll from "./Popups/PartagerAll";
+import ToFolderGroup from "./Popups/ToFolderGroup";
 
 function Fichier() {
   const css = useStyles();
@@ -39,7 +40,7 @@ function Fichier() {
   // POPUP FOR DELETE-UPDATE ALL
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // delete_all / share_all
+    type: "", // delete_all / share_all / to_folder
     value: null,
   });
   const openDial = (type, value) => {
@@ -54,6 +55,9 @@ function Fichier() {
   };
   const openDelAll = () => {
     openDial("delete_all", selected);
+  };
+  const openToFolder = () => {
+    openDial("to_folder", selected);
   };
 
   return (
@@ -85,6 +89,9 @@ function Fichier() {
           ) : (
             <div className="group">
               <Button onClick={openShareAll}>Partager</Button>
+              <Button onClick={openToFolder} className="yello-btn">
+                Aff Dossier
+              </Button>
               <Button onClick={openDelAll} className="red-btn">
                 Supprimer
               </Button>
@@ -93,7 +100,7 @@ function Fichier() {
         </div>
       </div>
       <br />
-      <FoldersTable
+      <FilesTable
         nbSelect={nbSelect}
         set_nbSelect={set_nbSelect}
         set_selected={set_selected}
@@ -108,11 +115,16 @@ function Fichier() {
       ) : (
         <></>
       )}
+      {dialog.type === "to_folder" ? (
+        <ToFolderGroup dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
     </main>
   );
 }
 
-function FoldersTable({ nbSelect, set_nbSelect, set_selected }) {
+function FilesTable({ nbSelect, set_nbSelect, set_selected }) {
   const data = useSelector((state) => state.Fichier);
   const dispatch = useDispatch();
   const [selData, setSelData] = useState([...data]);
@@ -195,7 +207,7 @@ const OneDoc = ({ item, handleSelect }) => {
   // the popup state to open and close **************************
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // delete / rename / qrcode / share
+    type: "", // delete / rename / qrcode / share / to_folder
     value: null,
   });
   const openDial = (type, value) => {
@@ -208,11 +220,14 @@ const OneDoc = ({ item, handleSelect }) => {
   const openQrcode = () => {
     openDial("qrcode", null);
   };
-  const openRename = () => {
-    openDial("rename", null);
-  };
+  // const openRename = () => {
+  //   openDial("rename", title);
+  // };
   const openDelete = () => {
-    openDial("delete", null);
+    openDial("delete", [item]);
+  };
+  const openToFolder = () => {
+    openDial("to_folder", [item]);
   };
   const openShare = () => {
     openDial("share", document.id);
@@ -279,9 +294,13 @@ const OneDoc = ({ item, handleSelect }) => {
                 <MenuItem>
                   <TabButtonYf onClick={openShare}>Partager</TabButtonYf>
                 </MenuItem>
-                <Divider />
+                {/* <Divider />
                 <MenuItem>
                   <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
+                </MenuItem> */}
+                <Divider />
+                <MenuItem>
+                  <TabButtonGf onClick={openToFolder}>Aff Dossier</TabButtonGf>
                 </MenuItem>
                 <Divider />
                 <MenuItem>
@@ -292,11 +311,11 @@ const OneDoc = ({ item, handleSelect }) => {
           </div>
         </Td>
         {/************************  POPUPS ************************/}
-        {dialog.type === "rename" ? (
+        {/* {dialog.type === "rename" ? (
           <Renommer dialog={dialog} handleClose={closeDial} />
         ) : (
           <></>
-        )}
+        )} */}
         {dialog.type === "qrcode" ? (
           <QRcode dialog={dialog} handleClose={closeDial} />
         ) : (
@@ -309,6 +328,11 @@ const OneDoc = ({ item, handleSelect }) => {
         )}
         {dialog.type === "share" ? (
           <Partager dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
+        {dialog.type === "to_folder" ? (
+          <ToFolderGroup dialog={dialog} handleClose={closeDial} />
         ) : (
           <></>
         )}

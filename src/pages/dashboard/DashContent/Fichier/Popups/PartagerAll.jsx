@@ -154,8 +154,7 @@ const PartagerAll = (props) => {
     let documents = value.map((item) => {
       return { id: item.document.id };
     });
-    console.log(users, documents);
-    dispatch(ShareMultipleDocs(value, users, handleClose));
+    dispatch(ShareMultipleDocs(documents, users, handleClose));
   };
 
   return (

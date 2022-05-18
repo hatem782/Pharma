@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import Input from "../../../../../components/Inputs/Input2";
 import Button from "../../../../../components/Buttons/TabButtonGf";
-import { RenameFolder } from "../../../../../store/actions/Dossier.action";
+import { RenameDoc } from "../../../../../store/actions/Fichier.action";
 import { useDispatch } from "react-redux";
 
 import Slide from "@mui/material/Slide";
@@ -52,11 +52,10 @@ const Renommer = (props) => {
   const { active, value } = dialog;
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [name, setname] = useState(value.folder.name);
+  const [name, setname] = useState(value);
 
   useEffect(() => {
-    setname(value.folder.name);
-    console.log(value.folder.name);
+    setname(value);
   }, [value]);
 
   const inputHandler = (e) => {
@@ -80,7 +79,7 @@ const Renommer = (props) => {
           <h3>Renommer votre fichier</h3>
           <p>Nom du fichier</p>
           <Input
-            onChanle={inputHandler}
+            onChange={inputHandler}
             value={name}
             placeholder="Entrer le nom de votre dossier"
           />

@@ -47,6 +47,37 @@ export const useStyles = makeStyles((theme) => ({
       fontWeight: "600",
     },
   },
+  model: {
+    width: "180px",
+    height: "252px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "20px",
+    margin: "0px 20px",
+    position: "relative",
+    cursor: "pointer",
+    "& .paper": {
+      border: "solid 2px black",
+      width: "620px",
+      height: "877px",
+      position: "absolute",
+      transform: "scale(0.3)",
+      padding: "40px",
+
+      display: "flex",
+      justifyContent: "space-between",
+      flexDirection: "column",
+    },
+    [theme.breakpoints.down("xl")]: {
+      /*height: "500px",
+      border: "solid 1px black",*/
+    },
+  },
+
+  "& .body": {
+    marginTop: "50px",
+  },
   foldes: {
     padding: "0px 0px 0px 0px",
 

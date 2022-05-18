@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStyles } from "./AllTemps.styles";
 import Button from "../../../../../components/Buttons/SubmitBtn";
@@ -19,21 +19,34 @@ import {
   Tr,
 } from "../../../../../components/Table/TableFolder";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GetAllTemplates,
+  SetOneTemplate,
+} from "../../../../../store/actions/Templates.action";
+import { GetDocsByUserCreated } from "../../../../../store/actions/Fichier.action";
+
 function AllTemps() {
   const css = useStyles();
   const navig = useNavigate();
+  const dispatch = useDispatch();
+  const templates = useSelector((state) => state.Templates);
 
   const toCreatePage = () => {
     navig("/dashboard/templates/create");
   };
+
+  useEffect(() => {
+    dispatch(GetAllTemplates());
+  }, []);
 
   return (
     <div className={css.main}>
       <h4>Mes fichiers</h4>
       <div className="templates">
         <div className="items">
-          {Temps.map((item, key) => {
-            return <TempCard item={item} key={key} />;
+          {templates.map((item, key) => {
+            return <OneTemp Text={item} key={key} />;
           })}
         </div>
         <Button onClick={toCreatePage}>
@@ -49,24 +62,51 @@ function AllTemps() {
 
 export default AllTemps;
 
-const Temps = [
-  { title: "Document vierge", img: fak1 },
-  { title: "Template 1", img: fak2 },
-  { title: "Template 2", img: fak3 },
-];
-const TempCard = ({ item }) => {
+const OneTemp = ({ Text }) => {
   const css = useStyles();
-  const { img, title } = item;
+  const dispatch = useDispatch();
+  const navig = useNavigate();
+
+  const StartUpdate = () => {
+    dispatch(SetOneTemplate(Text));
+    navig("/dashboard/templates/modifier");
+  };
   return (
-    <div className={css.card}>
-      <img src={img} alt="template" />
-      <p>{title}</p>
+    <div className={css.model} onClick={StartUpdate}>
+      <div className="paper">
+        <div className="g1">
+          <div className="header">
+            <div
+              className="subInfo"
+              dangerouslySetInnerHTML={{ __html: Text.header }}
+            />
+          </div>
+          <div className="body">
+            <div
+              className="subInfo"
+              dangerouslySetInnerHTML={{ __html: Text.body }}
+            />
+          </div>
+        </div>
+        <div className="footer">
+          <div
+            className="subInfo"
+            dangerouslySetInnerHTML={{ __html: Text.footer }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
 function FoldersTable() {
   const css = useStyles();
+  const files = useSelector((state) => state.Fichier);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GetDocsByUserCreated());
+  }, []);
+
   return (
     <div className={css.foldes}>
       <Table>
@@ -78,41 +118,35 @@ function FoldersTable() {
           </Thr>
         </thead>
         <tbody>
-          <OneFolder />
-          <OneFolder />
-          <OneFolder />
-          <OneFolder />
-          <OneFolder />
-          <OneFolder />
+          {files.map((file, key) => {
+            return <OneDoc file={file} key={key} />;
+          })}
         </tbody>
       </Table>
     </div>
   );
 }
 
-const OneFolder = (props) => {
-  const [selected, setSelected] = useState(false);
-
-  const click = () => {
-    setSelected(!selected);
-  };
+const OneDoc = ({ file }) => {
+  const { id, selected, type, folder_name, created, document } = file;
+  const { title, size, qr_code } = document;
 
   return (
     <Tr>
       <Td>
         <div className={"folder-name"}>
-          <span>Infection palustre</span>
+          <span>{title}</span>
           <span className="space50" />
         </div>
       </Td>
       <Td>
         <span className="folder-name">
-          12/01/2022 12:35h <span className="space50" />
+          {new Date(created).toDateString()} <span className="space50" />
         </span>
       </Td>
       <Td>
         <span className="folder-name">
-          200 Ko <span className="space50" />
+          {Math.floor(size / 1024)} ko <span className="space50" />
         </span>
       </Td>
       <Td className="buttons-group">

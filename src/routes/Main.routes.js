@@ -21,6 +21,7 @@ import Dossier from "../pages/dashboard/DashContent/Dossier/Dossier";
 import Fichier from "../pages/dashboard/DashContent/Fichier/Fichier";
 import AllTempsier from "../pages/dashboard/DashContent/Templats/AllTemps/AllTemps";
 import CreateTemps from "../pages/dashboard/DashContent/Templats/CreateTemps/CreateTemps";
+import ModifierTemps from "../pages/dashboard/DashContent/Templats/ModifierTemps/ModifierTemps";
 // ************************** TOP BAR *******************************
 
 import TopBar from "../Layouts/TopBar/TopBar";
@@ -143,6 +144,16 @@ export const NoNavRoutes = [
       <>
         <TopBarWithRech />
         <CreateTemps />
+      </>
+    ),
+  },
+  {
+    mainUrl: "/dashboard",
+    url: "/templates/modifier",
+    compo: (
+      <>
+        <TopBarWithRech />
+        <ModifierTemps />
       </>
     ),
   },

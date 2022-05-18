@@ -4,6 +4,7 @@ import { SetToken, SetUser } from "../keys/Users.keys";
 import { ErrorSnack, SuccessSnack, CloseSnack } from "../keys/Snack";
 import { GET_DOSSIER } from "../keys/Dosser.key";
 import { GET_FICHIER } from "../keys/Fichier.key";
+import { GET_TEMPLATE, GET_TEMPLATES } from "../keys/Template.keys";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -57,11 +58,35 @@ const Fichier = (state = InitialFichier, action) => {
   }
 };
 
+// TEMPLATES REDUCER
+const InitialTemplates = [];
+const Templates = (state = InitialTemplates, action) => {
+  switch (action.type) {
+    case GET_TEMPLATES():
+      return action.value;
+    default:
+      return state;
+  }
+};
+
+// ONE TEMPLATE REDUCER - FOR UPDATE -
+const InitialTemplate = { header: " ", body: " ", footer: " " };
+const Template = (state = InitialTemplate, action) => {
+  switch (action.type) {
+    case GET_TEMPLATE():
+      return action.value;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   User: User,
   Snack: Snack,
   Dossier: Dossier,
   Fichier: Fichier,
+  Templates: Templates,
+  Template: Template,
 });
 
 //const load = loadFromLocal();

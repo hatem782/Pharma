@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useStyles } from "./CreateTemps.styles";
+import { useStyles } from "./ModifierTemps.styles";
 import Grid from "@mui/material/Grid";
 import TextEditor from "../../../../../components/Inputs/TextEditor";
 
 import TabButtonGf from "../../../../../components/Buttons/TabButtonGf";
-import { useDispatch } from "react-redux";
-import { GenerateTemplate } from "../../../../../store/actions/Templates.action";
+import { useDispatch, useSelector } from "react-redux";
+import { UpdateTemplate } from "../../../../../store/actions/Templates.action";
 import Partager from "./popups/Partager";
 import Preview from "./popups/Preview";
+import GenerateDoc from "./popups/GenerateDoc";
 
 import { useNavigate } from "react-router-dom";
 
-function CreateTemps() {
+function ModifierTemps() {
   const css = useStyles();
   const [Text, setText] = useState({ header: " ", body: " ", footer: " " });
+  const data = useSelector((state) => state.Template);
   const dispatch = useDispatch();
   const navig = useNavigate();
 
-  const GenerateTemp = () => {
-    dispatch(GenerateTemplate(Text, BackToTemplates));
+  useEffect(() => {
+    setText({ ...data });
+  }, [data]);
+
+  const UpdateTemp = () => {
+    dispatch(UpdateTemplate(Text, BackToTemplates));
   };
 
   const BackToTemplates = () => {
     navig("/dashboard/templates");
   };
-
-  useEffect(() => {
-    console.log(Text);
-  }, [Text]);
 
   const setHeader = (text) => {
     setText({ ...Text, header: text });
@@ -42,7 +44,7 @@ function CreateTemps() {
   // ********* popups ********
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // share / preview
+    type: "", // share / preview / GenDocNoSign / GenDocWiSign
     value: null,
   });
   const openDial = (type, value) => {
@@ -59,6 +61,10 @@ function CreateTemps() {
 
   const openPreview = () => {
     openDial("preview", Text);
+  };
+
+  const openGenDocNoSig = () => {
+    openDial("GenDocNoSign", Text.id);
   };
 
   return (
@@ -121,8 +127,10 @@ function CreateTemps() {
               <div className="buttons">
                 {/* <TabButtonGf>Sauvegarder</TabButtonGf>
                 <TabButtonGf onClick={openShare}>Partager</TabButtonGf> */}
-                <TabButtonGf onClick={GenerateTemp}>Génerer</TabButtonGf>
-                <TabButtonGf>Génerer Document</TabButtonGf>
+                <TabButtonGf onClick={UpdateTemp}>Modifier</TabButtonGf>
+                <TabButtonGf onClick={openGenDocNoSig}>
+                  Génerer Document (sans signature)
+                </TabButtonGf>
               </div>
             </div>
           </Grid>
@@ -138,8 +146,13 @@ function CreateTemps() {
       ) : (
         <></>
       )}
+      {dialog.type === "GenDocNoSign" ? (
+        <GenerateDoc dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
 
-export default CreateTemps;
+export default ModifierTemps;

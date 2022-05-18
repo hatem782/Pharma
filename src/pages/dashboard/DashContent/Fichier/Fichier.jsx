@@ -249,7 +249,7 @@ const OneDoc = ({ item, handleSelect }) => {
         </Td>
         <Td>
           <div className={"folder-name"}>
-            <span>{type}</span>
+            <span>{type ? type : "Générée"}</span>
             <span className="space50" />
           </div>
         </Td>
@@ -271,7 +271,7 @@ const OneDoc = ({ item, handleSelect }) => {
         </Td>
         <Td>
           <span className="folder-name">
-            {type} <span className="space50" />
+            {type ? type : "GENEREE"} <span className="space50" />
           </span>
         </Td>
         <Td className="buttons-group">

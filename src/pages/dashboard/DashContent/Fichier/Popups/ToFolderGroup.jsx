@@ -55,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
       "& .folder": {
         margin: "0px 10px",
         transition: "all 0.2s",
+        cursor: "pointer",
+
         "& p": {
           textAlign: "center",
         },

@@ -7,6 +7,7 @@ import {
   GetDocsByUser,
   GetDocsByUserRecieved,
   GetDocsByUserUploaded,
+  GetDocsByUserCreated,
 } from "../../store/actions/Fichier.action";
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -64,7 +65,7 @@ const ListItems = () => {
     "Tous mes fichiers",
     "Fichiers reçus",
     /*"Fichiers envoyés",*/
-    /*"Fichiers créés",*/
+    "Fichiers créés",
     "Fichiers importés",
   ];
 
@@ -77,11 +78,11 @@ const ListItems = () => {
 
       /*case "Fichiers envoyés":
         dispatch(GetDocsByUser());
-        break;
+        break;*/
 
       case "Fichiers créés":
-        dispatch(GetDocsByUser());
-        break;*/
+        dispatch(GetDocsByUserCreated());
+        break;
 
       case "Fichiers importés":
         dispatch(GetDocsByUserUploaded());

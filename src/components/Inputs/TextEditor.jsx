@@ -31,7 +31,6 @@ function TextEditor(props) {
   }, [data]);
 
   const onEditorStateChange = (newData) => {
-    console.log();
     //let html = stateToHTML(newData.getCurrentContent());
     let html = draftToHtml(convertToRaw(newData.getCurrentContent()));
     onChange(html);

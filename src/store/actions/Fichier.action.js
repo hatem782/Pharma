@@ -166,6 +166,37 @@ export const GetDocsByUserUploaded = () => {
   };
 };
 
+export const GetDocsByUserCreated = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(REACT_APP_API_HOST + "/document/user/", {
+        headers: {
+          Authorization: `token ${getToken(getState)}`,
+        },
+      });
+      console.log(response.data.results);
+      let with_select = response.data.results
+        .filter((dt) => {
+          return dt.type === null;
+        })
+        .map((dt) => {
+          let folder_name = "aucun";
+          let selected = false;
+          if (dt.folder_id) {
+            folder_name = "have a name";
+          }
+          return { ...dt, selected, folder_name };
+        });
+      dispatch({
+        type: GET_FICHIER(),
+        value: with_select,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
 export const GetDocsByUserRecieved = () => {
   return async (dispatch, getState) => {
     try {

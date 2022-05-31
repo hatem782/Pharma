@@ -1,24 +1,25 @@
 import React from "react";
-import Button from "@mui/material/Button";
+import Button from "@mui/lab/LoadingButton";
 import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   btn: {
     borderRadius: "5px",
-    border: `solid 2px ${theme.palette.error.main} `,
+    border: `solid 2px ${theme.palette.error.main} !important`,
     outline: "none",
 
-    backgroundColor: "transparent",
-    padding: "6px 20px",
-    margin: "0px 10px",
+    backgroundColor: "transparent !important",
+    padding: "0px 20px",
+    lineHeight: "1.5 !important",
+    margin: "0px 10px ",
 
-    color: theme.palette.error.main,
+    color: `${theme.palette.error.main} !important`,
     fontStyle: "myriad",
     fontSize: "16px",
     fontWeight: "600",
 
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: "flex !important",
+    alignItems: "center !important",
+    justifyContent: "center !important",
 
     transition: "all 0.1s",
     cursor: "pointer",
@@ -44,14 +45,22 @@ const useStyles = makeStyles((theme) => ({
 // RED OUTLINED
 function TabButtonRo(props) {
   const css = useStyles();
-  const { onClick, children, isIcon = false, className } = props;
+  const {
+    onClick,
+    children,
+    isIcon = false,
+    className,
+    loading = false,
+  } = props;
   return (
-    <button
+    <Button
+      variant="contained"
+      loading={loading}
       className={`${css.btn} ${isIcon ? css.iconBtn : ""} ${className} `}
       onClick={onClick}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 

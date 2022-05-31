@@ -53,18 +53,24 @@ const Renommer = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [name, setname] = useState(value.name);
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     setname(value.name);
     console.log(value.name);
   }, [value]);
 
+  const errorCallBack = () => {
+    setDisable(false);
+  };
+
   const inputHandler = (e) => {
     setname(e.target.value);
   };
 
   const Submit = () => {
-    dispatch(RenameFolder(value.id, value.name, handleClose));
+    setDisable(true);
+    dispatch(RenameFolder(value.id, name, handleClose, errorCallBack));
   };
 
   return (
@@ -84,7 +90,9 @@ const Renommer = (props) => {
             value={name}
             placeholder="Entrer le nom de votre dossier"
           />
-          <Button onClick={Submit}>Renommer</Button>
+          <Button loading={disable} onClick={Submit}>
+            Renommer
+          </Button>
         </div>
       </Dialog>
     </div>

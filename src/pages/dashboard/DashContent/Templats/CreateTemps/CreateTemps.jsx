@@ -91,9 +91,9 @@ function CreateTemps() {
                 </div>
               </div>
             </div>
-            <a className="previsualise" onClick={openPreview}>
+            <p className="previsualise" onClick={openPreview}>
               Prévisualiser
-            </a>
+            </p>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={8} xl={8}>
             <div className="text-editers">

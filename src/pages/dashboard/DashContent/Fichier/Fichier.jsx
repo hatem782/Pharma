@@ -7,6 +7,7 @@ import Menu from "../../../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {} from "../../../../functions/help";
 import { GetDocsByUser } from "../../../../store/actions/Fichier.action";
 import {
@@ -55,6 +56,7 @@ function Fichier() {
   const css = useStyles();
   const [nbSelect, set_nbSelect] = useState(0);
   const [selected, set_selected] = useState([]);
+  const navig = useNavigate();
   // FILTER SECTION
 
   const [filter, setFilter] = useState({
@@ -123,7 +125,11 @@ function Fichier() {
         <div className="part2">
           {nbSelect === 0 ? (
             <div className="add">
-              <Button>
+              <Button
+                onClick={() => {
+                  navig("/dashboard/templates");
+                }}
+              >
                 <img style={{ transform: "translateY(2px)" }} src={addimg} />{" "}
                 Nouveau fichier
               </Button>

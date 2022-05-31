@@ -6,44 +6,21 @@ import { ErrorSnack, SuccessSnack } from "../keys/Snack";
 
 const { REACT_APP_API_HOST } = process.env;
 
-/*export const GetAllFichier = () => {
-  return async (dispatch) => {
-    try {
-      let selected_data = data.map((dt, key) => {
-        return { ...dt, selected: false };
-      });
+export const UploadFile = (files, callback) => {
+  const body = new FormData();
+  for (let i = 0; i < files.length; i++) {
+    body.append("files", files[i]);
+  }
 
-      dispatch({
-        type: GET_FICHIER(),
-        value: selected_data,
-      });
-    } catch (error) {
-      console.log(error.response);
-      dispatch({
-        type: ErrorSnack(),
-        value: "can't get data",
-      });
-    }
-  };
-};*/
-
-export const UploadFile = (file, callback) => {
-  console.log(file);
-  let body = new FormData();
-  body.append("file", file);
-  console.log(body);
-  console.log(body.getAll("file"));
   return async (dispatch, getState) => {
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/document/upload_documents/",
-        {
-          body,
-        },
+        body,
         {
           headers: {
+            "content-Type": "multipart/form-data",
             Authorization: `token ${getToken(getState)}`,
-            // "content-Type": "multipart/form-data",
           },
         }
       );
@@ -52,39 +29,8 @@ export const UploadFile = (file, callback) => {
         type: SuccessSnack(),
         value: "Document à été crée avec succée",
       });
-      //callback();
-      //dispatch(GetAllByUser());
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
-};
-
-export const UploadFile2 = (file, callback) => {
-  console.log(file);
-  let formdata = new FormData();
-  formdata.append("file", file);
-  return async (dispatch, getState) => {
-    // https://stackoverflow.com/questions/70313125/not-able-to-send-http-post-request-using-axios
-    try {
-      const response = await axios.post(
-        REACT_APP_API_HOST + "/document/upload_documents/",
-        {
-          file,
-        },
-        {
-          headers: {
-            Authorization: `token ${getToken(getState)}`,
-            // "content-Type": "multipart/form-data",
-          },
-        }
-      );
-      dispatch({
-        type: SuccessSnack(),
-        value: "Document à été crée avec succée",
-      });
-      //callback();
-      //dispatch(GetAllByUser());
+      dispatch(GetDocsByUser());
+      callback();
     } catch (error) {
       console.log(error.response);
     }

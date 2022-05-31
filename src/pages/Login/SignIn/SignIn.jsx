@@ -21,7 +21,7 @@ function SignIn() {
     phone_number: { value: "", error: false },
     password: { value: "", error: false },
   });
-  const [remember, setRemeber] = useState(false);
+  // const [remember, setRemeber] = useState(false);
   const dispatch = useDispatch();
 
   const inputHandler = (e) => {
@@ -31,9 +31,9 @@ function SignIn() {
     });
   };
 
-  const checkboxHandler = (e) => {
-    setRemeber(e.target.checked);
-  };
+  // const checkboxHandler = (e) => {
+  //   setRemeber(e.target.checked);
+  // };
 
   const submit = (e) => {
     e.preventDefault();
@@ -62,7 +62,7 @@ function SignIn() {
       phone_number: form.phone_number.value,
       password: form.password.value,
     };
-    dispatch(login(auth, remember));
+    dispatch(login(auth, true));
   };
 
   return (
@@ -108,11 +108,11 @@ function SignIn() {
                   onChange={inputHandler}
                 />
                 <div className="check-forget">
-                  <CheckBx
+                  {/* <CheckBx
                     value={remember}
                     onChange={checkboxHandler}
                     label="Se souvenir de moi"
-                  />
+                  /> */}
                   <NavLinkEdited to={"/reset_pass"}>
                     Mot de passe oublié ?
                   </NavLinkEdited>

@@ -120,6 +120,9 @@ export const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "flex-end",
       padding: "18px 20px 18px 20px",
+      "& button": {
+        margin: "0px 5px !important",
+      },
 
       "& img": {
         margin: "0px 10px",

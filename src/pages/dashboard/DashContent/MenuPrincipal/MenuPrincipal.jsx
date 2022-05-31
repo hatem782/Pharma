@@ -73,8 +73,7 @@ const Filedrag = () => {
     document.getElementById("dragZone").classList.remove(css.dragging);
     // getting files from drag zone
     let files = ltoa(e.dataTransfer.files);
-    console.log(files[0]);
-    dispatch(UploadFile(files[0]));
+    dispatch(UploadFile(files));
 
     // creating form data
     /*let formData = new FormData();

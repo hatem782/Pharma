@@ -49,12 +49,18 @@ const useStyles = makeStyles((theme) => ({
 const AddFolderPopup = (props) => {
   const { dialog, handleClose } = props;
   const [name, setname] = useState("");
+  const [disable, setDisable] = useState(false);
   const dispatch = useDispatch();
   const { active } = dialog;
   const classes = useStyles();
 
+  const errorCallBack = () => {
+    setDisable(false);
+  };
+
   const Add = () => {
-    dispatch(AddFolder(name, handleClose));
+    setDisable(true);
+    dispatch(AddFolder(name, handleClose, errorCallBack));
   };
 
   return (
@@ -76,7 +82,9 @@ const AddFolderPopup = (props) => {
             }}
             placeholder="nom"
           />
-          <Button onClick={Add}>Créer</Button>
+          <Button loading={disable} onClick={Add}>
+            Créer
+          </Button>
         </div>
       </Dialog>
     </div>

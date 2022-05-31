@@ -6,13 +6,14 @@ export const useStyles = makeStyles((theme) => ({
     padding: "20px 0px 15px 0px",
 
     "& .create-temp": {
-      "& a.previsualise": {
+      "& .previsualise": {
         color: theme.palette.primary.main,
         textAlign: "center",
         display: "block",
         margin: "15px auto 0px auto ",
         fontSize: "18px",
         cursor: "pointer",
+        textDecoration: "underline",
       },
     },
 

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Dialog from "@mui/material/Dialog";
-import Input from "../../../../../components/Inputs/Input2";
-import Button from "../../../../../components/Buttons/TabButtonRo";
+import Button from "../../../../../components/Buttons/TabButtonGf";
 
 import Slide from "@mui/material/Slide";
 import { makeStyles } from "@mui/styles";
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
       marginTop: "20px",
       padding: "12px 40px",
-      backgroundColor: "#F00",
       color: "white",
     },
   },
@@ -51,16 +49,22 @@ const useStyles = makeStyles((theme) => ({
 const DeleteGroup = (props) => {
   const { dialog, handleClose } = props;
   const { active, value } = dialog;
+  const [disable, setDisable] = useState(false);
   const classes = useStyles();
 
   const dispatch = useDispatch();
 
+  const errorCallBack = () => {
+    setDisable(false);
+  };
+
   const handleSubmit = () => {
+    setDisable(true);
     let ids = value.map((item) => {
       return { id: item.folder.id };
     });
     console.log(ids);
-    dispatch(SendToTrushMultiple(ids, handleClose));
+    dispatch(SendToTrushMultiple(ids, handleClose, errorCallBack));
   };
 
   return (
@@ -75,7 +79,9 @@ const DeleteGroup = (props) => {
         <div className={classes.main}>
           <h3>Supprimer les dossiers selectionnées</h3>
           <p>vous êtes sure de supprimer ces dossiers ?</p>
-          <Button onClick={handleSubmit}>Supprimer tout</Button>
+          <Button loading={disable} onClick={handleSubmit}>
+            Supprimer tout
+          </Button>
         </div>
       </Dialog>
     </div>

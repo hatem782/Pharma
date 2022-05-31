@@ -1,10 +1,10 @@
 import axios from "axios";
-import { /*ErrorSnack*/ SuccessSnack } from "../keys/Snack";
+import { ErrorSnack, SuccessSnack } from "../keys/Snack";
 import { GET_DOSSIER } from "../keys/Dosser.key";
 import { getToken } from "./Headers";
 const { REACT_APP_API_HOST } = process.env;
 
-export const AddFolder = (name, callback) => {
+export const AddFolder = (name, callback, errorCallBack) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.post(
@@ -23,12 +23,14 @@ export const AddFolder = (name, callback) => {
       callback();
       dispatch(GetAllByUser());
     } catch (error) {
+      errorCallBack();
       console.log(error);
     }
   };
 };
 
-export const RenameFolder = (id, name, callback) => {
+export const RenameFolder = (id, name, callback, errorCallBack) => {
+  console.log(name);
   return async (dispatch, getState) => {
     try {
       const response = await axios.put(
@@ -48,6 +50,7 @@ export const RenameFolder = (id, name, callback) => {
       callback();
       dispatch(GetAllByUser());
     } catch (error) {
+      errorCallBack();
       console.log(error.response);
     }
   };
@@ -125,7 +128,7 @@ export const GetCreatedFolders = () => {
   };
 };
 
-export const ShareOneFolders = (id, users, callback) => {
+export const ShareOneFolders = (id, users, callback, errorCallBack) => {
   console.log({ users: [...users], folders: [{ id: id }] });
   return async (dispatch, getState) => {
     try {
@@ -145,12 +148,17 @@ export const ShareOneFolders = (id, users, callback) => {
       });
       callback();
     } catch (error) {
+      errorCallBack();
+      dispatch({
+        type: ErrorSnack(),
+        value: "Vérifier Votre Données",
+      });
       console.log(error.response);
     }
   };
 };
 
-export const ShareMultipleFolders = (ids, users, callback) => {
+export const ShareMultipleFolders = (ids, users, callback, errorCallBack) => {
   let folders = ids.map((item) => {
     return { id: item.folder.id };
   });
@@ -174,12 +182,17 @@ export const ShareMultipleFolders = (ids, users, callback) => {
       });
       callback();
     } catch (error) {
+      dispatch({
+        type: ErrorSnack(),
+        value: "Vérifier Votre Données",
+      });
+      errorCallBack();
       console.log(error.response);
     }
   };
 };
 
-export const SendToTrushMultiple = (ids, callback) => {
+export const SendToTrushMultiple = (ids, callback, errorCallBack) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(
@@ -194,12 +207,13 @@ export const SendToTrushMultiple = (ids, callback) => {
       dispatch(GetAllByUser());
       callback();
     } catch (error) {
+      errorCallBack();
       console.log(error.response);
     }
   };
 };
 
-export const SendToTrushOne = (id, callback) => {
+export const SendToTrushOne = (id, callback, errorCallBack) => {
   console.log(id);
   return async (dispatch, getState) => {
     try {
@@ -215,6 +229,7 @@ export const SendToTrushOne = (id, callback) => {
       dispatch(GetAllByUser());
       callback();
     } catch (error) {
+      errorCallBack();
       console.log(error);
     }
   };

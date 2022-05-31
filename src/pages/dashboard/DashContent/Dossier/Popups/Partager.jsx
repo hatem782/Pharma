@@ -111,11 +111,16 @@ const useStyles = makeStyles((theme) => ({
 const Partager = (props) => {
   const [type, settype] = useState(""); // type is : email - mobile
   const [dests, setdests] = useState({ value0: "" });
+  const [disable, setDisable] = useState(false);
   const { dialog, handleClose } = props;
   const { active, value } = dialog;
   const dispatch = useDispatch();
 
   const classes = useStyles();
+
+  const errorCallBack = () => {
+    setDisable(false);
+  };
 
   const shareWithEmail = () => {
     settype("email");
@@ -138,17 +143,16 @@ const Partager = (props) => {
     setdests({ ...dests, [key]: "" });
   };
 
-  useEffect(() => {
-    console.log(dests);
-  }, [dests]);
+  useEffect(() => {}, [dests]);
 
   const handleSubmit = () => {
+    setDisable(true);
     let users = Object.keys(dests).map((item) => {
       return type === "mobile"
         ? { phone_number: dests[item] }
         : { email: dests[item] };
     });
-    dispatch(ShareOneFolders(value, users, handleClose));
+    dispatch(ShareOneFolders(value, users, handleClose, errorCallBack));
   };
 
   return (
@@ -194,7 +198,9 @@ const Partager = (props) => {
                 );
               })}
               <h4 onClick={addPerso}>Ajouter un autre numéro</h4>
-              <Button onClick={handleSubmit}>Partager</Button>
+              <Button loading={disable} onClick={handleSubmit}>
+                Partager
+              </Button>
             </div>
           ) : null}
           {type === "email" ? (
@@ -213,7 +219,7 @@ const Partager = (props) => {
                 );
               })}
               <h4 onClick={addPerso}>Ajouter un autre email</h4>
-              <Button>Partager</Button>
+              <Button loading={disable}>Partager</Button>
             </div>
           ) : null}
         </div>

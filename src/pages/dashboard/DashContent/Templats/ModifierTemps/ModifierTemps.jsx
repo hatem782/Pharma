@@ -18,13 +18,19 @@ function ModifierTemps() {
   const data = useSelector((state) => state.Template);
   const dispatch = useDispatch();
   const navig = useNavigate();
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     setText({ ...data });
   }, [data]);
 
+  const errorCallBack1 = () => {
+    setDisable(false);
+  };
+
   const UpdateTemp = () => {
-    dispatch(UpdateTemplate(Text, BackToTemplates));
+    setDisable(true);
+    dispatch(UpdateTemplate(Text, BackToTemplates, errorCallBack1));
   };
 
   const BackToTemplates = () => {
@@ -127,7 +133,9 @@ function ModifierTemps() {
               <div className="buttons">
                 {/* <TabButtonGf>Sauvegarder</TabButtonGf>
                 <TabButtonGf onClick={openShare}>Partager</TabButtonGf> */}
-                <TabButtonGf onClick={UpdateTemp}>Modifier</TabButtonGf>
+                <TabButtonGf loading={disable} onClick={UpdateTemp}>
+                  Modifier
+                </TabButtonGf>
                 <TabButtonGf onClick={openGenDocNoSig}>
                   Génerer Document (sans signature)
                 </TabButtonGf>

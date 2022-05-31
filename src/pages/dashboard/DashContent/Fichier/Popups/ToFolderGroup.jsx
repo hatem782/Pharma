@@ -80,6 +80,7 @@ const ToFolderGroup = (props) => {
   const classes = useStyles();
   const folders = useSelector((state) => state.Dossier);
   const [selected, setSelected] = useState("");
+  const [disable, setDisable] = useState(false);
 
   const selectFolder = (folder) => {
     console.log(folder.folder.id);
@@ -90,13 +91,20 @@ const ToFolderGroup = (props) => {
     dispatch(GetAllByUser());
   }, []);
 
+  const errorCallBack = () => {
+    setDisable(false);
+  };
+
   const HundleSubmit = () => {
+    setDisable(true);
     let documents = value.map((item) => {
       return { id: item.document.id };
     });
     if (selected !== "") {
       console.log(documents, selected);
-      dispatch(SendDocToFolder(documents, selected, handleClose));
+      dispatch(
+        SendDocToFolder(documents, selected, handleClose, errorCallBack)
+      );
     } else {
       alert("selectionner un dossier !");
     }
@@ -131,7 +139,9 @@ const ToFolderGroup = (props) => {
               );
             })}
           </div>
-          <Button onClick={HundleSubmit}>Affecter</Button>
+          <Button loading={disable} onClick={HundleSubmit}>
+            Affecter
+          </Button>
         </div>
       </Dialog>
     </div>

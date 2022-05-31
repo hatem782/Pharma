@@ -8,17 +8,24 @@ import { useDispatch } from "react-redux";
 import { GenerateTemplate } from "../../../../../store/actions/Templates.action";
 import Partager from "./popups/Partager";
 import Preview from "./popups/Preview";
+import GenTempAndDoc from "./popups/GenerateTempAndDoc";
 
 import { useNavigate } from "react-router-dom";
 
 function CreateTemps() {
   const css = useStyles();
   const [Text, setText] = useState({ header: " ", body: " ", footer: " " });
+  const [disable, setDisable] = useState(false);
   const dispatch = useDispatch();
   const navig = useNavigate();
 
+  const errorCallBack1 = () => {
+    setDisable(false);
+  };
+
   const GenerateTemp = () => {
-    dispatch(GenerateTemplate(Text, BackToTemplates));
+    setDisable(true);
+    dispatch(GenerateTemplate(Text, BackToTemplates, errorCallBack1));
   };
 
   const BackToTemplates = () => {
@@ -42,7 +49,7 @@ function CreateTemps() {
   // ********* popups ********
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // share / preview
+    type: "", // share / preview / gentempdoc
     value: null,
   });
   const openDial = (type, value) => {
@@ -55,6 +62,10 @@ function CreateTemps() {
 
   const openShare = () => {
     openDial("share", null);
+  };
+
+  const gentempdoc = () => {
+    openDial("gentempdoc", Text);
   };
 
   const openPreview = () => {
@@ -121,8 +132,12 @@ function CreateTemps() {
               <div className="buttons">
                 {/* <TabButtonGf>Sauvegarder</TabButtonGf>
                 <TabButtonGf onClick={openShare}>Partager</TabButtonGf> */}
-                <TabButtonGf onClick={GenerateTemp}>Génerer</TabButtonGf>
-                <TabButtonGf>Génerer Document</TabButtonGf>
+                <TabButtonGf loading={disable} onClick={GenerateTemp}>
+                  Sauvegarder
+                </TabButtonGf>
+                <TabButtonGf onClick={gentempdoc}>
+                  Sauvegarder et generer fichier
+                </TabButtonGf>
               </div>
             </div>
           </Grid>
@@ -135,6 +150,11 @@ function CreateTemps() {
       )}
       {dialog.type === "preview" ? (
         <Preview dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
+      {dialog.type === "gentempdoc" ? (
+        <GenTempAndDoc dialog={dialog} handleClose={closeDial} />
       ) : (
         <></>
       )}

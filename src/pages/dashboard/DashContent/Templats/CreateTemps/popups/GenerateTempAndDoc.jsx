@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import Dialog from "@mui/material/Dialog";
-import Input from "../../../../../components/Inputs/Input2";
-import Button from "../../../../../components/Buttons/TabButtonGf";
+import Input from "../../../../../../components/Inputs/Input2";
+import Button from "../../../../../../components/Buttons/TabButtonGf";
+import { useDispatch } from "react-redux";
+import { GenerateTempAndDoc } from "../../../../../../store/actions/Templates.action";
 
 import Slide from "@mui/material/Slide";
 import { makeStyles } from "@mui/styles";
-import { useDispatch } from "react-redux";
-import { SendToTrush } from "../../../../../store/actions/Fichier.action";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "650px",
   },
   main: {
-    padding: "45px 30px",
+    padding: "30px",
     minWidth: "650px",
     "& h3": {
       color: theme.palette.primary.main,
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     "& p": {
       fontSize: "18px",
-      margin: "0px 0px 20px 0px",
+      margin: "0px 0px -5px 0px",
       fontWeight: "600",
       color: "black",
     },
@@ -42,31 +42,25 @@ const useStyles = makeStyles((theme) => ({
       margin: "auto",
       marginTop: "20px",
       padding: "12px 40px",
-      //backgroundColor: "#F00",
-      color: "white",
     },
   },
 }));
 
-const DeleteGroup = (props) => {
+const GenerateTempAndDocument = (props) => {
   const { dialog, handleClose } = props;
-  const { active, value } = dialog;
+  const [title, settitle] = useState("");
   const [disable, setDisable] = useState(false);
-  const classes = useStyles();
-
   const dispatch = useDispatch();
+  const { active, value } = dialog;
+  const classes = useStyles();
 
   const errorCallBack = () => {
     setDisable(false);
   };
 
-  const handleSubmit = () => {
+  const GenerateDoc = () => {
     setDisable(true);
-    let ids = value.map((item) => {
-      return { id: item.document.id };
-    });
-    console.log(ids);
-    dispatch(SendToTrush(ids, handleClose, errorCallBack));
+    dispatch(GenerateTempAndDoc(value, title, handleClose, errorCallBack));
   };
 
   return (
@@ -79,10 +73,17 @@ const DeleteGroup = (props) => {
         scroll={"paper"}
       >
         <div className={classes.main}>
-          <h3>Supprimer un fichier</h3>
-          <p>vous êtes sure de supprimer cet fichiers ?</p>
-          <Button loading={disable} onClick={handleSubmit}>
-            Supprimer
+          <h3>Géneration D'un Document</h3>
+          <p>Entrer le libellé du document</p>
+          <Input
+            value={title}
+            onChange={(e) => {
+              settitle(e.target.value);
+            }}
+            placeholder="document libellé"
+          />
+          <Button loading={disable} onClick={GenerateDoc}>
+            Genérer Document
           </Button>
         </div>
       </Dialog>
@@ -90,4 +91,4 @@ const DeleteGroup = (props) => {
   );
 };
 
-export default DeleteGroup;
+export default GenerateTempAndDocument;

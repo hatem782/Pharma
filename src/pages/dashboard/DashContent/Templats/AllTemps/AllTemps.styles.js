@@ -22,6 +22,8 @@ export const useStyles = makeStyles((theme) => ({
 
       "& .items": {
         display: "flex",
+        maxWidth: "80%",
+        flexWrap: "wrap",
       },
 
       "& button": {
@@ -54,7 +56,7 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     padding: "20px",
-    margin: "0px 20px",
+    margin: "0px 20px 30px 20px",
     position: "relative",
     cursor: "pointer",
     "& .paper": {
@@ -79,7 +81,7 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "50px",
   },
   foldes: {
-    padding: "0px 0px 0px 0px",
+    padding: "0px 20px 0px 20px",
 
     "& .space50": {
       display: "inline-block",
@@ -125,10 +127,18 @@ export const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "flex-end",
       padding: "18px 0px",
+      "& button": {
+        margin: "0px 5px",
+      },
       "& .red-btn": {
         backgroundColor: "#f00",
         color: "white",
       },
+    },
+  },
+  menuItems: {
+    "& button": {
+      width: "100%",
     },
   },
 }));

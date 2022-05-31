@@ -51,10 +51,23 @@ const AddFolderPopup = (props) => {
   const [title, settitle] = useState("");
   const dispatch = useDispatch();
   const { active, value } = dialog;
+  const [disable, setDisable] = useState(false);
   const classes = useStyles();
 
+  const errorCallBack1 = () => {
+    setDisable(false);
+  };
+
   const GenerateDoc = () => {
-    dispatch(GenerateDocumentWithoutSignature(value, title, handleClose));
+    setDisable(true);
+    dispatch(
+      GenerateDocumentWithoutSignature(
+        value,
+        title,
+        handleClose,
+        errorCallBack1
+      )
+    );
   };
 
   return (
@@ -67,7 +80,7 @@ const AddFolderPopup = (props) => {
         scroll={"paper"}
       >
         <div className={classes.main}>
-          <h3>Géneration D'un Document'</h3>
+          <h3>Géneration D'un Document</h3>
           <p>Entrer le libellé du document</p>
           <Input
             value={title}
@@ -76,7 +89,9 @@ const AddFolderPopup = (props) => {
             }}
             placeholder="document libellé"
           />
-          <Button onClick={GenerateDoc}>Genérer Document</Button>
+          <Button loading={disable} onClick={GenerateDoc}>
+            Genérer Document
+          </Button>
         </div>
       </Dialog>
     </div>

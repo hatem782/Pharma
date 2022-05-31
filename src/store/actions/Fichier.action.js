@@ -174,7 +174,7 @@ export const GetDocsByUserRecieved = () => {
 };
 
 // ************************** Partager **************************
-export const ShareOneDoc = (id, users, callback) => {
+export const ShareOneDoc = (id, users, callback, errorCallback) => {
   console.log({ users: [...users], documents: [{ id: id }] });
   return async (dispatch, getState) => {
     try {
@@ -194,12 +194,17 @@ export const ShareOneDoc = (id, users, callback) => {
       });
       callback();
     } catch (error) {
+      errorCallback();
+      dispatch({
+        type: ErrorSnack(),
+        value: "Vérifier Votre Données",
+      });
       console.log(error.response);
     }
   };
 };
 
-export const ShareMultipleDocs = (ids, users, callback) => {
+export const ShareMultipleDocs = (ids, users, callback, errorCallback) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.post(
@@ -220,12 +225,17 @@ export const ShareMultipleDocs = (ids, users, callback) => {
       });
       callback();
     } catch (error) {
+      dispatch({
+        type: ErrorSnack(),
+        value: "Vérifier Votre Données",
+      });
+      errorCallback();
       console.log(error.response);
     }
   };
 };
 
-export const SendDocToFolder = (ids, folder, callback) => {
+export const SendDocToFolder = (ids, folder, callback, errorCallBack) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.put(
@@ -248,12 +258,13 @@ export const SendDocToFolder = (ids, folder, callback) => {
       dispatch(GetDocsByUser());
       callback();
     } catch (error) {
+      errorCallBack();
       console.log(error.response);
     }
   };
 };
 
-export const SendToTrush = (ids, callback) => {
+export const SendToTrush = (ids, callback, errorCallback) => {
   console.log(ids);
   return async (dispatch, getState) => {
     try {
@@ -269,6 +280,7 @@ export const SendToTrush = (ids, callback) => {
       dispatch(GetDocsByUser());
       callback();
     } catch (error) {
+      errorCallback();
       console.log(error);
     }
   };

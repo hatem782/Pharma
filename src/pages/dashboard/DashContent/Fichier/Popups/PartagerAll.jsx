@@ -112,6 +112,7 @@ const PartagerAll = (props) => {
   const [type, settype] = useState(""); // type is : email - mobile
   const [dests, setdests] = useState({ value0: "" });
   const { dialog, handleClose } = props;
+  const [disable, setDisable] = useState(false);
   const { active, value } = dialog;
   const dispatch = useDispatch();
 
@@ -138,7 +139,12 @@ const PartagerAll = (props) => {
     setdests({ ...dests, [key]: "" });
   };
 
+  const errorCallBack = () => {
+    setDisable(false);
+  };
+
   const handleSubmit = () => {
+    setDisable(true);
     let users = Object.keys(dests)
       .map((item) => {
         return type === "mobile"
@@ -154,7 +160,7 @@ const PartagerAll = (props) => {
     let documents = value.map((item) => {
       return { id: item.document.id };
     });
-    dispatch(ShareMultipleDocs(documents, users, handleClose));
+    dispatch(ShareMultipleDocs(documents, users, handleClose, errorCallBack));
   };
 
   return (
@@ -200,7 +206,9 @@ const PartagerAll = (props) => {
                 );
               })}
               <h4 onClick={addPerso}>Ajouter un autre numéro</h4>
-              <Button onClick={handleSubmit}>PartagerAll</Button>
+              <Button loading={disable} onClick={handleSubmit}>
+                PartagerAll
+              </Button>
             </div>
           ) : null}
           {type === "email" ? (
@@ -219,7 +227,7 @@ const PartagerAll = (props) => {
                 );
               })}
               <h4 onClick={addPerso}>Ajouter un autre email</h4>
-              <Button>Partager</Button>
+              <Button loading={disable}>Partager</Button>
             </div>
           ) : null}
         </div>

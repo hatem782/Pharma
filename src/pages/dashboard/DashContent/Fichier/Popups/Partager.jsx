@@ -113,6 +113,7 @@ const Partager = (props) => {
   const [dests, setdests] = useState({ value0: "" });
   const { dialog, handleClose } = props;
   const { active, value } = dialog;
+  const [disable, setDisable] = useState(false);
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -142,7 +143,12 @@ const Partager = (props) => {
     console.log(dests);
   }, [dests]);
 
+  const errorCallBack = () => {
+    setDisable(false);
+  };
+
   const handleSubmit = () => {
+    setDisable(true);
     let users = Object.keys(dests)
       .map((item) => {
         return type === "mobile"
@@ -155,7 +161,7 @@ const Partager = (props) => {
           (!type === "mobile" && item.email)
         );
       });
-    dispatch(ShareOneDoc(value, users, handleClose));
+    dispatch(ShareOneDoc(value, users, handleClose, errorCallBack));
   };
 
   return (
@@ -201,7 +207,9 @@ const Partager = (props) => {
                 );
               })}
               <h4 onClick={addPerso}>Ajouter un autre numéro</h4>
-              <Button onClick={handleSubmit}>Partager</Button>
+              <Button loading={disable} onClick={handleSubmit}>
+                Partager
+              </Button>
             </div>
           ) : null}
           {type === "email" ? (
@@ -220,7 +228,7 @@ const Partager = (props) => {
                 );
               })}
               <h4 onClick={addPerso}>Ajouter un autre email</h4>
-              <Button>Partager</Button>
+              <Button loading={disable}>Partager</Button>
             </div>
           ) : null}
         </div>

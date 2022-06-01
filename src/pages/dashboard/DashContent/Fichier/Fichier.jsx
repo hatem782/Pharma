@@ -283,7 +283,7 @@ const OneDoc = ({ item, handleSelect }) => {
     setdialog({ active: false, type: "", value: null });
   };
   const openQrcode = () => {
-    openDial("qrcode", null);
+    openDial("qrcode", qr_code);
   };
   // const openRename = () => {
   //   openDial("rename", title);

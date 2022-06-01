@@ -94,7 +94,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   foldes: {
-    padding: "0px 0px 0px 0px",
+    padding: "0px 20px 0px 20px",
 
     "& .space50": {
       display: "inline-block",
@@ -117,9 +117,15 @@ export const useStyles = makeStyles((theme) => ({
       borderBottom: "solid 2px #D8EAE6",
     },
 
+    "& td,th": {
+      fontWeight: 600,
+    },
+
     "& .folder-name": {
       display: "flex",
       alignItems: "center",
+      color: "black !important",
+
       "& span": { fontSize: "18px" },
       "& img": {
         margin: "0px 10px 0px 0px",
@@ -134,6 +140,18 @@ export const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "flex-end",
       padding: "18px 0px",
+      "& button": {
+        margin: "0px 5px",
+      },
+      "& .red-btn": {
+        backgroundColor: "#f00",
+        color: "white",
+      },
+    },
+  },
+  menuItems: {
+    "& button": {
+      width: "100%",
     },
   },
 }));

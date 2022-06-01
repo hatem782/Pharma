@@ -67,7 +67,7 @@ const AjouterModel = () => {
             />
             <input
               style={{ display: "none" }}
-              accept="image/*"
+              accept="*"
               id="contained-button-file"
               multiple
               onChange={handleFiles}

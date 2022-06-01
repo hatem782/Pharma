@@ -1,7 +1,12 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { SetToken, SetUser } from "../keys/Users.keys";
-import { ErrorSnack, SuccessSnack, CloseSnack } from "../keys/Snack";
+import {
+  ErrorSnack,
+  SuccessSnack,
+  CloseSnack,
+  FileUpSnack,
+} from "../keys/Snack";
 import { GET_DOSSIER } from "../keys/Dosser.key";
 import { GET_FICHIER } from "../keys/Fichier.key";
 import { GET_TEMPLATE, GET_TEMPLATES } from "../keys/Template.keys";
@@ -29,6 +34,12 @@ const Snack = (state = { ...InitialSnack }, action) => {
       return { open: true, type: "success", msg: action.value };
     case ErrorSnack():
       return { open: true, type: "error", msg: action.value };
+    case FileUpSnack():
+      return {
+        open: true,
+        type: "fileup",
+        msg: action.value,
+      };
     case CloseSnack():
       return { ...InitialSnack };
     default:

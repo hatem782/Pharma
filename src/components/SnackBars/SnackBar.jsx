@@ -1,7 +1,7 @@
 import * as React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import ReactDOM from "react-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { makeStyles } from "@mui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -16,6 +16,14 @@ const outerTheme = createTheme({
     error: {
       main: "#FF0000",
     },
+    primary: {
+      main: "#1DBF73",
+      contrastText: "#ffffff",
+    },
+    spinner: {
+      main: "#ffffff",
+      contrastText: "#ffffff",
+    },
   },
 });
 
@@ -24,6 +32,21 @@ const useStyles = makeStyles((theme) => ({
     transform: "scale(1.3)",
     bottom: "35px !important",
     right: "70px !important",
+    "& .file_upload": {
+      backgroundColor: "#1DBF73",
+      color: "white",
+      display: "flex",
+      alignItems: "center",
+      padding: "10px 20px",
+      borderRadius: "10px",
+
+      fontSize: "16px",
+      fontWeight: "500",
+
+      "& .spinner": {
+        transform: "scale(0.75)",
+      },
+    },
   },
 }));
 
@@ -48,18 +71,27 @@ const EditedSnackBar = () => {
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={type === "fileup" ? null : 6000}
         onClose={handleClose}
         className={css.snackContainer}
       >
-        <Alert
-          className={css.alert}
-          onClose={handleClose}
-          severity={type}
-          sx={{ width: "100%" }}
-        >
-          {msg}
-        </Alert>
+        {type !== "fileup" ? (
+          <Alert
+            className={css.alert}
+            onClose={handleClose}
+            severity={type}
+            sx={{ width: "100%" }}
+          >
+            {msg}
+          </Alert>
+        ) : (
+          <div className="file_upload">
+            <div className="spinner">
+              <CircularProgress color="spinner" />
+            </div>
+            {msg}
+          </div>
+        )}
       </Snackbar>
     </ThemeProvider>
   );

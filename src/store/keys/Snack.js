@@ -9,3 +9,7 @@ export const ErrorSnack = () => {
 export const CloseSnack = () => {
   return "close";
 };
+
+export const FileUpSnack = () => {
+  return "fileupsnack";
+};

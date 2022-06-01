@@ -2,7 +2,12 @@ import axios from "axios";
 //import { useSelector } from "react-redux";
 import { getToken } from "./Headers";
 import { GET_FICHIER } from "../keys/Fichier.key";
-import { ErrorSnack, SuccessSnack } from "../keys/Snack";
+import {
+  ErrorSnack,
+  SuccessSnack,
+  FileUpSnack,
+  CloseSnack,
+} from "../keys/Snack";
 
 const { REACT_APP_API_HOST } = process.env;
 
@@ -13,6 +18,11 @@ export const UploadFile = (files, callback) => {
   }
 
   return async (dispatch, getState) => {
+    dispatch({
+      type: FileUpSnack(),
+      value: "Téléchargement Des Fichiers ...",
+    });
+
     try {
       const response = await axios.post(
         REACT_APP_API_HOST + "/document/upload_documents/",
@@ -25,6 +35,12 @@ export const UploadFile = (files, callback) => {
         }
       );
       console.log(response);
+
+      dispatch({
+        type: CloseSnack(),
+        value: "",
+      });
+
       dispatch({
         type: SuccessSnack(),
         value: "Document à été crée avec succée",

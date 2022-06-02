@@ -20,15 +20,6 @@ const QRcode = (props) => {
   const { active, value } = dialog;
   const classes = useStyles();
 
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
-
-  //   const Submit = () => {
-  //     AddGal(Item);
-  //     handleClose();
-  //   };
-
   return (
     <div>
       <Dialog

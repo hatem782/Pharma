@@ -75,19 +75,10 @@ export const GetDocsByUser = () => {
           Authorization: `token ${getToken(getState)}`,
         },
       });
-      console.log(response.data.results);
-      let with_select = await Promise.all(
-        response.data.results.map(async (dt) => {
-          let folder_name = "aucun";
-          let selected = false;
-          if (dt.folder_id) {
-            folder_name = await GetFNBId(dt.folder_id, getState);
-            console.log(dt.folder_id);
-          }
-          return { ...dt, selected, folder_name };
-        })
-      );
-      console.log(with_select);
+      let with_select = response.data.results.map((dt) => {
+        let selected = false;
+        return { ...dt, selected };
+      });
       dispatch({
         type: GET_FICHIER(),
         value: with_select,
@@ -109,14 +100,9 @@ export const GetDocsByUserUploaded = () => {
           },
         }
       );
-      console.log(response.data.results);
       let with_select = response.data.results.map((dt) => {
-        let folder_name = "aucun";
         let selected = false;
-        if (dt.folder_id) {
-          folder_name = "have a name";
-        }
-        return { ...dt, selected, folder_name };
+        return { ...dt, selected };
       });
       dispatch({
         type: GET_FICHIER(),
@@ -136,18 +122,14 @@ export const GetDocsByUserCreated = () => {
           Authorization: `token ${getToken(getState)}`,
         },
       });
-      console.log(response.data.results);
       let with_select = response.data.results
         .filter((dt) => {
+          console.log(dt.type);
           return dt.type === null;
         })
         .map((dt) => {
-          let folder_name = "aucun";
           let selected = false;
-          if (dt.folder_id) {
-            folder_name = "have a name";
-          }
-          return { ...dt, selected, folder_name };
+          return { ...dt, selected };
         });
       dispatch({
         type: GET_FICHIER(),
@@ -170,14 +152,9 @@ export const GetDocsByUserRecieved = () => {
           },
         }
       );
-      console.log(response.data.results);
       let with_select = response.data.results.map((dt) => {
-        let folder_name = "aucun";
         let selected = false;
-        if (dt.folder_id) {
-          folder_name = "have a name";
-        }
-        return { ...dt, selected, folder_name };
+        return { ...dt, selected };
       });
       dispatch({
         type: GET_FICHIER(),

@@ -31,6 +31,7 @@ import Partager from "./Popups/Partager";
 import DeleteGroup from "./Popups/DeleteGroup";
 import PartagerAll from "./Popups/PartagerAll";
 import ToFolderGroup from "./Popups/ToFolderGroup";
+import Afficher from "./Popups/Afficher";
 
 const SourceList = [
   {
@@ -248,8 +249,9 @@ function FilesTable({ nbSelect, set_nbSelect, set_selected, filter }) {
 }
 
 const OneDoc = ({ item, handleSelect }) => {
-  const { id, selected, type, folder_name, created, document } = item;
-  const { title, size, qr_code } = document;
+  const { id, selected, type, folder, created, document } = item;
+  const { title, size, qr_code, file } = document;
+  let folder_name = folder ? folder.name : "aucun";
   const css = useStyles();
   // the state for checkbox *************************************
   const click = () => {
@@ -272,7 +274,7 @@ const OneDoc = ({ item, handleSelect }) => {
   // the popup state to open and close **************************
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // delete / rename / qrcode / share / to_folder
+    type: "", // show / delete / rename / qrcode / share / to_folder
     value: null,
   });
   const openDial = (type, value) => {
@@ -285,9 +287,9 @@ const OneDoc = ({ item, handleSelect }) => {
   const openQrcode = () => {
     openDial("qrcode", qr_code);
   };
-  // const openRename = () => {
-  //   openDial("rename", title);
-  // };
+  const openShow = () => {
+    openDial("show", file);
+  };
   const openDelete = () => {
     openDial("delete", [item]);
   };
@@ -340,7 +342,7 @@ const OneDoc = ({ item, handleSelect }) => {
           </span>
         </Td>
         <Td className="buttons-group">
-          <TabButtonGf>Afficher</TabButtonGf>
+          <TabButtonGf onClick={openShow}>Afficher</TabButtonGf>
           <TabButtonGo onClick={openQrcode}>Code QR</TabButtonGo>
 
           <img src={threp} onClick={handleClick} />
@@ -359,10 +361,6 @@ const OneDoc = ({ item, handleSelect }) => {
                 <MenuItem>
                   <TabButtonYf onClick={openShare}>Partager</TabButtonYf>
                 </MenuItem>
-                {/* <Divider />
-                <MenuItem>
-                  <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
-                </MenuItem> */}
                 <Divider />
                 <MenuItem>
                   <TabButtonGf onClick={openToFolder}>Aff Dossier</TabButtonGf>
@@ -381,6 +379,11 @@ const OneDoc = ({ item, handleSelect }) => {
         ) : (
           <></>
         )} */}
+        {dialog.type === "show" ? (
+          <Afficher dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
         {dialog.type === "qrcode" ? (
           <QRcode dialog={dialog} handleClose={closeDial} />
         ) : (

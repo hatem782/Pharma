@@ -33,6 +33,7 @@ import QRcode from "../../Fichier/Popups/QRcode";
 import DeleteItem from "../../Fichier/Popups/DeleteItem";
 import Partager from "../../Fichier/Popups/Partager";
 import ToFolderGroup from "../../Fichier/Popups/ToFolderGroup";
+import Afficher from "../../Fichier/Popups/Afficher";
 
 function AllTemps() {
   const css = useStyles();
@@ -140,8 +141,9 @@ function FilesTable() {
 }
 
 const OneDoc = ({ item }) => {
-  const { type, folder_name, created, document } = item;
-  const { title, size, qr_code } = document;
+  const { id, selected, type, folder, created, document } = item;
+  const { title, size, qr_code, file } = document;
+  let folder_name = folder ? folder.name : "aucun";
   const css = useStyles();
 
   // the menu items of rename and delete ************************
@@ -159,7 +161,7 @@ const OneDoc = ({ item }) => {
   // the popup state to open and close **************************
   const [dialog, setdialog] = useState({
     active: false,
-    type: "", // delete / rename / qrcode / share / to_folder
+    type: "", // show / delete / rename / qrcode / share / to_folder
     value: null,
   });
   const openDial = (type, value) => {
@@ -172,9 +174,9 @@ const OneDoc = ({ item }) => {
   const openQrcode = () => {
     openDial("qrcode", null);
   };
-  // const openRename = () => {
-  //   openDial("rename", title);
-  // };
+  const openShow = () => {
+    openDial("show", file);
+  };
   const openDelete = () => {
     openDial("delete", [item]);
   };
@@ -223,7 +225,7 @@ const OneDoc = ({ item }) => {
           </span>
         </Td>
         <Td className="buttons-group">
-          <TabButtonGf>Afficher</TabButtonGf>
+        <TabButtonGf onClick={openShow}>Afficher</TabButtonGf>
           <TabButtonGo onClick={openQrcode}>Code QR</TabButtonGo>
 
           <img src={threp} onClick={handleClick} />
@@ -260,6 +262,11 @@ const OneDoc = ({ item }) => {
         </Td>
 
         {/************************  POPUPS ************************/}
+        {dialog.type === "show" ? (
+          <Afficher dialog={dialog} handleClose={closeDial} />
+        ) : (
+          <></>
+        )}
         {dialog.type === "qrcode" ? (
           <QRcode dialog={dialog} handleClose={closeDial} />
         ) : (

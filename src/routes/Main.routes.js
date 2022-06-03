@@ -121,7 +121,7 @@ export const routes2 = [
     title: "Paramètres",
     compo: (
       <>
-        <TopBar />
+        <TopBarWithRech />
         <Profile />
       </>
     ),

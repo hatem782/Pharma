@@ -173,7 +173,7 @@ const GetTokenFromLocal = () => {
 };
 
 const GetUserByToken = (setspinn) => {
-  console.log(GetTokenFromLocal());
+  console.log("GetUserByToken");
   return async (dispatch) => {
     try {
       const response = await axios.get(
@@ -189,6 +189,7 @@ const GetUserByToken = (setspinn) => {
         type: SetUser(),
         value: response.data,
       });
+
       setspinn(false);
     } catch (error) {
       // to stop spinner

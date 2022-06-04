@@ -11,6 +11,10 @@ export const useStyles = makeStyles((theme) => ({
       margin: "0px 0px 5px 0px",
       fontWeight: "500",
       fontFamily: "myriad",
+
+      [theme.breakpoints.down("xl")]: {
+        fontSize: "16px",
+      },
     },
 
     "& .paper": {
@@ -33,6 +37,11 @@ export const useStyles = makeStyles((theme) => ({
           fontSize: "16px",
           fontWeight: "700",
           margin: "0px",
+
+          [theme.breakpoints.down("xl")]: {
+            fontSize: "12px",
+            fontWeight: "600",
+          },
         },
 
         "& .list": {
@@ -50,6 +59,11 @@ export const useStyles = makeStyles((theme) => ({
           borderRadius: "5px",
           transition: "all 0.2s",
           cursor: "pointer",
+
+          [theme.breakpoints.down("xl")]: {
+            fontSize: "14px",
+            padding: "12px 18px",
+          },
         },
         "& .list li.selected": {
           backgroundColor: "#1DBF7333",
@@ -71,12 +85,21 @@ export const useStyles = makeStyles((theme) => ({
       alignItems: "center",
       margin: "20px 0px",
 
-      "& img": {
+      "& .img": {
         width: "150px",
         height: "150px",
         borderRadius: "500px",
         margin: "0px 20px 0px 0px",
         cursor: "pointer",
+
+        backgroundPosition: "50% 50%",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+
+        [theme.breakpoints.down("xl")]: {
+          width: "110px",
+          height: "110px",
+        },
       },
 
       "& .group-buttons": {
@@ -89,6 +112,16 @@ export const useStyles = makeStyles((theme) => ({
         "& button": {
           width: "100% !important",
           height: "50px !important",
+        },
+
+        [theme.breakpoints.down("xl")]: {
+          height: "110px",
+
+          "& button": {
+            width: "100% !important",
+            height: "40px !important",
+            fontSize: "14px",
+          },
         },
       },
     },
@@ -129,6 +162,12 @@ export const useStyles = makeStyles((theme) => ({
         "&:hover": {
           border: "solid 2px #95989A",
         },
+
+        [theme.breakpoints.down("xl")]: {
+          fontSize: "14px",
+          margin: "5px",
+          padding: "8.5px",
+        },
       },
     },
 
@@ -138,7 +177,22 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: "16px",
         fontWeight: "700",
         margin: "0px",
+        [theme.breakpoints.down("xl")]: {
+          fontSize: "14px",
+          fontWeight: "600",
+        },
       },
+    },
+  },
+
+  signature: {
+    "& img": {
+      width: "300px",
+      height: "300px",
+    },
+
+    "& button": {
+      padding: "10px 20px !important",
     },
   },
 
@@ -157,7 +211,7 @@ export const useStyles = makeStyles((theme) => ({
     },
 
     [theme.breakpoints.down("xl")]: {
-      padding: "40px 0px",
+      padding: "5px 0px",
     },
 
     "& input": {
@@ -179,11 +233,12 @@ export const useStyles = makeStyles((theme) => ({
       },
 
       [theme.breakpoints.down("xl")]: {
-        height: "65px",
-        width: "65px",
-        fontSize: "30px",
+        height: "45px",
+        width: "45px",
+        fontSize: "20px",
         borderRadius: "15px",
         border: "solid 2px #C7E6C2",
+        borderRadius: "10px",
         "&:focus": {
           border: `solid 2px ${theme.palette.primary.main}`,
         },

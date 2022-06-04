@@ -62,6 +62,7 @@ function Input2(props) {
     onChange,
     error = false,
     errorMs = "",
+    disabled = false,
   } = props;
   return (
     <div className={css.inputContainer + " edited-input"}>
@@ -81,6 +82,7 @@ function Input2(props) {
         placeholder={placeholder}
         type={type}
         name={name}
+        disabled={disabled}
         className={css.input + " " + (error ? css.input_error : "")}
       />
     </div>

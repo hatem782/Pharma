@@ -6,15 +6,18 @@ import Menu from "../../components/Menu/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import notification from "../../assets/svgs/notification.svg";
-import person_img from "../../assets/images/Circle.png";
-import { useDispatch } from "react-redux";
+import noimg from "../../assets/images/noprofileimg.png";
+import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../../store/actions/Auth.action";
 
 import { useStyles } from "./TopBarStyles";
+const { REACT_APP_API_HOST } = process.env;
 
 function Notif_Avatar() {
   const css = useStyles();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.User.user);
+  const { photo } = user;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -35,7 +38,7 @@ function Notif_Avatar() {
         <Avatar
           alt="Remy Sharp"
           sx={{ width: 46, height: 46 }}
-          src={person_img}
+          src={photo ? REACT_APP_API_HOST + photo : noimg}
           onClick={handleClick}
           style={{ cursor: "pointer" }}
         />

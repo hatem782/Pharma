@@ -1,25 +1,58 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
-import Paper from "@mui/material/Paper";
 
 import { useStyles } from "./ProfileStyles";
 
 import noImg from "../../../../assets/images/noImg.png";
+import nosign from "../../../../assets/images/signCont.png";
+
 import GreenButton from "../../../../components/Buttons/TabButtonGf";
 import RedButton from "../../../../components/Buttons/TabButtonRo";
 import { useDispatch, useSelector } from "react-redux";
-import Input from "../../../../components/Inputs/Input2";
+import {
+  UploadProfileImage,
+  UploadSignatureImage,
+} from "../../../../store/actions/Profile.action";
 
-const profile_links = ["Profil", "Sécurité", "Membres"];
+import SimpleEditedFieldData from "./SubComps/SimpleEditedFieldData";
+import EditedFieldData from "./SubComps/EditedFieldData";
+import EditedInputForPass from "./SubComps/EditedInputForPass";
+import Uploader from "../../../../components/Outils/Uploader";
+import Disactivation from "./SubComps/Disactivation";
+
+const profile_links = ["Profil", "Sécurité", "Signature"];
+const { REACT_APP_API_HOST } = process.env;
 
 function Profile() {
   const css = useStyles();
   const user = useSelector((state) => state.User.user);
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState("Profil");
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  const [dialog, setdialog] = useState({
+    active: false,
+    type: "", // disactivate
+    value: null,
+  });
+  const openDial = (type, value) => {
+    setdialog({ active: true, type: type, value: value });
+  };
+
+  const closeDial = () => {
+    setdialog({ active: false, type: "", value: null });
+  };
+  const oepnDesactivation = () => {
+    openDial("disactivate", null);
+  };
+
+  const UpdateImg = (e) => {
+    console.log(e.target.files);
+    dispatch(UploadProfileImage(e.target.files));
+  };
+
+  const UpdateSignature = (e) => {
+    console.log(e.target.files);
+    dispatch(UploadSignatureImage(e.target.files));
+  };
 
   return (
     <div className={css.main}>
@@ -47,39 +80,64 @@ function Profile() {
 
         <div className="content">
           <div>
+            <Header
+              disact={oepnDesactivation}
+              UpdateImg={UpdateImg}
+              user={user}
+            />
             {selected === "Profil" && (
               <>
-                <Header user={user} />
                 <EditProfileData user={user} />
-                <Footer />
               </>
             )}
 
             {selected === "Sécurité" && (
               <>
-                <Header user={user} />
                 <EditSecurityData user={user} />
-                <Footer />
               </>
             )}
+
+            {selected === "Signature" && (
+              <>
+                <Signature user={user} UpdateImg={UpdateSignature} />
+              </>
+            )}
+            <Footer />
           </div>
         </div>
       </div>
+
+      {dialog.type === "disactivate" ? (
+        <Disactivation dialog={dialog} handleClose={closeDial} />
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
 
-const Header = ({ user }) => {
+const Header = ({ user, UpdateImg, disact }) => {
   const css = useStyles();
   const { id, photo } = user;
   return (
     <div className={css.header}>
       <h4>Votre photo de profil</h4>
       <div className="container">
-        <img src={photo ? photo : noImg} />
+        <Uploader handleFiles={UpdateImg}>
+          <div
+            className="img"
+            style={{
+              backgroundImage: `url(${
+                photo ? REACT_APP_API_HOST + photo : noImg
+              })`,
+            }}
+          />
+        </Uploader>
         <div className="group-buttons">
-          <GreenButton>Changer de photo</GreenButton>
-          <RedButton>Supprimer</RedButton>
+          <GreenButton>
+            <Uploader handleFiles={UpdateImg}> Changer de photo </Uploader>
+          </GreenButton>
+          <RedButton onClick={disact}>Supprimer</RedButton>
         </div>
       </div>
       <h4 className="ID">ID : {id}</h4>
@@ -101,12 +159,11 @@ const Footer = () => {
 };
 
 const EditProfileData = ({ user }) => {
-  const css = useStyles();
   return (
     <div>
-      <EditedFieldData label="Nom" value="Bertan" />
-      <EditedFieldData label="Prénom" value="Alexandre" />
-      <EditedFieldData label="Email" value="Alexandre.Bertan@gmail.com" />
+      <SimpleEditedFieldData label="Nom" user={user} field="first_name" />
+      <SimpleEditedFieldData label="Prénom" user={user} field="last_name" />
+      <EditedFieldData label="Email" user={user} field="email" />
     </div>
   );
 };
@@ -115,105 +172,34 @@ const EditSecurityData = ({ user }) => {
   const css = useStyles();
   return (
     <div>
-      <EditedFieldData label="Numéro de téléphone" value="+33 15 389 320" />
-      <EditedFieldData label="Mot de passe" value="Alexandre" type="password" />
+      <EditedFieldData
+        label="Numéro de téléphone"
+        user={user}
+        field="phone_number"
+      />
+      <EditedInputForPass
+        label="Mot de passe"
+        value="Alexandre"
+        type="password"
+      />
     </div>
   );
 };
 
-const EditedFieldData = ({ label, value, type }) => {
+const Signature = ({ user, UpdateImg }) => {
   const css = useStyles();
-  const [opt, setOpt] = useState(false);
-  const [val, setVal] = useState("");
-
-  // ****************** OPT ******************
-  const [valNumb, setvalNumb] = useState("");
-  const [match, setMatch] = useState(0); // 0:not verified yet / 1 : match / -1 : not equal
-
-  useEffect(() => {
-    setVal(value);
-  }, [value]);
-
-  const inputHandler = (e) => {
-    setVal(e.target.value);
-  };
-
-  const SendOpt = () => {
-    setOpt(true);
-  };
+  const { user_signature } = user;
 
   return (
-    <div className={css.editedFieldData}>
-      <div className="text-field-container">
-        <div className="text-field">
-          <Input
-            label={label}
-            onChange={inputHandler}
-            type={type}
-            value={val}
-          />
-        </div>
-        <div onClick={SendOpt} className="button">
-          Modifier
-        </div>
-      </div>
-      {opt && (
-        <div className="opt-field-container">
-          <p className="opt-txt">
-            Entrer le code secret envoyé par SMS sur votre téléphone portable
-          </p>
-          <InpNums valNumb={valNumb} setvalNumb={setvalNumb} match={match} />
-        </div>
-      )}
-    </div>
-  );
-};
-
-const InpNums = ({ valNumb, setvalNumb, match }) => {
-  const [number, setNumber] = useState(["", "", "", "", "", ""]);
-  const css = useStyles();
-
-  const handlerChange = (event, key) => {
-    //if (number[key].length == 0 || event.target.value === "") {
-    let newNumber = [...number];
-    newNumber[key] = event.target.value;
-    setNumber([...newNumber]);
-    if (key < 5 && event.target.value) {
-      document.getElementById(`inp_${key + 1}`).focus();
-    }
-  };
-
-  useEffect(() => {
-    if (valNumb.length === 6) {
-      setNumber(valNumb.split(""));
-      document.getElementById(`inp_5`).focus();
-    }
-  }, []);
-
-  useEffect(() => {
-    setvalNumb(number.join(""));
-  }, [number]);
-
-  return (
-    <div className={css.inputs}>
-      {number.map((num, key) => {
-        return (
-          <input
-            className={`${match === 1 ? " match " : ""} ${
-              match === -1 ? " not-match " : ""
-            }`}
-            key={key}
-            value={num}
-            maxLength="1"
-            onChange={(event) => {
-              handlerChange(event, key);
-            }}
-            type="text"
-            name={`inp_${key}`}
-            id={`inp_${key}`}
-          />
-        );
-      })}
+    <div className={css.signature}>
+      <br />
+      <GreenButton>
+        <Uploader handleFiles={UpdateImg}> Changer de Signature </Uploader>
+      </GreenButton>
+      <br />
+      <Uploader handleFiles={UpdateImg}>
+        <img src={user_signature ? user_signature : nosign} />
+      </Uploader>
     </div>
   );
 };

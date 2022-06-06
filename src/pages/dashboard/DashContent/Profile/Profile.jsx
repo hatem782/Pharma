@@ -155,7 +155,7 @@ const Footer = ({ disact }) => {
   return (
     <div className={css.hint}>
       <h4>
-        il est possible de
+        il est possible de{" "}
         <span className="red" onClick={disact}>
           désactiver temporairement votre compte
         </span>

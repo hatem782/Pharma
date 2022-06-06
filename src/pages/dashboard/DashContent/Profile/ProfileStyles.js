@@ -137,6 +137,10 @@ export const useStyles = makeStyles((theme) => ({
 
     "& .red": {
       color: "red",
+      "&:hover": {
+        textDecoration: "underline",
+        cursor: "pointer",
+      },
     },
   },
 

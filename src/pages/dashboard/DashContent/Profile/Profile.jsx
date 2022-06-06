@@ -49,6 +49,15 @@ function Profile() {
     dispatch(UploadProfileImage(e.target.files));
   };
 
+  const DeleteImg = async () => {
+    const resp = await fetch(noImg);
+    const data = await resp.blob();
+    console.log(data);
+    const file = new File([data], "noimg", { type: "image/jpeg" });
+    console.log(file);
+    dispatch(UploadProfileImage([file]));
+  };
+
   const UpdateSignature = (e) => {
     console.log(e.target.files);
     dispatch(UploadSignatureImage(e.target.files));
@@ -80,11 +89,7 @@ function Profile() {
 
         <div className="content">
           <div>
-            <Header
-              disact={oepnDesactivation}
-              UpdateImg={UpdateImg}
-              user={user}
-            />
+            <Header UpdateImg={UpdateImg} deleteImg={DeleteImg} user={user} />
             {selected === "Profil" && (
               <>
                 <EditProfileData user={user} />
@@ -102,7 +107,7 @@ function Profile() {
                 <Signature user={user} UpdateImg={UpdateSignature} />
               </>
             )}
-            <Footer />
+            <Footer disact={oepnDesactivation} />
           </div>
         </div>
       </div>
@@ -116,7 +121,7 @@ function Profile() {
   );
 }
 
-const Header = ({ user, UpdateImg, disact }) => {
+const Header = ({ user, UpdateImg, deleteImg }) => {
   const css = useStyles();
   const { id, photo } = user;
   return (
@@ -137,7 +142,7 @@ const Header = ({ user, UpdateImg, disact }) => {
           <GreenButton>
             <Uploader handleFiles={UpdateImg}> Changer de photo </Uploader>
           </GreenButton>
-          <RedButton onClick={disact}>Supprimer</RedButton>
+          <RedButton onClick={deleteImg}>Supprimer</RedButton>
         </div>
       </div>
       <h4 className="ID">ID : {id}</h4>
@@ -145,14 +150,16 @@ const Header = ({ user, UpdateImg, disact }) => {
   );
 };
 
-const Footer = () => {
+const Footer = ({ disact }) => {
   const css = useStyles();
   return (
     <div className={css.hint}>
       <h4>
-        il est possible de{" "}
-        <span className="red"> désactiver temporairement votre compte </span>,
-        mais c'est irréversible. Assurez-vous que vous souhaitez le faire.
+        il est possible de
+        <span className="red" onClick={disact}>
+          désactiver temporairement votre compte
+        </span>
+        , mais c'est irréversible. Assurez-vous que vous souhaitez le faire.
       </h4>
     </div>
   );

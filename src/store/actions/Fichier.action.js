@@ -53,20 +53,6 @@ export const UploadFile = (files, callback) => {
   };
 };
 
-// get folder name by id
-const GetFNBId = async (id, getState) => {
-  try {
-    const response2 = await axios.get(REACT_APP_API_HOST + `/folder/${id}/`, {
-      headers: {
-        Authorization: `token ${getToken(getState)}`,
-      },
-    });
-    return response2.data.folder.name;
-  } catch (erreur) {
-    return "aucun";
-  }
-};
-
 export const GetDocsByUser = () => {
   return async (dispatch, getState) => {
     try {

@@ -19,9 +19,11 @@ import Profile from "../pages/dashboard/DashContent/Profile/Profile";
 import MenuPrincipal from "../pages/dashboard/DashContent/MenuPrincipal/MenuPrincipal";
 import Dossier from "../pages/dashboard/DashContent/Dossier/Dossier";
 import Fichier from "../pages/dashboard/DashContent/Fichier/Fichier";
+import Corbeille from "../pages/dashboard/DashContent/Corbeille/Corbeille";
 import AllTempsier from "../pages/dashboard/DashContent/Templats/AllTemps/AllTemps";
 import CreateTemps from "../pages/dashboard/DashContent/Templats/CreateTemps/CreateTemps";
 import ModifierTemps from "../pages/dashboard/DashContent/Templats/ModifierTemps/ModifierTemps";
+import Disconnect from "../pages/Login/Disconnect/Disconnect";
 // ************************** TOP BAR *******************************
 
 import TopBar from "../Layouts/TopBar/TopBar";
@@ -92,28 +94,33 @@ export const routes = [
   },
   {
     mainUrl: "/dashboard",
-    url: "/notifications",
-    img: notif,
-    title: "Notifications",
-    compo: <></>,
-  },
-  {
-    mainUrl: "/dashboard",
-    url: "/parrainage",
-    img: rounded_chart,
-    title: "Parrainage",
-    compo: <></>,
-  },
-];
-
-export const routes2 = [
-  {
-    mainUrl: "/dashboard",
     url: "/corbeille",
     img: trash,
     title: "Corbeille",
-    compo: <></>,
+    compo: (
+      <>
+        <TopBarWithRech />
+        <Corbeille />
+      </>
+    ),
   },
+  // {
+  //   mainUrl: "/dashboard",
+  //   url: "/notifications",
+  //   img: notif,
+  //   title: "Notifications",
+  //   compo: <></>,
+  // },
+  // {
+  //   mainUrl: "/dashboard",
+  //   url: "/parrainage",
+  //   img: rounded_chart,
+  //   title: "Parrainage",
+  //   compo: <></>,
+  // },
+];
+
+export const routes2 = [
   {
     mainUrl: "/dashboard",
     url: "/parametres",
@@ -126,13 +133,17 @@ export const routes2 = [
       </>
     ),
   },
-  // {
-  //   mainUrl: "/dashboard",
-  //   url: "/deconnexion",
-  //   img: logout,
-  //   title: "Déconnexion",
-  //   compo: <></>,
-  // },
+  {
+    mainUrl: "/dashboard",
+    url: "/deconnexion",
+    img: logout,
+    title: "Déconnexion",
+    compo: (
+      <>
+        <Disconnect />
+      </>
+    ),
+  },
 ];
 
 // those routes are not acceccible by navbar

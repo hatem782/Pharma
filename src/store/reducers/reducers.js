@@ -9,6 +9,7 @@ import {
 } from "../keys/Snack";
 import { GET_DOSSIER } from "../keys/Dosser.key";
 import { GET_FICHIER } from "../keys/Fichier.key";
+import { GET_CORBEILLE } from "../keys/Corbeille.key";
 import { GET_TEMPLATE, GET_TEMPLATES } from "../keys/Template.keys";
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -69,6 +70,17 @@ const Fichier = (state = InitialFichier, action) => {
   }
 };
 
+// TRASH REDUCER
+const InitialTrash = [];
+const Trash = (state = InitialTrash, action) => {
+  switch (action.type) {
+    case GET_CORBEILLE():
+      return action.value;
+    default:
+      return state;
+  }
+};
+
 // TEMPLATES REDUCER
 const InitialTemplates = [];
 const Templates = (state = InitialTemplates, action) => {
@@ -96,6 +108,7 @@ const allReducers = combineReducers({
   Snack: Snack,
   Dossier: Dossier,
   Fichier: Fichier,
+  Trash: Trash,
   Templates: Templates,
   Template: Template,
 });

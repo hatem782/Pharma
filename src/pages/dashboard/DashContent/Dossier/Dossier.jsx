@@ -264,11 +264,12 @@ const OneFolder = ({ item, handleSelect }) => {
         </Td>
         <Td>
           <span className="folder-name">
-            {size} <span className="space50" />
+            {Math.floor(size / 1024)} ko <span className="space50" />
           </span>
         </Td>
         <Td className="buttons-group">
-          <TabButtonGf>Afficher</TabButtonGf>
+          {/* <TabButtonGf>Afficher</TabButtonGf> */}
+          <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
           <TabButtonGo onClick={openQrcode}>Code QR</TabButtonGo>
           <TabButtonYf onClick={openShare}>Partager</TabButtonYf>
           <img src={threp} onClick={handleClick} />
@@ -284,10 +285,6 @@ const OneFolder = ({ item, handleSelect }) => {
               pos={5}
             >
               <div style={{ padding: "0px 10px" }} className="menu-items">
-                <MenuItem>
-                  <TabButtonGf onClick={openRename}>Renommer</TabButtonGf>
-                </MenuItem>
-                <Divider />
                 <MenuItem>
                   <TabButtonRo onClick={openDelete}>Supprimer</TabButtonRo>
                 </MenuItem>

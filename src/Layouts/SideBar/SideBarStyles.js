@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   full_logo: {
-    width: "100%",
+    width: "70%",
     display: "block",
     margin: "0px auto 100px auto",
 

@@ -37,11 +37,12 @@ import Divider from "@mui/material/Divider";
 import threp from "../../../../assets/svgs/icons/Groupe 17360.svg";
 
 function MenuPrincipal() {
+  const user = useSelector((state) => state.User.user);
   const css = useStyles();
   return (
     <main className={css.main}>
       <br />
-      <H1>Bienvenue Mr. Alexandre Bertan !</H1>
+      <H1>Bienvenue {`${user.first_name} ${user.last_name}`} !</H1>
       <Filedrag />
 
       <br />

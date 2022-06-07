@@ -40,7 +40,7 @@ function Notif_Avatar() {
           sx={{ width: 46, height: 46 }}
           src={photo ? REACT_APP_API_HOST + photo : noimg}
           onClick={handleClick}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", border: "solid 1px grey" }}
         />
         <Menu
           id="basic-menu"

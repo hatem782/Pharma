@@ -6,9 +6,11 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: "100vh",
     "& .images": {
       height: "100%",
-      backgroundColor: "#A2A2A2",
+      // backgroundColor: "#A2A2A2",
+      backgroundSize: "cover",
+      backgroundPosition: "50% 50%",
+      backgroundRepeat: "no-repeat",
     },
-
     "& .register": {
       minHeight: "100vh",
       padding: "100px 0px",

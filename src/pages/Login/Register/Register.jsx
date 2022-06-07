@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useStyles } from "./RegisterStyles";
 import { Grid } from "@mui/material";
+import img from "../../../assets/images/website/log.png";
 
 import logo from "../../../assets/svgs/logo/logo1.svg";
 import Input2 from "../../../components/Inputs/Input2";
@@ -133,7 +134,10 @@ function Register() {
     <main className={css.main}>
       <Grid container spacing={0}>
         <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
-          <div className="images"></div>
+          <div
+            className="images"
+            style={{ backgroundImage: `url(${img})` }}
+          ></div>
         </Grid>
         <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
           <div className="register">

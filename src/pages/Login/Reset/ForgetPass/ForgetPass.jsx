@@ -7,6 +7,7 @@ import Input2 from "../../../../components/Inputs/Input2";
 import CheckBx from "../../../../components/Inputs/CheckBox";
 import SubmitBtn from "../../../../components/Buttons/SubmitBtn";
 import NavLinkEdited from "../../../../components/NavLink/NavLink";
+import img from "../../../../assets/images/website/log.png";
 
 import { isMobile } from "../../../../functions/inputValidator";
 
@@ -58,7 +59,10 @@ function ForgetPass() {
     <main className={css.main}>
       <Grid container spacing={0}>
         <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
-          <div className="images"></div>
+          <div
+            className="images"
+            style={{ backgroundImage: `url(${img})` }}
+          ></div>
         </Grid>
         <Grid item xl={6} lg={6} md={12} sm={12} xs={12}>
           <div className="login">

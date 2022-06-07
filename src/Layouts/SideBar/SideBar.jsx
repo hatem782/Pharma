@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import { useStyles } from "./SideBarStyles";
 import logo from "../../assets/svgs/sidebar/logo.svg";
-import full_logo from "../../assets/svgs/sidebar/full_logo.svg";
+// import full_logo from "../../assets/svgs/sidebar/full_logo.svg";
+import full_logo from "../../assets/images/website/logo.png";
 
 import NavLink from "../../components/NavLink/NavLink";
 

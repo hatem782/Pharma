@@ -10,6 +10,7 @@ import SetPassword from "./pages/Login/SetPassword/SetPassword";
 import ForgetPass from "./pages/Login/Reset/ForgetPass/ForgetPass";
 import NumValidResetPass from "./pages/Login/Reset/NumValidResetPass/NumValidResetPass";
 import ResetPassword from "./pages/Login/Reset/ResetPassword/ResetPassword";
+import Website from "./pages/Website/Website";
 
 // ********************** COMPONENTS ************************
 
@@ -50,11 +51,13 @@ function App() {
           <Router>
             {user ? (
               <Routes>
+                <Route path="/pbird/*" element={<Website />} />
                 <Route path="/dashboard/*" element={<Dashboard />} />
                 <Route path="/*" element={<Navigate to="/dashboard/main" />} />
               </Routes>
             ) : (
               <Routes>
+                <Route path="/pbird/*" element={<Website />} />
                 <Route path="/signin" element={<SignIn />} />
 
                 <Route path="/registration" element={<Register />} />

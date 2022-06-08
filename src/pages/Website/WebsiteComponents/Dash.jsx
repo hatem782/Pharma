@@ -5,8 +5,8 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
   main: {
     display: "block",
-    width: "80px",
-    height: "4px",
+    width: "100px",
+    height: "5px",
     borderRadius: "500px",
     backgroundColor: theme.palette.primary.main,
   },

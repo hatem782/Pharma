@@ -2,7 +2,7 @@ import React from "react";
 
 import { makeStyles } from "@mui/styles";
 import check from "../../../assets/images/website/check.png";
-
+import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   main: {
     width: "40%",
@@ -88,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
 
 function BffCard() {
   const css = useStyles();
+  const navig = useNavigate();
   return (
     <div className={css.main}>
       <div className="price">
@@ -132,7 +133,13 @@ function BffCard() {
       </div>
 
       <div className="footer">
-        <button>Commencer</button>
+        <button
+          onClick={() => {
+            navig("/registration");
+          }}
+        >
+          Commencer
+        </button>
         <p>Voir tous les inclus</p>
       </div>
     </div>
